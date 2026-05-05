@@ -9,23 +9,40 @@ let usuarioActual = null;
 document.addEventListener("DOMContentLoaded", async function () {
   console.log("Inicializando Login");
 
-// Verificar sesión pero permitir acceso siempre al login
   await iniciarAuth({
     alLoguearse: (usuario) => {
-      // Está logueado, pero permitir acceso al login
+      usuarioActual = usuario;
+      configurarUIUsuarioLogueado();
       inicializarFormulario();
     },
     alNoLoguearse: () => {
-      // No está logueado
+      configurarUIUsuarioNoLogueado();
       inicializarFormulario();
     }
   });
 });
 
-function inicializarFormulario() {
-  // Configurar botones de sesión
-  configurarBotonesSesion();
+function configurarUIUsuarioLogueado() {
+  const botonPerfil = document.getElementById('perfilUsuario');
+  const banner = document.getElementById('bannerUsuario');
+  
+  if (botonPerfil && banner) {
+    botonPerfil.addEventListener('click', () => {
+      banner.classList.toggle('abierto');
+    });
+  }
+}
 
+function configurarUIUsuarioNoLogueado() {
+  const botonPerfil = document.getElementById('perfilUsuario');
+  if (botonPerfil) {
+    botonPerfil.addEventListener('click', () => {
+      alert("Ya estás en la página de inicio de sesión");
+    });
+  }
+}
+
+function inicializarFormulario() {
   // Inicializar JustValidate
   const validador = new JustValidate("#loginForm", {
     validateBeforeSubmitting: true,
@@ -82,6 +99,3 @@ function inicializarFormulario() {
   });
 }
 
-function configurarBotonesSesion() {
-  // Ya configurado en funcionesGlobales.js
-}

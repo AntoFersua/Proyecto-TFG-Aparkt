@@ -1,8 +1,5 @@
 function obtenerRutaBase() {
-  const ruta = window.location.pathname;
-  if (ruta.includes("/Proyecto-TFG-Aparkt/")) return "/Proyecto-TFG-Aparkt";
-  if (ruta.includes("/app/")) return "";
-  return "";
+  return "/Proyecto-TFG-Aparkt";
 }
 
 class Modalpuntos extends HTMLElement {

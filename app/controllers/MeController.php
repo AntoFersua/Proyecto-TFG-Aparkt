@@ -39,8 +39,10 @@ $response = [
 
 // If user is logged in, also fetch their score
 if ($logueado && isset($_SESSION['usuario_id'])) {
+    require_once __DIR__ . '/../models/Conexion.php';
+    $conexion = require __DIR__ . '/../models/Conexion.php';
     require_once __DIR__ . '/../models/SistemaPuntuacion.php';
-    $puntuacionModel = new SistemaPuntuacion();
+    $puntuacionModel = new SistemaPuntuacion($conexion);
     $response['puntuacion'] = $puntuacionModel->obtenerPuntuacion($_SESSION['usuario_id']);
     $response['usuario_id'] = $_SESSION['usuario_id'];
     $response['puntosCrear'] = SistemaPuntuacion::PUNTOS_CREAR;

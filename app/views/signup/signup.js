@@ -1,10 +1,28 @@
-// Importamos componenetes
+// Importamos componentes
 import '../components/Header.js';
 import '../components/PerfilUsuario.js';
 import '../components/Footer.js';
 
+import { iniciarAuth } from '../auth.js';
 
+async function iniciarPagina() {
+  await iniciarAuth({
+    alNoLoguearse: () => {
+      configurarUIUsuarioNoLogueado();
+    }
+  });
+}
 
+function configurarUIUsuarioNoLogueado() {
+  const botonPerfil = document.getElementById('perfilUsuario');
+  if (botonPerfil) {
+    botonPerfil.addEventListener('click', () => {
+      window.location.href = "/Proyecto-TFG-Aparkt/app/views/login/login.html";
+    });
+  }
+}
+
+iniciarPagina();
 
 // Validación con JustValidate
 document.addEventListener("DOMContentLoaded", function () {

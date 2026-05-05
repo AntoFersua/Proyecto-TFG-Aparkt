@@ -10,22 +10,14 @@
 
 // FUNCIONES AUXILIARES
 /**
- * Obtiene la ruta base según la URL actual del navegador.
- * Necesario porque el proyecto puede estar en /Proyecto-TFG-Aparkt/ o en la raíz.
+ * Obtiene la ruta base del proyecto.
  */
 function obtenerRutaBase() {
-  const ruta = window.location.pathname;
-  // Si contiene /Proyecto-TFG-Aparkt/
-  if (ruta.includes("/Proyecto-TFG-Aparkt/")) return "/Proyecto-TFG-Aparkt";
-  // Si contiene /app/, estamos en la raíz
-  if (ruta.includes("/app/")) return "";
-  // Por defecto vacío
-  return "";
+  return "/Proyecto-TFG-Aparkt";
 }
 
 // CONSTANTES Y VARIABLES
-// Endpoint que verifica la sesión (PHP que devuelve si hay usuario logueado)
-const ENDPOINT_SESION = obtenerRutaBase() + "/app/controllers/MeController.php";
+// El endpoint se construye dinámicamente en obtenerSesion() para evitar problemas de ruta
 
 // Variable para almacenar en memoria el usuario actual (cache)
 let usuarioCache = null;
@@ -41,10 +33,12 @@ let sesionActual = null;
  */
 export async function obtenerSesion() {
   try {
-    console.log(":", ENDPOINT_SESION);
+    const rutaBase = obtenerRutaBase();
+    const endpointSesion = rutaBase + "/app/controllers/MeController.php";
+    console.log(":", endpointSesion);
 
     // Fetch al endpoint con credentials: 'include' para enviar cookies de sesión
-    const respuesta = await fetch(ENDPOINT_SESION, {
+    const respuesta = await fetch(endpointSesion, {
       credentials: "include", // MUY IMPORTANTE por las cookies de sesión
     });
 

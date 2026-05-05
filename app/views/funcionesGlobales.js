@@ -49,14 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const banner = document.getElementById("bannerUsuario");
   const botonCerrarBanner = document.getElementById("cerrarBanner");
 
-  // Botón de perfil - abre/cierra el banner
-  if (botonPerfil && banner) {
-    botonPerfil.addEventListener("click", function (e) {
-      e.stopPropagation();
-      banner.classList.toggle("abierto");
-    });
-  }
-
   // Botón de cerrar banner
   if (botonCerrarBanner && banner) {
     botonCerrarBanner.addEventListener("click", function (e) {

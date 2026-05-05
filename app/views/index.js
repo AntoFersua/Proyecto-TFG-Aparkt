@@ -527,5 +527,10 @@ function configurarUIUsuarioLogueado(usuario) {
 function configurarUIUsuarioNoLogueado() {
   console.log('Usuario no logueado');
 
-  // Si no está logueado, el botón de perfil no hace nada
+  const perfilBtn = document.getElementById('perfilUsuario');
+  if (perfilBtn) {
+    perfilBtn.addEventListener('click', () => {
+      window.location.href = "/Proyecto-TFG-Aparkt/app/views/login/login.html";
+    });
+  }
 }

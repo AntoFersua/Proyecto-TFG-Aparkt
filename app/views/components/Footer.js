@@ -11,11 +11,14 @@ class Footer extends HTMLElement {
 
   // Método que define el contenido HTML del componente.
   render() {
+    const rutaBase = "/Proyecto-TFG-Aparkt";
+    const rutaAssets = rutaBase + "/app/views/assets";
+    
     this.innerHTML = `
         <footer>
       <div class="footer-content">
         <div class="footer-section footer-brand">
-          <img src="../assets/imagotipoAparkt.png" alt="Aparkt Logo" class="footer-logo" />
+          <img src="${rutaAssets}/imagotipoAparkt.png" alt="Aparkt Logo" class="footer-logo" />
         </div>
 
         
