@@ -520,9 +520,7 @@ function configurarUIUsuarioLogueado(usuario) {
   // Logout
   const logoutBtn = document.getElementById('logout');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      window.location.href = "../controllers/Logout.php";
-    });
+    logoutBtn.addEventListener('click', () => cerrarSesion());
   }
 }
 

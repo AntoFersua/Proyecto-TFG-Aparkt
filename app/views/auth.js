@@ -221,10 +221,9 @@ export async function iniciarAuth(opciones = {}) {
  * Redirige al archivo PHP que destruye la sesión y cierra sesión.
  *
  */
-export function cerrarSesion(urlRedireccion = null) {
+export function cerrarSesion() {
   const rutaBase = obtenerRutaBase();
   const urlLogout = rutaBase + "controllers/Logout.php";
-  const urlLogin = urlRedireccion || rutaBase + "login/login.html";
   console.log("Logout URL:", urlLogout);
   window.location.href = urlLogout;
 }

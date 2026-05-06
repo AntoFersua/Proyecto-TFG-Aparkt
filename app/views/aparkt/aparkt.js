@@ -22,9 +22,7 @@ async function iniciarPagina() {
 function configurarUIUsuarioLogueado(usuario) {
   const botonLogout = document.getElementById('logout');
   if (botonLogout) {
-    botonLogout.addEventListener('click', () => {
-      window.location.href = "../../controllers/Logout.php";
-    });
+    botonLogout.addEventListener('click', () => cerrarSesion());
   }
 
   const botonPerfil = document.getElementById('perfilUsuario');
