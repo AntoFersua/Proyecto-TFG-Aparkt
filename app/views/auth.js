@@ -9,18 +9,21 @@
  */
 
 // FUNCIONES AUXILIARES
-/**
- * Obtiene la ruta base según la URL actual del navegador.
- */
 function obtenerRutaBase() {
   const ruta = window.location.pathname;
-  if (ruta.includes("/Proyecto-TFG-Aparkt/")) return "/Proyecto-TFG-Aparkt";
-  if (ruta.includes("/app/")) return "";
-  return "";
+  // Si está en /app/views/login/ o /app/views/signup/ o /app/views/aparkt/
+  if (ruta.includes('/app/views/login/') || ruta.includes('/app/views/signup/') || ruta.includes('/app/views/aparkt/')) {
+    return '../../';
+  }
+  // Si está en /app/views/ (index)
+  return './';
+}
+
+function obtenerRutaCompleta(rutaRelativa) {
+  return obtenerRutaBase() + rutaRelativa;
 }
 
 // CONSTANTES Y VARIABLES
-// El endpoint se construye dinámicamente en obtenerSesion() para evitar problemas de ruta
 
 // Variable para almacenar en memoria el usuario actual (cache)
 let usuarioCache = null;
@@ -37,11 +40,12 @@ let sesionActual = null;
 export async function obtenerSesion() {
   try {
     const rutaBase = obtenerRutaBase();
-    const endpointSesion = rutaBase + "/app/controllers/MeController.php";
-    console.log(":", endpointSesion);
+    const endpoint = rutaBase + "controllers/MeController.php";
+    console.log("Ruta base:", rutaBase);
+    console.log("Endpoint:", endpoint);
 
     // Fetch al endpoint con credentials: 'include' para enviar cookies de sesión
-    const respuesta = await fetch(endpointSesion, {
+    const respuesta = await fetch(endpoint, {
       credentials: "include", // MUY IMPORTANTE por las cookies de sesión
     });
 
@@ -78,14 +82,15 @@ export async function obtenerSesion() {
  * Verifica la sesión y si no está logueado, redirige a la página de login.
  */
 export async function requiereAuth(
-  urlRedireccion = "/app/views/login/login.html",
+  urlRedireccionParam = null,
 ) {
+  const urlRedireccion = urlRedireccionParam || obtenerRutaBase() + "login/login.html";
+  
   const sesion = await obtenerSesion();
 
   // Si no está logueado, redirigir al login
   if (!sesion.logueado) {
-    const rutaBase = obtenerRutaBase();
-    window.location.href = rutaBase + urlRedireccion;
+    window.location.href = urlRedireccion;
     return null;
   }
 
@@ -174,8 +179,11 @@ export async function iniciarAuth(opciones = {}) {
     alLoguearse = null, // Función a ejecutar si está logueado
     alNoLoguearse = null, // Función a ejecutar si NO está logueado
     requiereAuth = false, // Por defecto no requiere autenticación obligatoria
-    urlRedireccion = "/app/views/login/login.html", // URL de login por defecto
+    urlRedireccion: urlRedireccionParam = null, // URL de login por defecto (se calcula automáticamente)
   } = opciones;
+
+  // Calcular url de login según la profundidad
+  let urlRedireccion = urlRedireccionParam || obtenerRutaBase() + "login/login.html";
 
   // Obtener sesión del servidor
   const sesion = await obtenerSesion();
@@ -197,8 +205,7 @@ export async function iniciarAuth(opciones = {}) {
   else {
     // Si requiereAuth es true, redirigir al login
     if (requiereAuth) {
-      const rutaBase = obtenerRutaBase();
-      window.location.href = rutaBase + urlRedireccion;
+      window.location.href = urlRedireccion;
       return;
     }
 
@@ -214,8 +221,10 @@ export async function iniciarAuth(opciones = {}) {
  * Redirige al archivo PHP que destruye la sesión y cierra sesión.
  *
  */
-export function cerrarSesion(urlRedireccion = "/app/views/login/login.html") {
+export function cerrarSesion(urlRedireccion = null) {
   const rutaBase = obtenerRutaBase();
-  // Redirigir al Logout.php que destruye la sesión
-  window.location.href = rutaBase + "/app/controllers/Logout.php";
+  const urlLogout = rutaBase + "controllers/Logout.php";
+  const urlLogin = urlRedireccion || rutaBase + "login/login.html";
+  console.log("Logout URL:", urlLogout);
+  window.location.href = urlLogout;
 }

@@ -17,9 +17,7 @@ function configurarUIUsuarioNoLogueado() {
   const botonPerfil = document.getElementById('perfilUsuario');
   if (botonPerfil) {
     botonPerfil.addEventListener('click', () => {
-      const ruta = window.location.pathname;
-      const rutaBase = ruta.includes("/Proyecto-TFG-Aparkt/") ? "/Proyecto-TFG-Aparkt" : "";
-      window.location.href = rutaBase + "/app/views/login/login.html";
+      window.location.href = "../../login/login.html";
     });
   }
 }

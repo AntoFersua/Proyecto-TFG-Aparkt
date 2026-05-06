@@ -39,10 +39,19 @@ window.inicializarValidacionVehiculo = function () {
 
       console.log("Enviando:", datos);
 
-      const ruta = window.location.pathname;
-      const rutaBase = ruta.includes("/Proyecto-TFG-Aparkt/") ? "/Proyecto-TFG-Aparkt" : "";
-      
-      fetch(rutaBase + "/app/controllers/VehiculoController.php", {
+      function obtenerRutaBase() {
+        const ruta = window.location.pathname;
+        if (ruta.includes("/app/views/")) {
+          const parteDespuesDeViews = ruta.split("/app/views/")[1];
+          const profundidad = parteDespuesDeViews ? parteDespuesDeViews.split("/").filter(p => p).length : 0;
+          return "../".repeat(profundidad);
+        }
+        if (ruta.includes("/app/")) return "./";
+        return "./";
+      }
+
+      const rutaBase = obtenerRutaBase();
+      fetch(rutaBase + "controllers/VehiculoController.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",

@@ -1,10 +1,3 @@
-function obtenerRutaBase() {
-  const ruta = window.location.pathname;
-  if (ruta.includes("/Proyecto-TFG-Aparkt/")) return "/Proyecto-TFG-Aparkt";
-  if (ruta.includes("/app/")) return "";
-  return "";
-}
-
 class Modalpuntos extends HTMLElement {
   constructor() {
     super();
@@ -21,8 +14,7 @@ class Modalpuntos extends HTMLElement {
 
   async fetchPuntuacion() {
     try {
-      const rutaBase = obtenerRutaBase();
-      const response = await fetch(rutaBase + "/app/controllers/MeController.php", {
+      const response = await fetch("../../controllers/MeController.php", {
         credentials: "include"
       });
       const data = await response.json();

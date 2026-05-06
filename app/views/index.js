@@ -520,7 +520,9 @@ function configurarUIUsuarioLogueado(usuario) {
   // Logout
   const logoutBtn = document.getElementById('logout');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => cerrarSesion());
+    logoutBtn.addEventListener('click', () => {
+      window.location.href = "../controllers/Logout.php";
+    });
   }
 }
 
@@ -530,9 +532,7 @@ function configurarUIUsuarioNoLogueado() {
   const perfilBtn = document.getElementById('perfilUsuario');
   if (perfilBtn) {
     perfilBtn.addEventListener('click', () => {
-      const ruta = window.location.pathname;
-      const rutaBase = ruta.includes("/Proyecto-TFG-Aparkt/") ? "/Proyecto-TFG-Aparkt" : "";
-      window.location.href = rutaBase + "/app/views/login/login.html";
+      window.location.href = "../login/login.html";
     });
   }
 }

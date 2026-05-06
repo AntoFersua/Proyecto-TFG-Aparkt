@@ -74,16 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (botonLogout) {
     botonLogout.addEventListener("click", function (e) {
       e.preventDefault();
-      
-      const path = window.location.pathname;
-      let rutaBase = '';
-      if (path.includes('/Proyecto-TFG-Aparkt/')) {
-        rutaBase = '/Proyecto-TFG-Aparkt';
-      } else if (path.includes('/PRUEBAS/')) {
-        rutaBase = '/PRUEBAS';
-      }
-      
-      window.location.href = rutaBase + '/app/controllers/Logout.php';
+      window.location.href = "./controllers/Logout.php";
     });
   }
 
