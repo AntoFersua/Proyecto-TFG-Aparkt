@@ -17,7 +17,7 @@ function configurarUIUsuarioNoLogueado() {
   const botonPerfil = document.getElementById('perfilUsuario');
   if (botonPerfil) {
     botonPerfil.addEventListener('click', () => {
-      window.location.href = "../../login/login.html";
+      window.location.href = "../login/login.html";
     });
   }
 }

@@ -35,7 +35,7 @@ function configurarUIUsuarioLogueado(usuario) {
     });
   }
 
-  const nombreUsuario = usuario.nombre || usuario.name || usuario.email || 'Usuario';
+  const nombreUsuario = usuario.nombre || usuario.email || 'Usuario';
   console.log(`Bienvenido, ${nombreUsuario}`);
 }
 
@@ -43,7 +43,7 @@ function configurarUIUsuarioNoLogueado() {
   const botonPerfil = document.getElementById('perfilUsuario');
   if (botonPerfil) {
     botonPerfil.addEventListener('click', () => {
-      window.location.href = "../../login/login.html";
+      window.location.href = "../login/login.html";
     });
   }
 }
