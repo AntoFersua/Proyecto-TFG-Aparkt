@@ -10,10 +10,13 @@
 
 // FUNCIONES AUXILIARES
 /**
- * Obtiene la ruta base del proyecto.
+ * Obtiene la ruta base según la URL actual del navegador.
  */
 function obtenerRutaBase() {
-  return "/Proyecto-TFG-Aparkt";
+  const ruta = window.location.pathname;
+  if (ruta.includes("/Proyecto-TFG-Aparkt/")) return "/Proyecto-TFG-Aparkt";
+  if (ruta.includes("/app/")) return "";
+  return "";
 }
 
 // CONSTANTES Y VARIABLES

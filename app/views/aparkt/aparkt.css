@@ -187,7 +187,7 @@
 
         &:hover {
           transform: translateY(-8px) scale(1.03);
-          background-image: url("/Proyecto-TFG-Aparkt/app/views/assets/fondoAparkt.png");
+          background-image: url("../../assets/fondoAparkt.png");
           outline: none;
 
           box-shadow: var(--shadow-card);

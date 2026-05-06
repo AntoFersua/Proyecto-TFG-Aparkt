@@ -39,7 +39,10 @@ window.inicializarValidacionVehiculo = function () {
 
       console.log("Enviando:", datos);
 
-      fetch("/Proyecto-TFG-Aparkt/app/controllers/VehiculoController.php", {
+      const ruta = window.location.pathname;
+      const rutaBase = ruta.includes("/Proyecto-TFG-Aparkt/") ? "/Proyecto-TFG-Aparkt" : "";
+      
+      fetch(rutaBase + "/app/controllers/VehiculoController.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",

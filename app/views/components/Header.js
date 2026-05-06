@@ -9,20 +9,17 @@ class Header extends HTMLElement {
   }
 
   render() {
-    const rutaBase = "/Proyecto-TFG-Aparkt";
-    const rutaAssets = rutaBase + "/app/views/assets";
-    
     this.innerHTML = `
         <header>
       <div class="logoHeader">
-        <img src="${rutaAssets}/imagotipoAparkt.png" alt="Logo" />
+        <img src="../assets/imagotipoAparkt.png" alt="Logo" />
       </div>
       <nav class="navPrincipal">
         <ul>
-          <li><a href="${rutaBase}/app/views/index.html">Mapa</a></li>
-          <li><a href="${rutaBase}/app/views/aparkt/aparkt.html">Aparkt</a></li>
-          <li><a href="${rutaBase}/app/views/login/login.html">Log In</a></li>
-          <li><a href="${rutaBase}/app/views/signup/signup.html">Sign Up</a></li>
+          <li><a href="../index.html">Mapa</a></li>
+          <li><a href="../aparkt/aparkt.html">Aparkt</a></li>
+          <li><a href="../login/login.html">Log In</a></li>
+          <li><a href="../signup/signup.html">Sign Up</a></li>
         </ul>
       </nav>
       <div id="headerDerecha">
