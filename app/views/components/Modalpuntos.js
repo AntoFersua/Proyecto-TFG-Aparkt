@@ -1,4 +1,6 @@
+//Componente llamado ModalPuntos que hereda de HTMLElement
 class Modalpuntos extends HTMLElement {
+  //Constructor para crear el componente
   constructor() {
     super();
     this.puntuacion = 0;
@@ -8,17 +10,21 @@ class Modalpuntos extends HTMLElement {
     this.cargando = true;
   }
 
+  //Método que se ejecuta cuando el componente se añade al DOM
   connectedCallback() {
     this.fetchPuntuacion();
   }
 
+  //Asincronía para traer desde el backend la puntuación de usuario
   async fetchPuntuacion() {
     try {
+      //Petición al controlador PHP
       const response = await fetch("../../controllers/MeController.php", {
         credentials: "include"
       });
       const data = await response.json();
 
+      //Se verifica que el usuario esta logueado
       if (data.logueado) {
         this.puntuacion = data.puntuacion ?? 0;
         this.puntosCrear = data.puntosCrear ?? 100;
@@ -29,10 +35,12 @@ class Modalpuntos extends HTMLElement {
       console.error("Error al obtener puntuación:", error);
     }
 
+    //Se renderiza el componente con los nuevos datos que hemos traído
     this.cargando = false;
     this.render();
   }
 
+  //Con este método pintamos el HTML
   render() {
     const puntos = this.cargando ? "..." : Number(this.puntuacion).toLocaleString("es-ES");
 
@@ -190,4 +198,5 @@ class Modalpuntos extends HTMLElement {
   }
 }
 
+//Aquí "guardamos" el componente personalizado que luego lo usaremos como <modal-puntos></modal-puntos>
 customElements.define("modal-puntos", Modalpuntos);

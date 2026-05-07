@@ -8,6 +8,7 @@ class PerfilUsuario extends HTMLElement {
     this.render();
   }
 
+  //Aquí pintamos el HTML del modal PerfilUsuario
   render() {
     this.innerHTML = `
            <aside id="bannerUsuario" class="banner-lateral">

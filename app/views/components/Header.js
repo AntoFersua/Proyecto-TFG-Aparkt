@@ -1,13 +1,17 @@
+//Creación de componente Header que hereda de HTMLElement
 class Header extends HTMLElement {
   constructor(nombre) {
     super();
   }
 
+ 
+  //Método que se ejecuta directamente cuando el componente se añade al DOM
   connectedCallback() {
     this.render();
     this.initJS();
   }
 
+  //Con este método pintamos el HTML del HEADER
   render() {
     this.innerHTML = `
         <header>
@@ -87,4 +91,5 @@ class Header extends HTMLElement {
   }
 }
 
+//Registramos el componente personalizado para poder usarlo luego como <app-header></app-header>
 customElements.define("app-header", Header);
