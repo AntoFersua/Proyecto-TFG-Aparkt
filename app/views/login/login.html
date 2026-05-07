@@ -3,20 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--SEO-->
     <meta name="description" content="Inicia sesión en Aparkt" />
     <meta name="keywords" content="Sesión, Aparkt, Aparcamiento" />
     <meta name="author" content="Aparkt" />
     <title>Log In</title>
+     <!-- Estilos globales del proyecto -->
     <link rel="stylesheet" type="text/css" href="../estilosGlobales.css" />
+    <!-- Estilos específicos del login -->
     <link rel="stylesheet" type="text/css" href="login.css" />
+    <!-- Scripts de validación de formularios -->
     <script src="../validacionVehiculo.js"></script>
     <script src="../just-validate.min.js"></script>
     <!-- <script src="../components/Modalpuntos.js"></script> -->
+    <!--Funciones globales del proyecto-->
     <script src="../funcionesGlobales.js" defer></script>
     <script src="login.js" defer type="module"></script>
   </head>
   <body>
-    <!--HEADER-->
+    <!--HEADER reutilizable, Web Component-->
     <app-header></app-header>
 
     <!-- Banner lateral de usuario -->
@@ -27,11 +32,13 @@
       <!-- Logo Aparkt -->
       <div class="main-izquierdo">
         <img src="../assets/isotipoAparkt.png" alt="Logo" />
-        <!-- METER LOGO -->
       </div>
+      
+      <!--Simulación de pantalla de móvil-->
       <article class="telefono">
         <span class="notch"></span>
 
+        <!--Formulario para loguearse-->
         <form id="loginForm" novalidate>
           <div class="form-contenido">
             <h2>BIENVENIDO</h2>
@@ -127,8 +134,9 @@
       </article>
     </main>
 
-    <!--FOOTER-->
+    <!--FOOTER reutilizable Web Component-->
     <app-footer></app-footer>
+    <!--Más scripts de validación y para el modo oscuro-->
     <script src="../just-validate.min.js"></script>
     <script src="../modoOscuro.js"></script>
   </body>

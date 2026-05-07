@@ -197,7 +197,6 @@ class ModalAparcamiento extends HTMLElement {
 `;
   }
 
-  //método para añadir eventos a los elementos del modal 
   agregarEventListeners() {
     //obtener botones
     const botonCerrar = this.querySelector('.boton-cerrar');

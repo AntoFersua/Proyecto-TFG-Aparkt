@@ -67,18 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========================================================================
-  // CERRAR SESIÓN
-  // ========================================================================
-
-  const botonLogout = document.getElementById("logout");
-  if (botonLogout) {
-    botonLogout.addEventListener("click", function (e) {
-      e.preventDefault();
-      window.location.href = "./controllers/Logout.php";
-    });
-  }
-
-  // ========================================================================
   // FORMULARIO AÑADIR VEHÍCULO
   // ========================================================================
 

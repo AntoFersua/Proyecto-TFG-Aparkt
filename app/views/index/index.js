@@ -6,6 +6,7 @@ import "../components/ModalAparcamiento.js";
 let usuarioActual = null;
 
 window.addEventListener("DOMContentLoaded", async function () {
+  // Verificar sesión
   await iniciarAuth({
     alLoguearse: (usuario) => {
       usuarioActual = usuario;
@@ -16,22 +17,30 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
+  // Cargar mapa
   fetch("../../config/config.php")
     .then(function (response) {
+      //Mostrar mensaje y convertir la respuesta en JSON
       console.log("Status:", response.status);
       return response.json();
     })
     .then(function (data) {
+      //Token
       mapboxgl.accessToken = data.MAPS_API_KEY;
 
+      //Mapa
       const mapa = new mapboxgl.Map({
+        //id del div donde se carga el mapa
         container: "mapa",
         style: "mapbox://styles/mapbox/standard",
+        //Globo terráqueo
         projection: "globe",
         zoom: 15,
+        //Coordenadas Teatinos
         center: [-4.475468174458712, 36.72410119432091]
       });
 
+      //Cuando el estilo del mapa se carga, se establece la niebla por defecto
       mapa.on("style.load", function () {
         mapa.setFog({});
       });
@@ -89,7 +98,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         //eliminar layer y luego source
         //mapa.removeLayer(zona1.layerID);
         //mapa.removeSource(zona1.sourceID);
-
 
         const zona2 = estadoAparcamiento(-4.476059, 36.72896, 500, "zona2", "zona2-fill", "rgba(255, 0, 0, 0.3)", "red");
 
@@ -401,10 +409,13 @@ window.addEventListener("DOMContentLoaded", async function () {
 
       });
 
+      //Obtener las coordenadas y la dirección de una ubi específica
       function obtenerDireccionDeCoordenadas(e) {
+        //Obtener latitud y longitud, se accede mediante las propiedades del objeto. e.lngLat da latitud y longitud juntas
         const longitud = e.lngLat.lng;
         const latitud = e.lngLat.lat;
 
+        //Obtener la dirección a partir de las coordenadas mediante la API de geocoding inverso de Mapbox
         fetch(
           "https://api.mapbox.com/search/geocode/v6/reverse?longitude=" +
           longitud +
@@ -414,9 +425,14 @@ window.addEventListener("DOMContentLoaded", async function () {
           mapboxgl.accessToken,
         )
           .then(function (response) {
+            //Convertir la respuesta en JSON
             return response.json();
           })
+          //Procesar datos obtenidos
           .then(function (datos) {
+            /*Se obtiene el nombre del lugar completo con calle, provincia y país o solo el nombre de la calle o un nombre de la calle o un mensaje por defecto.
+                        Se accede al elemento 0 del array features de datos, si existe se accede a properties, si existe se accede a full_address en caso de que no se sigue con name...
+                        console.log(datos);*/
             const address =
               datos.features[0]?.properties?.full_address ||
               datos.features[0]?.properties?.name ||
@@ -430,6 +446,7 @@ window.addEventListener("DOMContentLoaded", async function () {
               address,
             );
           })
+          //En caso de error
           .catch(function (error) {
             alert(
               "Coordenadas: " +
@@ -448,8 +465,13 @@ window.addEventListener("DOMContentLoaded", async function () {
 
       mapa.on("click", ModalAparcamiento);
 
+      //mapa.on("click", obtenerDireccionDeCoordenadas);
+
+      //Redirigir el mapa a la nueva ubicación
       function buscarLugar(inputBusqueda) {
+        //Obtener el texto de la barra de navegación de búsqueda
         const searchText = inputBusqueda.value;
+        //Llamada a la API de geocoding directo de Mapbox, uso de encodeURIComponent para evitar carácteres raros en URL
         fetch(
           "https://api.mapbox.com/search/geocode/v6/forward?q=" +
           encodeURIComponent(searchText) +
@@ -457,37 +479,51 @@ window.addEventListener("DOMContentLoaded", async function () {
           mapboxgl.accessToken,
         )
           .then(function (response) {
+            //Convertir la respuesta en JSON
             return response.json();
           })
+          //Procesar datos obtenidos
           .then(function (datos) {
             const feature = datos.features[0];
+            //si feature tiene datos
             if (feature) {
+              //Obtener coordenadas de longitud y latitud
               const longitudNuevaBusqueda = feature.geometry.coordinates[0];
               const latitudNuevaBusqueda = feature.geometry.coordinates[1];
 
+              //Mover la ubicación del mapa con la función flyto
               mapa.flyTo({
                 center: [longitudNuevaBusqueda, latitudNuevaBusqueda],
-                essential: true,
+                essential: true, //Asegura que la animación se realice
               });
             } else {
               alert("No se encontraron resultados para: " + searchText);
             }
           })
+          //En caso de error
           .catch(function (error) {
             alert("Error al obtener coordenadas para: " + searchText);
           });
       }
 
+      //Obtener el formulario de realizar una búsqueda
       let formulario = document.querySelector("form");
+      //Aplicar listener en caso de que sea enviado
       formulario.addEventListener("submit", enviarFormulario);
+      //Evento es un objeto
       function enviarFormulario(evento) {
+        //Obtener el input
         let input = document.querySelector("#busqueda");
+        //Si no está vacio se llama a la función
         if (input.value.length != 0) {
           buscarLugar(input);
         }
+        //Parar para no recargar la página
         evento.preventDefault();
       }
+      //formulario.removeEventListener("click", enviarFormulario);
 
+      //Crear popup con titulo y texto
       function crearPopupTituloParrafo(titulo, parrafo) {
         const popupTituloParrafo = new mapboxgl.Popup().setHTML(
           "<h3>" + titulo + "</h3><p>" + parrafo + "</p>",
@@ -505,6 +541,11 @@ window.addEventListener("DOMContentLoaded", async function () {
         "El mejor restaurante de la zona.",
       );
 
+      //Forma sin función
+      /*const popupAnuncianteCasaLola = new mapboxgl.Popup()
+            .setHTML('<h3>Casa Lola</h3><p>El mejor restaurante de la zona.</p>');*/
+
+      //Crear popup con solo titulo
       function crearPopupTitulo(titulo) {
         const popupTitulo = new mapboxgl.Popup().setHTML(
           "<h3>" + titulo + "</h3>",
@@ -516,6 +557,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       const popupUsuarioCasa = crearPopupTitulo("Mi Casa");
       const popupUsuarioColegio = crearPopupTitulo("Mi Cole");
 
+      //Crear popup con solo texto
       function crearPopupTexto(texto) {
         const popupTexto = new mapboxgl.Popup().setText(texto);
 
@@ -524,34 +566,52 @@ window.addEventListener("DOMContentLoaded", async function () {
 
       const popupUsuarioUbicacion = crearPopupTexto("Mi ubi");
 
+      //Forma sin función
+      /*const popupUsuarioUbicacion = new mapboxgl.Popup()
+            .setText('Mi ubi');*/
+
+      //añadir marcador basico
       function añadirMarcadorBasico(longitudX, latitudY, popup) {
         const marker = new mapboxgl.Marker({
           color: '#005a60',
           scale: 1,
           className: 'estadoVisualMarker',
+          //arrastrable
+          //draggable: true    
         })
+          //Asignar coordenadas
           .setLngLat([longitudX, latitudY])
-          .setPopup(popup)
-          .addTo(mapa);
+          //Crear un popup que indique info del marcador
+          .setPopup(popup) //.setPopup(new mapboxgl.Popup().setText('Aquí hay un parking'))
+          //Añadir al mapa
+          .addTo(mapa);  //se usa el encadenamiento de métodos porque cada método devuelve el propio objeto this, es igual que hacer marker.addTo(mapa)
         return marker;
       }
 
+      //crear marcadores
       const marcaUbi = añadirMarcadorBasico(-4.47234, 36.72372, popupUsuarioUbicacion);
       const marcaCasa = añadirMarcadorBasico(-4.47504, 36.72472, popupUsuarioCasa);
       const marcaCole = añadirMarcadorBasico(-4.47204, 36.71872, popupUsuarioColegio);
+      //marcaUbi.remove();
 
+      //array con todas los marcadores del usuario creados
       let arrayMarcadoresUsurio = [marcaUbi, marcaCasa, marcaCole];
 
+      //función mostrar/ocultar marcadores
       let estadoMostar;
       function cambiarVisibilidadMarkUsuario() {
+        //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (botonMarcadoresUsuario.textContent == "Mostrar marcadores usuario") {
           estadoMostar = true;
         } else {
           estadoMostar = false;
         }
+        //recorrer el array arrayMarcadoresUsurio
         for (let i = 0; i < arrayMarcadoresUsurio.length; i++) {
+          //si no son visibles los marcadores, mostrar y cambiar el mensaje a ocultar
           if (estadoMostar) {
             arrayMarcadoresUsurio[i].removeClassName('estadoVisualMarker');
+            //si es el último elemento 
             if (i == (arrayMarcadoresUsurio.length - 1)) {
               botonMarcadoresUsuario.textContent = "Ocultar marcadores usuario";
             }
@@ -564,9 +624,12 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
 
       }
+      //Obtener el botón de ver estados
       let botonMarcadoresUsuario = document.querySelector("#mostrarMarcadoresUsuario");
+      //Aplicar listener
       botonMarcadoresUsuario.addEventListener("click", cambiarVisibilidadMarkUsuario);
 
+      //añadir marcador Personalizado Logo
       function añadirMarcadorPersonalizado(longitudX, latitudY, popup) {
         const anunciante = document.createElement('div');
         anunciante.className = 'custom-marker';
@@ -575,7 +638,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         const markerAnunciante = new mapboxgl.Marker({
           className: 'estadoVisualMarker',
           element: anunciante,
-          anchor: 'bottom'
+          anchor: 'bottom' //se centra lo de abajo
         })
           .setLngLat([longitudX, latitudY])
           .setPopup(popup)
@@ -585,19 +648,26 @@ window.addEventListener("DOMContentLoaded", async function () {
 
       const marcaCasaLola = añadirMarcadorPersonalizado(-4.480782, 36.717794, popupAnuncianteCasaLola);
       const marcaCasaPaco = añadirMarcadorPersonalizado(-4.480700, 36.720100, popupAnuncianteCasaPaco);
+      //marcaCasaLola.remove();
 
+      //array con todas los marcadores personalizados creados
       let arrayMarcadoresPersonalizados = [marcaCasaLola, marcaCasaPaco];
 
+      //función mostrar/ocultar marcadores
       let estadoMostarPersonalizados;
       function cambiarVisibilidadMarkPersonalizado() {
+        //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (botonMarcadoresAnunciante.textContent == "Mostrar marcadores anunciantes") {
           estadoMostarPersonalizados = true;
         } else {
           estadoMostarPersonalizados = false;
         }
+        //recorrer el array arrayMarcadoresPersonalizados
         for (let i = 0; i < arrayMarcadoresPersonalizados.length; i++) {
+          //si no son visibles los marcadores, mostrar y cambiar el mensaje a ocultar
           if (estadoMostarPersonalizados) {
             arrayMarcadoresPersonalizados[i].removeClassName('estadoVisualMarker');
+            //si es el último elemento 
             if (i == (arrayMarcadoresPersonalizados.length - 1)) {
               botonMarcadoresAnunciante.textContent = "Ocultar marcadores anunciantes";
             }
@@ -610,7 +680,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
 
       }
+      //Obtener el botón de ver estados
       let botonMarcadoresAnunciante = document.querySelector("#mostrarMarcadoresAnunciante");
+      //Aplicar listener
       botonMarcadoresAnunciante.addEventListener("click", cambiarVisibilidadMarkPersonalizado);
 
     })
@@ -622,6 +694,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 function configurarUIUsuarioLogueado(usuario) {
   console.log('Usuario logueado:', usuario);
 
+  // Botón de perfil - abrir banner
   const perfilBtn = document.getElementById('perfilUsuario');
   if (perfilBtn) {
     perfilBtn.addEventListener('click', () => {
@@ -632,6 +705,7 @@ function configurarUIUsuarioLogueado(usuario) {
     });
   }
 
+  // Logout
   const logoutBtn = document.getElementById('logout');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => cerrarSesion());
