@@ -58,6 +58,8 @@ class Header extends HTMLElement {
     </header>`;
   }
 
+
+  //Se inicializa la lógica del menú de navegación
   initJS() {
     const navUl = this.querySelector(".navPrincipal ul");
     if (navUl) {
@@ -72,6 +74,7 @@ class Header extends HTMLElement {
       circle.className = "nav-circulo";
       navUl.appendChild(circle);
 
+      //Mueve el círculo de animación sobre el menú
       function moverCirculo(li) {
         const liRect = li.getBoundingClientRect();
         const ulRect = navUl.getBoundingClientRect();
@@ -80,12 +83,17 @@ class Header extends HTMLElement {
         spanDelante.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
         spanDetras.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
       }
+
+      //Oculta los efectos que tiene el menu cuando el ratón sale del menú
       function ocultarCirculo() {
         circle.style.transform = "translateY(-50%) scale(0)";
         spanDelante.style.transform = "translateY(-50%) scale(0)";
         spanDetras.style.transform = "translateY(-50%) scale(0)";
       }
+
+      //Hover sobre cada opción del menú 
       navLinks.forEach((li) => li.addEventListener("mouseenter", () => moverCirculo(li)));
+      //Cuando el cursor sale del menú
       navUl.addEventListener("mouseleave", ocultarCirculo);
     }
   }

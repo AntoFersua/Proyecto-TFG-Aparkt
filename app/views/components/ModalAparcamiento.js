@@ -188,6 +188,7 @@ class ModalAparcamiento extends HTMLElement {
 `;
   }
 
+  //Añade eventos interactivos al modal
   agregarEventListeners() {
     const botonCerrar = this.querySelector('.boton-cerrar');
     const botonCerrarFooter = this.querySelector('.boton-cerrar-footer');
