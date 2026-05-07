@@ -84,7 +84,7 @@ export async function obtenerSesion() {
 export async function requiereAuth(
   urlRedireccionParam = null,
 ) {
-  const urlRedireccion = urlRedireccionParam || obtenerRutaBase() + "login/login.html";
+  const urlRedireccion = urlRedireccionParam || "../login/login.html";
   
   const sesion = await obtenerSesion();
 
@@ -183,8 +183,8 @@ export async function iniciarAuth(opciones = {}) {
   } = opciones;
 
   // Calcular url de login según la profundidad
-  let urlRedireccion = urlRedireccionParam || obtenerRutaBase() + "login/login.html";
-
+  let urlRedireccion = urlRedireccionParam || "../login/login.html";
+  
   // Obtener sesión del servidor
   const sesion = await obtenerSesion();
 

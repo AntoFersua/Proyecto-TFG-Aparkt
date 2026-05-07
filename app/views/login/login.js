@@ -1,5 +1,5 @@
 import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
-import "../components/header.js";
+import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/Modalpuntos.js";
 import '../components/Footer.js';

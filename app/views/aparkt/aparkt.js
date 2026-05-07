@@ -1,5 +1,5 @@
 // Importamos componenetes
-import '../components/header.js';
+import '../components/Header.js';
 import '../components/Footer.js';
 import '../components/Modalpuntos.js';
 
