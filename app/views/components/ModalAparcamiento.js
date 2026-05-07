@@ -1,13 +1,16 @@
+//Creación de componente personalizado que se llama ModalAparcamiento
 class ModalAparcamiento extends HTMLElement {
   constructor() {
     super();
   }
 
+  //Método que se ejecuta cuando el componente se añade al DOM
   connectedCallback() {
     this.render();
     this.agregarEventListeners();
   }
 
+  //Método con el que se pinta el contenido que tiene el modal
   render() {
     this.innerHTML = `
 <style>
