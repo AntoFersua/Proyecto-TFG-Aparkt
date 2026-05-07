@@ -39,6 +39,11 @@ function configurarUIUsuarioLogueado() {
       banner.classList.toggle('abierto');
     });
   }
+
+  const botonLogout = document.getElementById('logout');
+  if (botonLogout) {
+    botonLogout.addEventListener('click', () => cerrarSesion());
+  }
 }
 
 //Función cuando el usuario NO ESTÁ LOGUEADO

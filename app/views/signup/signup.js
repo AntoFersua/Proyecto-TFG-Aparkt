@@ -3,10 +3,16 @@ import '../components/Header.js';
 import '../components/PerfilUsuario.js';
 import '../components/Footer.js';
 
-import { iniciarAuth } from '../auth.js';
+import { iniciarAuth, cerrarSesion } from '../auth.js';
 
 async function iniciarPagina() {
   await iniciarAuth({
+    alLoguearse: () => {
+      const botonLogout = document.getElementById('logout');
+      if (botonLogout) {
+        botonLogout.addEventListener('click', () => cerrarSesion());
+      }
+    },
     alNoLoguearse: () => {
       configurarUIUsuarioNoLogueado();
     }
