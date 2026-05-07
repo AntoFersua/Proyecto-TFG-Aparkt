@@ -24,5 +24,5 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_destroy(); //cierra la sesion, elimina todos los datos de la sesion en el servidor
-header("location: ../views/index.html"); //redirijo al index
+header("location: ../views/index/index.html"); //redirijo al index
 exit(); //me salgo por si hay mas codigo abajo no lo ejecute

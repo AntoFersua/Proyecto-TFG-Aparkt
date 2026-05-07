@@ -11,8 +11,8 @@
 // FUNCIONES AUXILIARES
 function obtenerRutaBase() {
   const ruta = window.location.pathname;
-  // Si está en /app/views/login/ o /app/views/signup/ o /app/views/aparkt/
-  if (ruta.includes('/app/views/login/') || ruta.includes('/app/views/signup/') || ruta.includes('/app/views/aparkt/')) {
+  // Si está en /app/views/login/ o /app/views/signup/ o /app/views/aparkt/ o /app/views/index/
+  if (ruta.includes('/app/views/login/') || ruta.includes('/app/views/signup/') || ruta.includes('/app/views/aparkt/') || ruta.includes('/app/views/index/')) {
     return '../../';
   }
   // Si está en /app/views/ (index)
