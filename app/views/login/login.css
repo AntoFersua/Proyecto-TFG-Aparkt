@@ -1,3 +1,4 @@
+/*Contenedor principal MAIN*/
 main {
   display: flex;
   justify-content: center;
@@ -13,6 +14,7 @@ main {
   background-color: var(--bg-primary);
 }
 
+/*Contenedor tipo móvil*/
 .telefono {
   position: relative;
   height: 580px;
@@ -62,6 +64,7 @@ main {
     transform: translateX(-50%);
   }
 
+  /*Formulario */
   form {
     height: 100%;
     display: flex;
@@ -70,6 +73,7 @@ main {
     max-width: 240px;
     padding: 5%;
 
+    /*Contenido del formulario*/
     .form-contenido {
       flex: 1;
       display: flex;
@@ -80,6 +84,7 @@ main {
       width: 100%;
     }
 
+    /*Logo*/
     img {
       height: 80px;
       width: 80px;
@@ -92,6 +97,7 @@ main {
       color: var(--color-azulOscuro);
     }
 
+    /*Opciones de recordar y el enlace*/
     .form-options {
       display: flex;
       justify-content: space-between;
@@ -134,6 +140,7 @@ main {
     }
   }
 
+  /*Botón principal del login*/
   button[type="submit"] {
     padding: 10px 20px;
     font-size: 0.85rem;
@@ -169,6 +176,7 @@ main {
   }
 }
 
+/*Campos input*/
 .input-field {
   position: relative;
   width: 100%;
@@ -216,6 +224,7 @@ main {
   }
 }
 
+/*Botón para ver contraseña*/
 .ver-contrasena {
   position: absolute;
   right: 10px;
@@ -246,6 +255,7 @@ main {
   }
 }
 
+/*Checkbox*/
 .checkbox-wrapper {
   display: flex;
   align-items: center;
@@ -289,6 +299,7 @@ main {
   }
 }
 
+/*Botón de Google*/
 .btn-google {
   width: 100%;
   padding: 9px 16px;
@@ -324,6 +335,7 @@ main {
   }
 }
 
+/*Logo izquierdo*/
 .main-izquierdo {
   display: flex;
   flex-direction: column;
@@ -342,6 +354,7 @@ main {
   }
 }
 
+/*Responsive*/
 @media (max-width: 900px) {
   main {
     flex-direction: column;

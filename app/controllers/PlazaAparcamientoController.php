@@ -208,35 +208,27 @@ class PlazaAparcamientoController
         $inputJSON = file_get_contents('php://input');
         $datos = json_decode($inputJSON, true);
 
-        $id = $datos['id'] ?? null;
+        $sourceID = $datos['sourceID'] ?? null;
 
         header('Content-Type: application/json');
 
-        if ($id === null) {
+        if ($sourceID === null) {
             echo json_encode([
                 "status" => "error",
-                "mensaje" => "El ID es obligatorio"
+                "mensaje" => "El sourceID es incorrecto"
             ]);
             exit();
         }
 
-        $usuarioId = $_SESSION['usuario_id'] ?? null;
+        $usuarioID = $datos['usuarioID'];
 
-        if ($usuarioId === null) {
-            echo json_encode([
-                "status" => "error",
-                "mensaje" => "No hay sesión activa"
-            ]);
-            exit();
-        }
+        $filas = $this->plazaModelo->ocuparPlaza($sourceID, $usuarioID);
 
-        $filas = $this->plazaModelo->ocuparPlaza($id, $usuarioId);
-
-        $this->puntuacionModelo->sumandoPuntuacion(
-            $usuarioId,
+       /* $this->puntuacionModelo->sumandoPuntuacion(
+            $usuarioId, //$usuarioID 
             SistemaPuntuacion::PUNTOS_OCUPAR,
             "Ocupar plaza de aparcamiento"
-        );
+        );*/
 
         echo json_encode([
             "status" => "ok",
@@ -250,30 +242,31 @@ class PlazaAparcamientoController
         $inputJSON = file_get_contents('php://input');
         $datos = json_decode($inputJSON, true);
 
-        $id = $datos['id'] ?? null;
+        $sourceID = $datos['sourceID'] ?? null;
 
         header('Content-Type: application/json');
 
-        if ($id === null) {
+        if ($sourceID === null) {
             echo json_encode([
                 "status" => "error",
-                "mensaje" => "El ID es obligatorio"
+                "mensaje" => "El sourceID es incorrecto"
             ]);
             exit();
         }
 
-        $plaza = $this->plazaModelo->obtenerPorId($id);
-        $esDueno = $plaza && $plaza['usuario_id'] == ($_SESSION['usuario_id'] ?? null);
+        //posible cambio????
+        /*$plaza = $this->plazaModelo->obtenerPorId($id);
+        $esDueno = $plaza && $plaza['usuario_id'] == ($_SESSION['usuario_id'] ?? null);*/
 
-        $filas = $this->plazaModelo->liberarPlaza($id);
+        $filas = $this->plazaModelo->liberarPlaza($sourceID);
 
-        if ($esDueno) {
+        /*if ($esDueno) {
             $this->puntuacionModelo->sumandoPuntuacion(
                 $_SESSION['usuario_id'],
                 SistemaPuntuacion::PUNTOS_LIBERAR,
                 "Liberar plaza de aparcamiento"
             );
-        }
+        }*/
 
         echo json_encode([
             "status" => "ok",
