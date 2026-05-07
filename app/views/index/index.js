@@ -1,5 +1,5 @@
 import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
-import "../components/header.js";
+import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/ModalAparcamiento.js";
 
@@ -351,6 +351,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 //en caso de que sea null, se mete en el error igualemnte, recargar estacionamientos, en caso de que le de 2 veces a ocupado teniendo en cuenta la BBDD o el colorsss
 //pasar cambios, meter usuario  s
 //revidar php tema de BBDD aparkamiento
+//revisar puntuacion, revisar comentarios ok
 //////////////////QUITAR APARCAMIENTO 14 DE LA BBDD ESTA REPE CON EL 4
 
         /*mapa.addInteraction('click', {
@@ -457,15 +458,6 @@ window.addEventListener("DOMContentLoaded", async function () {
             );
           });
       }
-
-      function ModalAparcamiento() {
-        const modal = document.createElement("modal-aparcamiento");
-        document.body.appendChild(modal);
-      }
-
-      mapa.on("click", ModalAparcamiento);
-
-      //mapa.on("click", obtenerDireccionDeCoordenadas);
 
       //Redirigir el mapa a la nueva ubicación
       function buscarLugar(inputBusqueda) {

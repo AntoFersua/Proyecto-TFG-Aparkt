@@ -1,7 +1,6 @@
 //Autenticación
 import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
-//Web Components usados en la vista del login
-import "../components/header.js";
+import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/Modalpuntos.js";
 import '../components/Footer.js';
