@@ -36,26 +36,38 @@ window.addEventListener("DOMContentLoaded", async function () {
         mapa.setFog({});
       });
 
+      //Cuando el mapa termina de cargar
       mapa.on("load", function () {
         mapa.addControl(new mapboxgl.NavigationControl());
 
+        //Indicar estado de aparcamiento
         function estadoAparcamiento(longitudX, latitudY, radioCirculo, idSource, idCapa, colorRelleno, colorBorde) {
+          //Coordenada de la señal
           const centro = [longitudX, latitudY];
+          //Radio del circulo en metros
           const radio = radioCirculo;
           const opciones = {
+            //Numero de pts del circulo
             steps: 64,
             units: 'meters',
             properties: {}
           };
+          //crear el circulo
           const circulo = turf.circle(centro, radio, opciones);
+          //Añadir datos geograficos al mapa en forma de geojson
           mapa.addSource(idSource, {
             type: 'geojson',
             data: circulo
           });
+          //Añadir capa visual al mapa
           mapa.addLayer({
+            //identificador de la capa
             id: idCapa,
+            //de tipo poligono con relleno
             type: 'fill',
+            //enlazar con la fuente zona
             source: idSource,
+            //controlar el estado de visibilidad inicial
             layout: {
               visibility: 'none'
             },
@@ -70,16 +82,27 @@ window.addEventListener("DOMContentLoaded", async function () {
           };
         }
 
+
+
         const zona1 = estadoAparcamiento(-4.476059, 36.718963, 100, "zona1", "zona1-fill", "rgba(255, 0, 0, 0.3)", "red");
+
+        //eliminar layer y luego source
+        //mapa.removeLayer(zona1.layerID);
+        //mapa.removeSource(zona1.sourceID);
+
 
         const zona2 = estadoAparcamiento(-4.476059, 36.72896, 500, "zona2", "zona2-fill", "rgba(255, 0, 0, 0.3)", "red");
 
+        //array con todas las zonas de estados creadas
         let arrayEstadosAparcamientos = [zona1, zona2];
 
         function cambiarEstado() {
+          //recorrer el array arrayEstadosAparcamientos
           for (let i = 0; i < arrayEstadosAparcamientos.length; i++) {
+            //obtener la visibilidad actual del elemento
             let estado = mapa.getLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility');
 
+            //si es visible, ocualtar estados y cambiar mensaje
             if (estado === 'visible') {
               mapa.setLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility', 'none');
               botonEstadosAparcamientos.textContent = "Mostrar estados aparcamientos";
@@ -90,9 +113,14 @@ window.addEventListener("DOMContentLoaded", async function () {
           }
 
         }
+        //Obtener el botón de ver estados
         let botonEstadosAparcamientos = document.querySelector("#mostrarEstadosAparcamientos");
+        //Aplicar listener
         botonEstadosAparcamientos.addEventListener("click", cambiarEstado);
 
+
+        
+        /*
         const aparcamiento1 = estadoAparcamiento(-4.478995, 36.719671, 3, "aparcamiento1", "aparcamiento1-fill", "rgba(255, 0, 0, 0.3)", "red");
         const aparcamiento2 = estadoAparcamiento(-4.478964, 36.719724, 3, "aparcamiento2", "aparcamiento2-fill", "rgba(0, 255, 0, 0.3)", "green");
         const aparcamiento3 = estadoAparcamiento(-4.478932, 36.719775, 3, "aparcamiento3", "aparcamiento3-fill", "rgba(0, 255, 0, 0.3)", "green");
@@ -115,21 +143,235 @@ window.addEventListener("DOMContentLoaded", async function () {
         const aparcamiento19 = estadoAparcamiento(-4.478243, 36.720835, 3, "aparcamiento19", "aparcamiento19-fill", "rgba(255, 0, 0, 0.3)", "red");
         const aparcamiento20 = estadoAparcamiento(-4.478201, 36.720897, 3, "aparcamiento20", "aparcamiento20-fill", "rgba(255, 0, 0, 0.3)", "red");
         const aparcamiento21 = estadoAparcamiento(-4.478166, 36.720953, 3, "aparcamiento21", "aparcamiento21-fill", "rgba(255, 0, 0, 0.3)", "red");
-        const aparcamiento22 = estadoAparcamiento(-4.478113, 36.7201023, 3, "aparcamiento22", "aparcamiento22-fill", "rgba(0, 255, 0, 0.3)", "green");
-        const aparcamiento23 = estadoAparcamiento(-4.478120, 36.721014, 3, "aparcamiento23", "aparcamiento23-fill", "rgba(0, 255, 0, 0.3)", "green");
-        const aparcamiento24 = estadoAparcamiento(-4.478085, 36.721070, 3, "aparcamiento24", "aparcamiento24-fill", "rgba(255, 0, 0, 0.3)", "red");
-        const aparcamiento25 = estadoAparcamiento(-4.478042, 36.721132, 3, "aparcamiento25", "aparcamiento25-fill", "rgba(0, 255, 0, 0.3)", "green");
-        const aparcamiento26 = estadoAparcamiento(-4.478005, 36.721189, 3, "aparcamiento26", "aparcamiento26-fill", "rgba(255, 0, 0, 0.3)", "red");
-        const aparcamiento27 = estadoAparcamiento(-4.477965, 36.721239, 3, "aparcamiento27", "aparcamiento27-fill", "rgba(0, 255, 0, 0.3)", "green");
+        const aparcamiento22 = estadoAparcamiento(-4.478120, 36.721014, 3, "aparcamiento22", "aparcamiento22-fill", "rgba(0, 255, 0, 0.3)", "green");
+        const aparcamiento23 = estadoAparcamiento(-4.478085, 36.721070, 3, "aparcamiento23", "aparcamiento23-fill", "rgba(255, 0, 0, 0.3)", "red");
+        const aparcamiento24 = estadoAparcamiento(-4.478042, 36.721132, 3, "aparcamiento24", "aparcamiento24-fill", "rgba(0, 255, 0, 0.3)", "green");
+        const aparcamiento25 = estadoAparcamiento(-4.478005, 36.721189, 3, "aparcamiento25", "aparcamiento25-fill", "rgba(255, 0, 0, 0.3)", "red");
+        const aparcamiento26 = estadoAparcamiento(-4.477965, 36.721239, 3, "aparcamiento26", "aparcamiento26-fill", "rgba(0, 255, 0, 0.3)", "green");
+*/
+        // Función para abrir el modal del aparcamiento
+        async function abrirModalAparcamiento() {
+          //busca si existe un modal de aparcamiento en el DOM
+          const modalExistente = document.querySelector("modal-aparcamiento");
+          //Si existe, lo elimina para que no haya duplicados 
+          if (modalExistente) {
+            modalExistente.remove();
+          }
+          //crear un elemento de modal-aparcamiento
+          const modal = document.createElement("modal-aparcamiento");
+          //añade el modal al body
+          document.body.appendChild(modal);
+          //retorna la promesa una vez que el modal haya sido cerrado
+          return await modal.resultado;
+        }
+        
+        //crear array de aparcamientos
+        let arrayAparcamientos = []; 
+        //obtener datos de la BBDD desde PlazaAparcamientoController.php
+        fetch("../../controllers/PlazaAparcamientoController.php")
+          .then(function (response) {
+            //sacar el estado de la respuesta 
+            console.log("Status:", response.status);
+            //convertir la respuesta a json
+            return response.json();
+          })
+          .then(function (data) {
+            //si el estado es correcto
+            if (data.status === "ok") {
+              //obtener los datos de las plazas
+              const plazas = data.data;
 
+              //recorrer datos de cada plaza y guardar en variables 
+              plazas.forEach(function (plaza) {
+                let longitudPlaza = plaza.longitud;
+                let latitudPlaza = plaza.latitud;
+                let radioPlaza = plaza.tamano;
+                let sourceIDPlaza = plaza.sourceID;
+                let capaIDPlaza = plaza.capaID;
+                let ocupadoPlaza = plaza.ocupado;
+                let colorRellenoPlaza; 
+                let colorBordePlaza; 
+
+                //determinar el color segun el estado de ocupación, verde está libre y rojo está ocupado
+                if(ocupadoPlaza == 0) {
+                  colorRellenoPlaza = "rgba(0, 255, 0, 0.3)"; 
+                  colorBordePlaza = "green";
+                }else {
+                  colorRellenoPlaza = "rgba(255, 0, 0, 0.3)"; 
+                  colorBordePlaza = "red";
+                }
+
+                //representar aparcamientos
+                //valores de la función a llamar --> longitudX, latitudY, radioCirculo, idSource, idCapa, colorRelleno, colorBorde
+                let aparcamiento = estadoAparcamiento(longitudPlaza, latitudPlaza, radioPlaza, sourceIDPlaza, capaIDPlaza, colorRellenoPlaza, colorBordePlaza);
+              
+                //añadir aparcamientos al array
+                arrayAparcamientos.push(aparcamiento); 
+
+
+              });
+              //console.log(arrayAparcamientos); //0: {sourceID: 'aparcamiento1', layerID: 'aparcamiento1-fill'}...
+              
+              //Acceder a un indicador de aparcamiento, cuando se hace click en una capa concreta 
+              arrayAparcamientos.forEach(parking => {
+                //si se hace click en una capa concreta de aparcamiento
+                mapa.on('click', parking.layerID, async (e) => {
+                  e.preventDefault();
+                  //console.log(parking.layerID);
+                  //e.features permite acceder a las propiedades geográficas del objeto e y obtener el idSource y el idCapa
+                  console.log(e.features);
+                  console.log(e.features[0]["source"]);
+                  //guardar valor del aparcamiento seleccionado antes del await, los datos del objeto se limpian
+                  let aparcamientoSeleccionado = e.features[0]["source"];
+                  //abrir el modal y esperar la respuesta del usuario y guardarla, la acción será ocupar o liberar 
+                  let accion = await abrirModalAparcamiento();
+                  console.log(accion);
+                  
+                  // Cambiar cursor al pasar por encima
+                  mapa.on('mouseenter', parking.layerID, () => {
+                    mapa.getCanvas().style.cursor = 'pointer';
+                  });
+                  mapa.on('mouseleave', parking.layerID, () => {
+                    mapa.getCanvas().style.cursor = '';
+                  });
+
+                  //si se confirma la ocupacion
+                  /*let accionBotonLiberar = document.querySelector("#botonLiberarPlaza").value;
+                  let accionBotonOcupar = document.querySelector("#botonOcuparPlaza").value;
+
+                  let accion2;
+                  if(accionBotonLiberar == "accionSeleccionadaLiberar"){
+                    accion2 = liberar;
+                    console.log("boton ocupar accion " + accionBotonOcupar);
+                    console.log("boton liberr accion " + accionBotonLiberar);
+                    console.log(accion2); 
+                  }else if(accionBotonOcupar == "accionSeleccionadaOcupar"){
+                    accion2 = ocupar;
+                    console.log("boton ocupar accion " + accionBotonOcupar);
+                    console.log("boton liberr accion " + accionBotonLiberar);
+                    console.log(accion2); 
+                  }*/
+                  
+                  //obtener el id del usuario actual 
+                  let usuarioActual = 1; 
+                  let usuarioRegistrado = usuarioActual ?? null;
+                  
+                  //si la acción es ocupar 
+                  if(accion == "ocupar"){
+                    console.log("entrao ocupar");
+                    //datos a enviar al backend  
+                    const datos = {
+                      sourceID: aparcamientoSeleccionado,
+                      action: accion,
+                      usuarioID: usuarioRegistrado
+                    };
+                    console.log(datos);
+                    //enviar datos al backend mediante POST en json
+                    fetch("../../controllers/PlazaAparcamientoController.php?action=" + accion, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(datos),
+                    })
+                      //respuesta del backend, convertir la respuesta http a json
+                      .then((res) => res.json())
+                      .then((data) => {
+                        console.log(data);
+                        console.log(data.mensaje);
+                        //si el status es ok
+                        if (data.status === "ok") {
+                          alert(data.mensaje);
+                        } else {
+                          //mostrar un mensaje del backend o uno por defecto
+                          alert(data.mensaje || "Error al guardar el estado");
+                          console.log("Error");
+                        }
+                      })
+                      //capturar errores
+                      .catch((err) => {
+                        console.error(err);
+                        alert("Error al guardar datos");
+                      });
+                      
+                  }else if(accion == "liberar"){
+                    console.log("entrao liberar");
+                    //datos a enviar al backend  
+                    const datos = {
+                      sourceID: aparcamientoSeleccionado,
+                      action: accion,
+                      usuarioID: usuarioRegistrado
+                    };
+                    console.log(datos);
+                    //enviar datos al backend mediante POST en json
+                    fetch("../../controllers/PlazaAparcamientoController.php?action=" + accion, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(datos),
+                    })
+                      //respuesta del backend, convertir la respuesta http a json
+                      .then((res) => res.json())
+                      .then((data) => {
+                        console.log(data);
+                        console.log(data.mensaje);
+                        //si el status es ok
+                        if (data.status === "ok") {
+                          alert(data.mensaje);
+
+                        } else {
+                          //mostrar un mensaje del backend o uno por defecto
+                          alert(data.mensaje || "Error al guardar el estado");
+                          console.log("Error");
+                        }
+                      })
+                      //capturar errores
+                      .catch((err) => {
+                        console.error(err);
+                        alert("Error al guardar datos");
+                      });
+                      
+                  }
+                });
+              });
+              
+              
+            }
+          })
+          //catch con errores de la petición inicial 
+          .catch(function (error) {
+            console.log("Error:", error);
+          });
+//modal creado , boton que llama a una funcion y esa funcion tiene el modal en funciones globales, importar modal al js
+//en caso de que sea null, se mete en el error igualemnte, recargar estacionamientos, en caso de que le de 2 veces a ocupado teniendo en cuenta la BBDD o el colorsss
+//pasar cambios, meter usuario  s
+//revidar php tema de BBDD aparkamiento
+//////////////////QUITAR APARCAMIENTO 14 DE LA BBDD ESTA REPE CON EL 4
+
+        /*mapa.addInteraction('click', {
+                  type: 'click',
+                  //indicar capa dónde se actúa
+                  target: { layerId: 'aparcamiento1-fill' },
+                  //target: { layerId: parking.layerID },
+                  //cuando ocurre el evento se realiza la acción
+                  handler: ({ feature }) => {
+                    console.log(feature);
+                    console.log(feature.source);
+                  }
+        });*/
+
+        //array con todas los aparcamientos creados
+        //posible mejorar accediendo a la BBDD guardando el idSource y añadirlo con for al array
+        /*
         let arrayAparcamientos = [aparcamiento1, aparcamiento2, aparcamiento3, aparcamiento4, aparcamiento5, aparcamiento6, aparcamiento7, aparcamiento8, aparcamiento9,
           aparcamiento10, aparcamiento11, aparcamiento12, aparcamiento13, aparcamiento14, aparcamiento15, aparcamiento16, aparcamiento17, aparcamiento18, aparcamiento19,
-          aparcamiento20, aparcamiento21, aparcamiento22, aparcamiento23, aparcamiento24, aparcamiento25, aparcamiento26, aparcamiento27];
+          aparcamiento20, aparcamiento21, aparcamiento23, aparcamiento24, aparcamiento25, aparcamiento26, aparcamiento27]; 
 
+*/
         function cambiarVisibilidadPlazas() {
+          //recorrer el array arrayAparcamientos
           for (let i = 0; i < arrayAparcamientos.length; i++) {
+            //obtener la visibilidad actual del elemento
             let estadoPlazas = mapa.getLayoutProperty(arrayAparcamientos[i].layerID, 'visibility');
 
+            //si es visible, ocualtar estados y cambiar mensaje
             if (estadoPlazas === 'visible') {
               mapa.setLayoutProperty(arrayAparcamientos[i].layerID, 'visibility', 'none');
               botonAparcamientos.textContent = "Mostrar aparcamientos";
@@ -140,30 +382,22 @@ window.addEventListener("DOMContentLoaded", async function () {
           }
 
         }
+        //Obtener el botón de ver estados
         let botonAparcamientos = document.querySelector("#mostrarAparcamientos");
+        //Aplicar listener
         botonAparcamientos.addEventListener("click", cambiarVisibilidadPlazas);
 
-        function abrirModalAparcamiento() {
-          const modalExistente = document.querySelector("modal-aparcamiento");
-          if (modalExistente) {
-            modalExistente.remove();
+        /*
+         function ModalAparcamiento() {
+            const modal = document.createElement("modal-aparcamiento");
+            document.body.appendChild(modal);
           }
-          const modal = document.createElement("modal-aparcamiento");
-          document.body.appendChild(modal);
-        }
 
-        arrayAparcamientos.forEach(aparcamiento => {
-          mapa.on('click', aparcamiento.layerID, (e) => {
-            e.preventDefault();
-            abrirModalAparcamiento();
-          });
-          mapa.on('mouseenter', aparcamiento.layerID, () => {
-            mapa.getCanvas().style.cursor = 'pointer';
-          });
-          mapa.on('mouseleave', aparcamiento.layerID, () => {
-            mapa.getCanvas().style.cursor = '';
-          });
-        });
+          mapa.on("click", ModalAparcamiento);
+
+          //mapa.on("click", obtenerDireccionDeCoordenadas);
+*/
+
 
       });
 

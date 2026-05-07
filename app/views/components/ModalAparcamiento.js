@@ -6,7 +6,16 @@ class ModalAparcamiento extends HTMLElement {
 
   //Método que se ejecuta cuando el componente se añade al DOM
   connectedCallback() {
+    //renderizar el modal
     this.render();
+    //inicializar la variable que almacena la función resolve de la promesa 
+    this._resolver = null;
+    //crear la promesa que devuelve la acción seleccionada por el usuario, ya sea ocupar o liberar
+    this.resultado = new Promise((resolve) => {
+      //guardar la función resolve de la promesa para poder llamarla desde los eventos de los botones
+      this._resolver = resolve;
+    });
+    //preparar botones del modal 
     this.agregarEventListeners();
   }
 
@@ -169,12 +178,12 @@ class ModalAparcamiento extends HTMLElement {
         Has seleccionado la plaza <strong>P-242</strong>. ¿Qué acción deseas realizar?
       </p>
 
-      <button class="boton-accion accion-primaria">
+      <button class="boton-accion accion-primaria" id="botonLiberarPlaza">
         <span>Liberar Plaza</span>
         <span>›</span>
       </button>
 
-      <button class="boton-accion accion-secundaria">
+      <button class="boton-accion accion-secundaria" id="botonOcuparPlaza">
         <span>Ocupar Plaza</span>
         <span>›</span>
       </button>
@@ -188,22 +197,69 @@ class ModalAparcamiento extends HTMLElement {
 `;
   }
 
+  //método para añadir eventos a los elementos del modal 
   agregarEventListeners() {
+    //obtener botones
     const botonCerrar = this.querySelector('.boton-cerrar');
     const botonCerrarFooter = this.querySelector('.boton-cerrar-footer');
+    const botonLiberarPlaza = this.querySelector('#botonLiberarPlaza');
+    const botonOcuparPlaza = this.querySelector('#botonOcuparPlaza');
+    //obtener el overlay (capa de fondo) que rodea al modal 
     const overlay = this.querySelector('.overlay-modal');
-
+   
+    //si existe el botón de cerrar 
     if (botonCerrar) {
-      botonCerrar.addEventListener('click', () => this.remove());
+      //añadir evento 
+      botonCerrar.addEventListener('click', () => {
+        //resolver promesa con null al no tener accion de ocupar o liberar
+        this._resolver(null);
+        //eliminar modal
+        this.remove()
+      });
     }
+    //si existe el botón de cerrar del footer
     if (botonCerrarFooter) {
-      botonCerrarFooter.addEventListener('click', () => this.remove());
+      //añadir evento
+      botonCerrarFooter.addEventListener('click', () => {
+        //resolver promesa con null al no tener accion de ocupar o liberar
+        this._resolver(null);
+        //eliminar modal
+        this.remove()
+      });
     }
+    //si existe el botón de liberar
+    if (botonLiberarPlaza) {
+      //añadir evento
+      botonLiberarPlaza.addEventListener('click', () => {
+        //this.value = "accionSeleccionadaLiberar"; 
+        //botonOcuparPlaza.value = "noSeleccionado";
+        //resolver la promesa con la acción de liberar
+        this._resolver("liberar");
+        //eliminar modal
+        this.remove();
+      });
+    }
+    //si existe el boton de ocupar plaza
+    if (botonOcuparPlaza) {
+      //añadir evento
+      botonOcuparPlaza.addEventListener('click', () => {
+        //this.value = "accionSeleccionadaOcupar"; 
+        //botonLiberarPlaza.value = "noSeleccionado";
+        //resolver la promesa con la acción de ocupar 
+        this._resolver("ocupar");
+        //eliminar modal
+        this.remove();
+      });
+    }
+    //si el overlay, la capa del fondo del modal existe 
     if (overlay) {
+      //añadir evento
       overlay.addEventListener('click', (e) => {
+        //si se hace click en el overlay se cierra el modal 
         if (e.target === overlay) this.remove();
       });
     }
+    
   }
 }
 

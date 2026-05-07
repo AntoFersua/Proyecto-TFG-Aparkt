@@ -30,9 +30,12 @@ class PlazaAparcamiento extends Model
     }
 
     public function obtenerTodas()
-    {
-        $consulta = "SELECT p.*, ST_X(p.ubicacion) as latitud, ST_Y(p.ubicacion) as longitud,
-                    z.id as zona_id
+    {   
+        /**ST_X y ST_Y son funciones de MySQL Spatial que permiten extraer las coordenadas de un 
+         * campo de tipo POINT. Este tipo de dato guarda la ubicación como (longitud, latitud). 
+         * ST_X devuelve la longitud y ST_Y devuelve la latitud. */
+        $consulta = "SELECT p.id, ST_AsText(p.ubicacion) AS ubicacion, ST_X(p.ubicacion) AS longitud, ST_Y(p.ubicacion) AS latitud,
+                    p.tamano, p.sourceID, p.capaID, p.tipo, p.zona_id, p.ocupado, p.usuario_id, p.hora_reporte, z.id AS zona_id
                     FROM plazaaparcamiento p
                     LEFT JOIN zona z ON p.zona_id = z.id";
 
@@ -113,30 +116,30 @@ class PlazaAparcamiento extends Model
         return $stmt->rowCount();
     }
 
-    public function ocuparPlaza($id, $usuarioId)
+    public function ocuparPlaza($sourceID, $usuarioID)
     {
         $consulta = "UPDATE plazaaparcamiento 
-                SET ocupado = 1, usuario_id = :usuario_id, hora_reporte = NOW()
-                WHERE id = :id";
+                SET ocupado = 1, usuario_id = :usuarioID, hora_reporte = NOW()
+                WHERE sourceID = :sourceID";
 
         $stmt = $this->_conexion->prepare($consulta);
 
-        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
-        $stmt->bindValue(":usuario_id", $usuarioId, PDO::PARAM_INT);
+        $stmt->bindValue(":sourceID", $sourceID, PDO::PARAM_STR);
+        $stmt->bindValue(":usuarioID", $usuarioID, PDO::PARAM_INT);
 
         $stmt->execute();
 
         return $stmt->rowCount();
     }
 
-    public function liberarPlaza($id)
+    public function liberarPlaza($sourceID)
     {
         $consulta = "UPDATE plazaaparcamiento 
                 SET ocupado = 0, usuario_id = NULL, hora_reporte = NOW()
-                WHERE id = :id";
+                WHERE sourceID = :sourceID";
 
         $stmt = $this->_conexion->prepare($consulta);
-        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->bindValue(":sourceID", $sourceID, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->rowCount();
