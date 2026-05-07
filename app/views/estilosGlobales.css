@@ -31,6 +31,7 @@
   --text-secondary: #666666;
   --text-muted: #888888;
   --text-on-dark: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.1);
   --border-opcion: rgba(0, 0, 0, 0.08);
   --border-banner: rgba(0, 0, 0, 0.1);
   --divider-color: #ddd;
@@ -57,6 +58,7 @@
     --text-secondary: #b0b0b0;
     --text-muted: #888888;
     --text-on-dark: #ffffff;
+    --border-color: rgba(255, 255, 255, 0.1);
     --border-opcion: rgba(255, 255, 255, 0.08);
     --border-banner: rgba(255, 255, 255, 0.05);
     --divider-color: #333;
@@ -83,6 +85,7 @@
   --text-secondary: #b0b0b0;
   --text-muted: #888888;
   --text-on-dark: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.1);
   --border-opcion: rgba(255, 255, 255, 0.08);
   --border-banner: rgba(255, 255, 255, 0.05);
   --divider-color: #333;
