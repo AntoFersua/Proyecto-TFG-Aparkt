@@ -212,6 +212,116 @@
     }
   }
 
+  .seccion-problema {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+
+  overflow: hidden;
+
+  .problema-header {
+    text-align: center;
+
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.7;
+    }
+  }
+
+  .mapa-problema {
+    position: relative;
+
+    height: 500px;
+
+    overflow: hidden;
+
+    .ruta-svg {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      path {
+        fill: none;
+
+        stroke: var(--color-verde);
+
+        stroke-width: 8;
+
+        stroke-linecap: round;
+
+        stroke-dasharray: 18 12;
+
+        opacity: 0.5;
+      }
+    }
+
+    .problema-item {
+      position: absolute;
+
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      padding: 18px 22px;
+
+      border-radius: 20px;
+
+      background: rgba(255,255,255,0.06);
+
+      backdrop-filter: blur(10px);
+
+      outline: 1px solid rgba(255,255,255,0.08);
+
+      box-shadow: var(--shadow-card);
+
+      transition:
+        transform 0.4s ease,
+        background 0.4s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      span {
+        font-size: 2rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        color: var(--text-secondary);
+      }
+    }
+
+    .tiempo {
+      top: 18%;
+      left: 18%;
+    }
+
+    .combustible {
+      bottom: 18%;
+      left: 42%;
+    }
+
+    .estres {
+      top: 20%;
+      right: 14%;
+    }
+  }
+}
+
+
   .seccion-mapa {
     display: flex;
     justify-content: center;
