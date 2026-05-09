@@ -1,21 +1,28 @@
-import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
+import {
+  obtenerSesion,
+  iniciarAuth,
+  obtenerUsuario,
+  cerrarSesion,
+} from "../auth.js";
 import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/ModalAparcamiento.js";
 
 let usuarioActual = null;
+let idUsuarioActual = null;
 
 window.addEventListener("DOMContentLoaded", async function () {
   // Verificar sesión
   await iniciarAuth({
-    alLoguearse: (usuario) => {
-      usuarioActual = usuario;
-      configurarUIUsuarioLogueado(usuario);
+    alLoguearse: async (usuario) => {
+      await configurarUIUsuarioLogueado(usuario);
     },
     alNoLoguearse: () => {
       configurarUIUsuarioNoLogueado();
-    }
+    },
   });
+
+  console.log("Usuario actual en DOMContentLoaded:", idUsuarioActual);
 
   // Cargar mapa
   fetch("../../config/config.php")
@@ -37,7 +44,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         projection: "globe",
         zoom: 15,
         //Coordenadas Teatinos
-        center: [-4.475468174458712, 36.72410119432091]
+        center: [-4.475468174458712, 36.72410119432091],
       });
 
       //Cuando el estilo del mapa se carga, se establece la niebla por defecto
@@ -50,7 +57,15 @@ window.addEventListener("DOMContentLoaded", async function () {
         mapa.addControl(new mapboxgl.NavigationControl());
 
         //Indicar estado de aparcamiento
-        function estadoAparcamiento(longitudX, latitudY, radioCirculo, idSource, idCapa, colorRelleno, colorBorde) {
+        function estadoAparcamiento(
+          longitudX,
+          latitudY,
+          radioCirculo,
+          idSource,
+          idCapa,
+          colorRelleno,
+          colorBorde,
+        ) {
           //Coordenada de la señal
           const centro = [longitudX, latitudY];
           //Radio del circulo en metros
@@ -58,48 +73,62 @@ window.addEventListener("DOMContentLoaded", async function () {
           const opciones = {
             //Numero de pts del circulo
             steps: 64,
-            units: 'meters',
-            properties: {}
+            units: "meters",
+            properties: {},
           };
           //crear el circulo
           const circulo = turf.circle(centro, radio, opciones);
           //Añadir datos geograficos al mapa en forma de geojson
           mapa.addSource(idSource, {
-            type: 'geojson',
-            data: circulo
+            type: "geojson",
+            data: circulo,
           });
           //Añadir capa visual al mapa
           mapa.addLayer({
             //identificador de la capa
             id: idCapa,
             //de tipo poligono con relleno
-            type: 'fill',
+            type: "fill",
             //enlazar con la fuente zona
             source: idSource,
             //controlar el estado de visibilidad inicial
             layout: {
-              visibility: 'none'
+              visibility: "none",
             },
             paint: {
-              'fill-color': colorRelleno,
-              'fill-outline-color': colorBorde
-            }
+              "fill-color": colorRelleno,
+              "fill-outline-color": colorBorde,
+            },
           });
           return {
             sourceID: idSource,
-            layerID: idCapa
+            layerID: idCapa,
           };
         }
 
-
-
-        const zona1 = estadoAparcamiento(-4.476059, 36.718963, 100, "zona1", "zona1-fill", "rgba(255, 0, 0, 0.3)", "red");
+        const zona1 = estadoAparcamiento(
+          -4.476059,
+          36.718963,
+          100,
+          "zona1",
+          "zona1-fill",
+          "rgba(255, 0, 0, 0.3)",
+          "red",
+        );
 
         //eliminar layer y luego source
         //mapa.removeLayer(zona1.layerID);
         //mapa.removeSource(zona1.sourceID);
 
-        const zona2 = estadoAparcamiento(-4.476059, 36.72896, 500, "zona2", "zona2-fill", "rgba(255, 0, 0, 0.3)", "red");
+        const zona2 = estadoAparcamiento(
+          -4.476059,
+          36.72896,
+          500,
+          "zona2",
+          "zona2-fill",
+          "rgba(255, 0, 0, 0.3)",
+          "red",
+        );
 
         //array con todas las zonas de estados creadas
         let arrayEstadosAparcamientos = [zona1, zona2];
@@ -108,26 +137,38 @@ window.addEventListener("DOMContentLoaded", async function () {
           //recorrer el array arrayEstadosAparcamientos
           for (let i = 0; i < arrayEstadosAparcamientos.length; i++) {
             //obtener la visibilidad actual del elemento
-            let estado = mapa.getLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility');
+            let estado = mapa.getLayoutProperty(
+              arrayEstadosAparcamientos[i].layerID,
+              "visibility",
+            );
 
             //si es visible, ocualtar estados y cambiar mensaje
-            if (estado === 'visible') {
-              mapa.setLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility', 'none');
-              botonEstadosAparcamientos.textContent = "Mostrar estados aparcamientos";
+            if (estado === "visible") {
+              mapa.setLayoutProperty(
+                arrayEstadosAparcamientos[i].layerID,
+                "visibility",
+                "none",
+              );
+              botonEstadosAparcamientos.textContent =
+                "Mostrar estados aparcamientos";
             } else {
-              mapa.setLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility', 'visible');
-              botonEstadosAparcamientos.textContent = "Ocultar estados aparcamientos";
+              mapa.setLayoutProperty(
+                arrayEstadosAparcamientos[i].layerID,
+                "visibility",
+                "visible",
+              );
+              botonEstadosAparcamientos.textContent =
+                "Ocultar estados aparcamientos";
             }
           }
-
         }
         //Obtener el botón de ver estados
-        let botonEstadosAparcamientos = document.querySelector("#mostrarEstadosAparcamientos");
+        let botonEstadosAparcamientos = document.querySelector(
+          "#mostrarEstadosAparcamientos",
+        );
         //Aplicar listener
         botonEstadosAparcamientos.addEventListener("click", cambiarEstado);
 
-
-        
         /*
         const aparcamiento1 = estadoAparcamiento(-4.478995, 36.719671, 3, "aparcamiento1", "aparcamiento1-fill", "rgba(255, 0, 0, 0.3)", "red");
         const aparcamiento2 = estadoAparcamiento(-4.478964, 36.719724, 3, "aparcamiento2", "aparcamiento2-fill", "rgba(0, 255, 0, 0.3)", "green");
@@ -161,7 +202,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         async function abrirModalAparcamiento() {
           //busca si existe un modal de aparcamiento en el DOM
           const modalExistente = document.querySelector("modal-aparcamiento");
-          //Si existe, lo elimina para que no haya duplicados 
+          //Si existe, lo elimina para que no haya duplicados
           if (modalExistente) {
             modalExistente.remove();
           }
@@ -172,13 +213,13 @@ window.addEventListener("DOMContentLoaded", async function () {
           //retorna la promesa una vez que el modal haya sido cerrado
           return await modal.resultado;
         }
-        
+
         //crear array de aparcamientos
-        let arrayAparcamientos = []; 
+        let arrayAparcamientos = [];
         //obtener datos de la BBDD desde PlazaAparcamientoController.php
         fetch("../../controllers/PlazaAparcamientoController.php")
           .then(function (response) {
-            //sacar el estado de la respuesta 
+            //sacar el estado de la respuesta
             console.log("Status:", response.status);
             //convertir la respuesta a json
             return response.json();
@@ -189,7 +230,7 @@ window.addEventListener("DOMContentLoaded", async function () {
               //obtener los datos de las plazas
               const plazas = data.data;
 
-              //recorrer datos de cada plaza y guardar en variables 
+              //recorrer datos de cada plaza y guardar en variables
               plazas.forEach(function (plaza) {
                 let longitudPlaza = plaza.longitud;
                 let latitudPlaza = plaza.latitud;
@@ -197,33 +238,39 @@ window.addEventListener("DOMContentLoaded", async function () {
                 let sourceIDPlaza = plaza.sourceID;
                 let capaIDPlaza = plaza.capaID;
                 let ocupadoPlaza = plaza.ocupado;
-                let colorRellenoPlaza; 
-                let colorBordePlaza; 
+                let colorRellenoPlaza;
+                let colorBordePlaza;
 
                 //determinar el color segun el estado de ocupación, verde está libre y rojo está ocupado
-                if(ocupadoPlaza == 0) {
-                  colorRellenoPlaza = "rgba(0, 255, 0, 0.3)"; 
+                if (ocupadoPlaza == 0) {
+                  colorRellenoPlaza = "rgba(0, 255, 0, 0.3)";
                   colorBordePlaza = "green";
-                }else {
-                  colorRellenoPlaza = "rgba(255, 0, 0, 0.3)"; 
+                } else {
+                  colorRellenoPlaza = "rgba(255, 0, 0, 0.3)";
                   colorBordePlaza = "red";
                 }
 
                 //representar aparcamientos
                 //valores de la función a llamar --> longitudX, latitudY, radioCirculo, idSource, idCapa, colorRelleno, colorBorde
-                let aparcamiento = estadoAparcamiento(longitudPlaza, latitudPlaza, radioPlaza, sourceIDPlaza, capaIDPlaza, colorRellenoPlaza, colorBordePlaza);
-              
+                let aparcamiento = estadoAparcamiento(
+                  longitudPlaza,
+                  latitudPlaza,
+                  radioPlaza,
+                  sourceIDPlaza,
+                  capaIDPlaza,
+                  colorRellenoPlaza,
+                  colorBordePlaza,
+                );
+
                 //añadir aparcamientos al array
-                arrayAparcamientos.push(aparcamiento); 
-
-
+                arrayAparcamientos.push(aparcamiento);
               });
               //console.log(arrayAparcamientos); //0: {sourceID: 'aparcamiento1', layerID: 'aparcamiento1-fill'}...
-              
-              //Acceder a un indicador de aparcamiento, cuando se hace click en una capa concreta 
-              arrayAparcamientos.forEach(parking => {
+
+              //Acceder a un indicador de aparcamiento, cuando se hace click en una capa concreta
+              arrayAparcamientos.forEach((parking) => {
                 //si se hace click en una capa concreta de aparcamiento
-                mapa.on('click', parking.layerID, async (e) => {
+                mapa.on("click", parking.layerID, async (e) => {
                   e.preventDefault();
                   //console.log(parking.layerID);
                   //e.features permite acceder a las propiedades geográficas del objeto e y obtener el idSource y el idCapa
@@ -231,16 +278,16 @@ window.addEventListener("DOMContentLoaded", async function () {
                   console.log(e.features[0]["source"]);
                   //guardar valor del aparcamiento seleccionado antes del await, los datos del objeto se limpian
                   let aparcamientoSeleccionado = e.features[0]["source"];
-                  //abrir el modal y esperar la respuesta del usuario y guardarla, la acción será ocupar o liberar 
+                  //abrir el modal y esperar la respuesta del usuario y guardarla, la acción será ocupar o liberar
                   let accion = await abrirModalAparcamiento();
                   console.log(accion);
-                  
+
                   // Cambiar cursor al pasar por encima
-                  mapa.on('mouseenter', parking.layerID, () => {
-                    mapa.getCanvas().style.cursor = 'pointer';
+                  mapa.on("mouseenter", parking.layerID, () => {
+                    mapa.getCanvas().style.cursor = "pointer";
                   });
-                  mapa.on('mouseleave', parking.layerID, () => {
-                    mapa.getCanvas().style.cursor = '';
+                  mapa.on("mouseleave", parking.layerID, () => {
+                    mapa.getCanvas().style.cursor = "";
                   });
 
                   //si se confirma la ocupacion
@@ -259,71 +306,39 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log("boton liberr accion " + accionBotonLiberar);
                     console.log(accion2); 
                   }*/
-                  
-                  //obtener el id del usuario actual 
-                  let usuarioActual = 1; 
-                  let usuarioRegistrado = usuarioActual ?? null;
-                  
-                  //si la acción es ocupar 
-                  if(accion == "ocupar"){
-                    console.log("entrao ocupar");
-                    //datos a enviar al backend  
-                    const datos = {
-                      sourceID: aparcamientoSeleccionado,
-                      action: accion,
-                      usuarioID: usuarioRegistrado
-                    };
-                    console.log(datos);
-                    //enviar datos al backend mediante POST en json
-                    fetch("../../controllers/PlazaAparcamientoController.php?action=" + accion, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(datos),
-                    })
-                      //respuesta del backend, convertir la respuesta http a json
-                      .then((res) => res.json())
-                      .then((data) => {
-                        console.log(data);
-                        console.log(data.mensaje);
-                        //si el status es ok
-                        if (data.status === "ok") {
-                          alert(data.mensaje);
-                        } else {
-                          //mostrar un mensaje del backend o uno por defecto
-                          alert(data.mensaje || "Error al guardar el estado");
-                          console.log("Error");
-                        }
-                      })
-                      //capturar errores
-                      .catch((err) => {
-                        console.error(err);
-                        alert("Error al guardar datos");
-                      });
-                      
-                  }else if(accion == "liberar"){
-                    console.log("entrao liberar");
-                    //datos a enviar al backend  
-                    const datos = {
-                      sourceID: aparcamientoSeleccionado,
-                      action: accion,
-                      usuarioID: usuarioRegistrado
-                    };
-                    console.log(datos);
-                    //enviar datos al backend mediante POST en json
-                    fetch("../../controllers/PlazaAparcamientoController.php?action=" + accion, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(datos),
-                    })
-                      //respuesta del backend, convertir la respuesta http a json
-                      .then((res) => res.json())
-                      .then((data) => {
-                        console.log(data);
-                        console.log(data.mensaje);
-                        //si el status es ok
-                        if (data.status === "ok") {
-                          alert(data.mensaje);
 
+                  //obtener el id del usuario actual
+                  let usuarioActual = 1;
+                  let usuarioRegistrado = usuarioActual ?? null;
+
+                  //si la acción es ocupar
+                  if (accion == "ocupar") {
+                    console.log("entrao ocupar");
+                    //datos a enviar al backend
+                    const datos = {
+                      sourceID: aparcamientoSeleccionado,
+                      action: accion,
+                      usuarioID: usuarioRegistrado,
+                    };
+                    console.log(datos);
+                    //enviar datos al backend mediante POST en json
+                    fetch(
+                      "../../controllers/PlazaAparcamientoController.php?action=" +
+                        accion,
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos),
+                      },
+                    )
+                      //respuesta del backend, convertir la respuesta http a json
+                      .then((res) => res.json())
+                      .then((data) => {
+                        console.log(data);
+                        console.log(data.mensaje);
+                        //si el status es ok
+                        if (data.status === "ok") {
+                          alert(data.mensaje);
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
                           alert(data.mensaje || "Error al guardar el estado");
@@ -335,24 +350,59 @@ window.addEventListener("DOMContentLoaded", async function () {
                         console.error(err);
                         alert("Error al guardar datos");
                       });
-                      
+                  } else if (accion == "liberar") {
+                    console.log("entrao liberar");
+                    //datos a enviar al backend
+                    const datos = {
+                      sourceID: aparcamientoSeleccionado,
+                      action: accion,
+                      usuarioID: usuarioRegistrado,
+                    };
+                    console.log(datos);
+                    //enviar datos al backend mediante POST en json
+                    fetch(
+                      "../../controllers/PlazaAparcamientoController.php?action=" +
+                        accion,
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos),
+                      },
+                    )
+                      //respuesta del backend, convertir la respuesta http a json
+                      .then((res) => res.json())
+                      .then((data) => {
+                        console.log(data);
+                        console.log(data.mensaje);
+                        //si el status es ok
+                        if (data.status === "ok") {
+                          alert(data.mensaje);
+                        } else {
+                          //mostrar un mensaje del backend o uno por defecto
+                          alert(data.mensaje || "Error al guardar el estado");
+                          console.log("Error");
+                        }
+                      })
+                      //capturar errores
+                      .catch((err) => {
+                        console.error(err);
+                        alert("Error al guardar datos");
+                      });
                   }
                 });
               });
-              
-              
             }
           })
-          //catch con errores de la petición inicial 
+          //catch con errores de la petición inicial
           .catch(function (error) {
             console.log("Error:", error);
           });
-//modal creado , boton que llama a una funcion y esa funcion tiene el modal en funciones globales, importar modal al js
-//en caso de que sea null, se mete en el error igualemnte, recargar estacionamientos, en caso de que le de 2 veces a ocupado teniendo en cuenta la BBDD o el colorsss
-//pasar cambios, meter usuario  s
-//revidar php tema de BBDD aparkamiento
-//revisar puntuacion, revisar comentarios ok
-//////////////////QUITAR APARCAMIENTO 14 DE LA BBDD ESTA REPE CON EL 4
+        //modal creado , boton que llama a una funcion y esa funcion tiene el modal en funciones globales, importar modal al js
+        //en caso de que sea null, se mete en el error igualemnte, recargar estacionamientos, en caso de que le de 2 veces a ocupado teniendo en cuenta la BBDD o el colorsss
+        //pasar cambios, meter usuario  s
+        //revidar php tema de BBDD aparkamiento
+        //revisar puntuacion, revisar comentarios ok
+        //////////////////QUITAR APARCAMIENTO 14 DE LA BBDD ESTA REPE CON EL 4
 
         /*mapa.addInteraction('click', {
                   type: 'click',
@@ -378,21 +428,33 @@ window.addEventListener("DOMContentLoaded", async function () {
           //recorrer el array arrayAparcamientos
           for (let i = 0; i < arrayAparcamientos.length; i++) {
             //obtener la visibilidad actual del elemento
-            let estadoPlazas = mapa.getLayoutProperty(arrayAparcamientos[i].layerID, 'visibility');
+            let estadoPlazas = mapa.getLayoutProperty(
+              arrayAparcamientos[i].layerID,
+              "visibility",
+            );
 
             //si es visible, ocualtar estados y cambiar mensaje
-            if (estadoPlazas === 'visible') {
-              mapa.setLayoutProperty(arrayAparcamientos[i].layerID, 'visibility', 'none');
+            if (estadoPlazas === "visible") {
+              mapa.setLayoutProperty(
+                arrayAparcamientos[i].layerID,
+                "visibility",
+                "none",
+              );
               botonAparcamientos.textContent = "Mostrar aparcamientos";
             } else {
-              mapa.setLayoutProperty(arrayAparcamientos[i].layerID, 'visibility', 'visible');
+              mapa.setLayoutProperty(
+                arrayAparcamientos[i].layerID,
+                "visibility",
+                "visible",
+              );
               botonAparcamientos.textContent = "Ocultar aparcamientos";
             }
           }
-
         }
         //Obtener el botón de ver estados
-        let botonAparcamientos = document.querySelector("#mostrarAparcamientos");
+        let botonAparcamientos = document.querySelector(
+          "#mostrarAparcamientos",
+        );
         //Aplicar listener
         botonAparcamientos.addEventListener("click", cambiarVisibilidadPlazas);
 
@@ -406,8 +468,6 @@ window.addEventListener("DOMContentLoaded", async function () {
 
           //mapa.on("click", obtenerDireccionDeCoordenadas);
 */
-
-
       });
 
       //Obtener las coordenadas y la dirección de una ubi específica
@@ -419,11 +479,11 @@ window.addEventListener("DOMContentLoaded", async function () {
         //Obtener la dirección a partir de las coordenadas mediante la API de geocoding inverso de Mapbox
         fetch(
           "https://api.mapbox.com/search/geocode/v6/reverse?longitude=" +
-          longitud +
-          "&latitude=" +
-          latitud +
-          "&access_token=" +
-          mapboxgl.accessToken,
+            longitud +
+            "&latitude=" +
+            latitud +
+            "&access_token=" +
+            mapboxgl.accessToken,
         )
           .then(function (response) {
             //Convertir la respuesta en JSON
@@ -440,21 +500,21 @@ window.addEventListener("DOMContentLoaded", async function () {
               "Dirección no encontrada";
             alert(
               "Coordenadas: " +
-              longitud.toFixed(6) +
-              ", " +
-              latitud.toFixed(6) +
-              "\nDirección: " +
-              address,
+                longitud.toFixed(6) +
+                ", " +
+                latitud.toFixed(6) +
+                "\nDirección: " +
+                address,
             );
           })
           //En caso de error
           .catch(function (error) {
             alert(
               "Coordenadas: " +
-              longitud.toFixed(6) +
-              ", " +
-              latitud.toFixed(6) +
-              "\nError al obtener dirección",
+                longitud.toFixed(6) +
+                ", " +
+                latitud.toFixed(6) +
+                "\nError al obtener dirección",
             );
           });
       }
@@ -466,9 +526,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         //Llamada a la API de geocoding directo de Mapbox, uso de encodeURIComponent para evitar carácteres raros en URL
         fetch(
           "https://api.mapbox.com/search/geocode/v6/forward?q=" +
-          encodeURIComponent(searchText) +
-          "&access_token=" +
-          mapboxgl.accessToken,
+            encodeURIComponent(searchText) +
+            "&access_token=" +
+            mapboxgl.accessToken,
         )
           .then(function (response) {
             //Convertir la respuesta en JSON
@@ -565,25 +625,37 @@ window.addEventListener("DOMContentLoaded", async function () {
       //añadir marcador basico
       function añadirMarcadorBasico(longitudX, latitudY, popup) {
         const marker = new mapboxgl.Marker({
-          color: '#005a60',
+          color: "#005a60",
           scale: 1,
-          className: 'estadoVisualMarker',
+          className: "estadoVisualMarker",
           //arrastrable
-          //draggable: true    
+          //draggable: true
         })
           //Asignar coordenadas
           .setLngLat([longitudX, latitudY])
           //Crear un popup que indique info del marcador
           .setPopup(popup) //.setPopup(new mapboxgl.Popup().setText('Aquí hay un parking'))
           //Añadir al mapa
-          .addTo(mapa);  //se usa el encadenamiento de métodos porque cada método devuelve el propio objeto this, es igual que hacer marker.addTo(mapa)
+          .addTo(mapa); //se usa el encadenamiento de métodos porque cada método devuelve el propio objeto this, es igual que hacer marker.addTo(mapa)
         return marker;
       }
 
       //crear marcadores
-      const marcaUbi = añadirMarcadorBasico(-4.47234, 36.72372, popupUsuarioUbicacion);
-      const marcaCasa = añadirMarcadorBasico(-4.47504, 36.72472, popupUsuarioCasa);
-      const marcaCole = añadirMarcadorBasico(-4.47204, 36.71872, popupUsuarioColegio);
+      const marcaUbi = añadirMarcadorBasico(
+        -4.47234,
+        36.72372,
+        popupUsuarioUbicacion,
+      );
+      const marcaCasa = añadirMarcadorBasico(
+        -4.47504,
+        36.72472,
+        popupUsuarioCasa,
+      );
+      const marcaCole = añadirMarcadorBasico(
+        -4.47204,
+        36.71872,
+        popupUsuarioColegio,
+      );
       //marcaUbi.remove();
 
       //array con todas los marcadores del usuario creados
@@ -593,7 +665,9 @@ window.addEventListener("DOMContentLoaded", async function () {
       let estadoMostar;
       function cambiarVisibilidadMarkUsuario() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
-        if (botonMarcadoresUsuario.textContent == "Mostrar marcadores usuario") {
+        if (
+          botonMarcadoresUsuario.textContent == "Mostrar marcadores usuario"
+        ) {
           estadoMostar = true;
         } else {
           estadoMostar = false;
@@ -602,35 +676,39 @@ window.addEventListener("DOMContentLoaded", async function () {
         for (let i = 0; i < arrayMarcadoresUsurio.length; i++) {
           //si no son visibles los marcadores, mostrar y cambiar el mensaje a ocultar
           if (estadoMostar) {
-            arrayMarcadoresUsurio[i].removeClassName('estadoVisualMarker');
-            //si es el último elemento 
-            if (i == (arrayMarcadoresUsurio.length - 1)) {
+            arrayMarcadoresUsurio[i].removeClassName("estadoVisualMarker");
+            //si es el último elemento
+            if (i == arrayMarcadoresUsurio.length - 1) {
               botonMarcadoresUsuario.textContent = "Ocultar marcadores usuario";
             }
           } else {
-            arrayMarcadoresUsurio[i].addClassName('estadoVisualMarker');
-            if (i == (arrayMarcadoresUsurio.length - 1)) {
+            arrayMarcadoresUsurio[i].addClassName("estadoVisualMarker");
+            if (i == arrayMarcadoresUsurio.length - 1) {
               botonMarcadoresUsuario.textContent = "Mostrar marcadores usuario";
             }
           }
         }
-
       }
       //Obtener el botón de ver estados
-      let botonMarcadoresUsuario = document.querySelector("#mostrarMarcadoresUsuario");
+      let botonMarcadoresUsuario = document.querySelector(
+        "#mostrarMarcadoresUsuario",
+      );
       //Aplicar listener
-      botonMarcadoresUsuario.addEventListener("click", cambiarVisibilidadMarkUsuario);
+      botonMarcadoresUsuario.addEventListener(
+        "click",
+        cambiarVisibilidadMarkUsuario,
+      );
 
       //añadir marcador Personalizado Logo
       function añadirMarcadorPersonalizado(longitudX, latitudY, popup) {
-        const anunciante = document.createElement('div');
-        anunciante.className = 'custom-marker';
+        const anunciante = document.createElement("div");
+        anunciante.className = "custom-marker";
         anunciante.innerHTML = `<img src="../assets/imagotipoAparkt.png" alt="anunciante" style="width:60px;height:60px;display:block;">`;
 
         const markerAnunciante = new mapboxgl.Marker({
-          className: 'estadoVisualMarker',
+          className: "estadoVisualMarker",
           element: anunciante,
-          anchor: 'bottom' //se centra lo de abajo
+          anchor: "bottom", //se centra lo de abajo
         })
           .setLngLat([longitudX, latitudY])
           .setPopup(popup)
@@ -638,8 +716,16 @@ window.addEventListener("DOMContentLoaded", async function () {
         return markerAnunciante;
       }
 
-      const marcaCasaLola = añadirMarcadorPersonalizado(-4.480782, 36.717794, popupAnuncianteCasaLola);
-      const marcaCasaPaco = añadirMarcadorPersonalizado(-4.480700, 36.720100, popupAnuncianteCasaPaco);
+      const marcaCasaLola = añadirMarcadorPersonalizado(
+        -4.480782,
+        36.717794,
+        popupAnuncianteCasaLola,
+      );
+      const marcaCasaPaco = añadirMarcadorPersonalizado(
+        -4.4807,
+        36.7201,
+        popupAnuncianteCasaPaco,
+      );
       //marcaCasaLola.remove();
 
       //array con todas los marcadores personalizados creados
@@ -649,7 +735,10 @@ window.addEventListener("DOMContentLoaded", async function () {
       let estadoMostarPersonalizados;
       function cambiarVisibilidadMarkPersonalizado() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
-        if (botonMarcadoresAnunciante.textContent == "Mostrar marcadores anunciantes") {
+        if (
+          botonMarcadoresAnunciante.textContent ==
+          "Mostrar marcadores anunciantes"
+        ) {
           estadoMostarPersonalizados = true;
         } else {
           estadoMostarPersonalizados = false;
@@ -658,59 +747,99 @@ window.addEventListener("DOMContentLoaded", async function () {
         for (let i = 0; i < arrayMarcadoresPersonalizados.length; i++) {
           //si no son visibles los marcadores, mostrar y cambiar el mensaje a ocultar
           if (estadoMostarPersonalizados) {
-            arrayMarcadoresPersonalizados[i].removeClassName('estadoVisualMarker');
-            //si es el último elemento 
-            if (i == (arrayMarcadoresPersonalizados.length - 1)) {
-              botonMarcadoresAnunciante.textContent = "Ocultar marcadores anunciantes";
+            arrayMarcadoresPersonalizados[i].removeClassName(
+              "estadoVisualMarker",
+            );
+            //si es el último elemento
+            if (i == arrayMarcadoresPersonalizados.length - 1) {
+              botonMarcadoresAnunciante.textContent =
+                "Ocultar marcadores anunciantes";
             }
           } else {
-            arrayMarcadoresPersonalizados[i].addClassName('estadoVisualMarker');
-            if (i == (arrayMarcadoresPersonalizados.length - 1)) {
-              botonMarcadoresAnunciante.textContent = "Mostrar marcadores anunciantes";
+            arrayMarcadoresPersonalizados[i].addClassName("estadoVisualMarker");
+            if (i == arrayMarcadoresPersonalizados.length - 1) {
+              botonMarcadoresAnunciante.textContent =
+                "Mostrar marcadores anunciantes";
             }
           }
         }
-
       }
       //Obtener el botón de ver estados
-      let botonMarcadoresAnunciante = document.querySelector("#mostrarMarcadoresAnunciante");
+      let botonMarcadoresAnunciante = document.querySelector(
+        "#mostrarMarcadoresAnunciante",
+      );
       //Aplicar listener
-      botonMarcadoresAnunciante.addEventListener("click", cambiarVisibilidadMarkPersonalizado);
-
+      botonMarcadoresAnunciante.addEventListener(
+        "click",
+        cambiarVisibilidadMarkPersonalizado,
+      );
     })
     .catch(function (error) {
       console.log("Error: " + error);
     });
 });
 
-function configurarUIUsuarioLogueado(usuario) {
-  console.log('Usuario logueado:', usuario);
+async function configurarUIUsuarioLogueado(usuario) {
+  // console.log("Usuario logueado:", usuario);
+
+  idUsuarioActual = await obtenerIdUsuario();
+
+  console.log("ID Usuario actual:", idUsuarioActual);
 
   // Botón de perfil - abrir banner
-  const perfilBtn = document.getElementById('perfilUsuario');
+  const perfilBtn = document.getElementById("perfilUsuario");
+
   if (perfilBtn) {
-    perfilBtn.addEventListener('click', () => {
-      const banner = document.getElementById('bannerUsuario');
+    perfilBtn.addEventListener("click", () => {
+      const banner = document.getElementById("bannerUsuario");
       if (banner) {
-        banner.classList.add('abierto');
+        banner.classList.add("abierto");
       }
     });
   }
 
+  // Buscamos el contenedor existente
+  const contenedor = document.getElementById("interactividad");
+
+  // BOTÓN: Mostrar aparcamientos
+  const btnAparcamientos = document.createElement("button");
+  btnAparcamientos.id = "mostrarAparcamientos";
+  btnAparcamientos.textContent = "Mostrar aparcamientos";
+
+  // BOTÓN: Mostrar marcadores usuario
+  const btnMarcadoresUsuario = document.createElement("button");
+  btnMarcadoresUsuario.id = "mostrarMarcadoresUsuario";
+  btnMarcadoresUsuario.textContent = "Mostrar marcadores usuario";
+
+  // BOTÓN: Mostrar marcadores anunciantes
+  const btnMarcadoresAnunciante = document.createElement("button");
+  btnMarcadoresAnunciante.id = "mostrarMarcadoresAnunciante";
+  btnMarcadoresAnunciante.textContent = "Mostrar marcadores anunciantes";
+
+  // Añadir al contenedor existente
+  contenedor.appendChild(btnAparcamientos);
+  contenedor.appendChild(btnMarcadoresUsuario);
+  contenedor.appendChild(btnMarcadoresAnunciante);
+
   // Logout
-  const logoutBtn = document.getElementById('logout');
+  const logoutBtn = document.getElementById("logout");
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => cerrarSesion());
+    logoutBtn.addEventListener("click", () => cerrarSesion());
   }
 }
 
 function configurarUIUsuarioNoLogueado() {
-  console.log('Usuario no logueado');
+  console.log("Usuario no logueado");
 
-  const perfilBtn = document.getElementById('perfilUsuario');
+  const perfilBtn = document.getElementById("perfilUsuario");
   if (perfilBtn) {
-    perfilBtn.addEventListener('click', () => {
+    perfilBtn.addEventListener("click", () => {
       window.location.href = "../login/login.html";
     });
   }
+}
+
+async function obtenerIdUsuario() {
+  const usuario = await obtenerSesion();
+  return usuario.usuario_id;
 }

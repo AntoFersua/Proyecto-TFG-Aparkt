@@ -12,19 +12,19 @@
 function obtenerRutaBase() {
   const ruta = window.location.pathname;
   // Si está en /app/views/login/ o /app/views/signup/ o /app/views/aparkt/ o /app/views/index/
-  if (ruta.includes('/app/views/login/') || ruta.includes('/app/views/signup/') || ruta.includes('/app/views/aparkt/') || ruta.includes('/app/views/index/')) {
-    return '../../';
+  if (
+    ruta.includes("/app/views/login/") ||
+    ruta.includes("/app/views/signup/") ||
+    ruta.includes("/app/views/aparkt/") ||
+    ruta.includes("/app/views/index/")
+  ) {
+    return "../../";
   }
-  // Si está en /app/views/ (index)
-  return './';
-}
-
-function obtenerRutaCompleta(rutaRelativa) {
-  return obtenerRutaBase() + rutaRelativa;
+  // Si está en /app/views/
+  return "./";
 }
 
 // CONSTANTES Y VARIABLES
-
 // Variable para almacenar en memoria el usuario actual (cache)
 let usuarioCache = null;
 
@@ -46,6 +46,12 @@ export async function obtenerSesion() {
 
     // Fetch al endpoint con credentials: 'include' para enviar cookies de sesión
     const respuesta = await fetch(endpoint, {
+      /*Se envia la cookie de sesion, el servidor puede identificar al usuario y
+       * devolver su información.
+       * Sin esto, el servidor siempre respondería que no hay usuario logueado.
+       * Con esto se compara la cookie de sesión enviada por el navegador con las sesiones activas en el servidor,
+       * y si coincide, devuelve los datos del usuario logueado.
+       */
       credentials: "include", // MUY IMPORTANTE por las cookies de sesión
     });
 
@@ -66,6 +72,7 @@ export async function obtenerSesion() {
     return {
       logueado: datos.logueado,
       usuario: datos.usuario,
+      usuario_id: datos.usuario_id, // Devolver toda la respuesta por si se necesitan otros datos
     };
   } catch (error) {
     // Si hay error de red o del servidor
@@ -81,11 +88,9 @@ export async function obtenerSesion() {
 /**
  * Verifica la sesión y si no está logueado, redirige a la página de login.
  */
-export async function requiereAuth(
-  urlRedireccionParam = null,
-) {
+export async function requiereAuth(urlRedireccionParam = null) {
   const urlRedireccion = urlRedireccionParam || "../login/login.html";
-  
+
   const sesion = await obtenerSesion();
 
   // Si no está logueado, redirigir al login
@@ -184,7 +189,7 @@ export async function iniciarAuth(opciones = {}) {
 
   // Calcular url de login según la profundidad
   let urlRedireccion = urlRedireccionParam || "../login/login.html";
-  
+
   // Obtener sesión del servidor
   const sesion = await obtenerSesion();
 
@@ -194,11 +199,11 @@ export async function iniciarAuth(opciones = {}) {
     usuarioCache = sesion.usuario;
 
     // Actualizar UI (elementos con data-auth)
-    inicializarUIAuth();
+    // inicializarUIAuth();
 
     // Ejecutar callback si existe
     if (alLoguearse) {
-      alLoguearse(usuarioCache);
+      await alLoguearse(usuarioCache);
     }
   }
   // Si NO está logueado
