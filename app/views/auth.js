@@ -232,3 +232,5 @@ export function cerrarSesion() {
   console.log("Logout URL:", urlLogout);
   window.location.href = urlLogout;
 }
+//Probando!!
+
