@@ -232,5 +232,8 @@ export function cerrarSesion() {
   console.log("Logout URL:", urlLogout);
   window.location.href = urlLogout;
 }
+<<<<<<< HEAD
 //Probando!!
 
+=======
+>>>>>>> parent of f021c2a (depuracion codigo)
