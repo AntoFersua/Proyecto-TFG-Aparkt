@@ -13,12 +13,10 @@ class Footer extends HTMLElement {
   render() {
     this.innerHTML = `
         <footer>
-      <div class="footer-content">
+      <div class="footer-main">
         <div class="footer-section footer-brand">
           <img src="../assets/imagotipoAparkt.png" alt="Aparkt Logo" class="footer-logo" />
         </div>
-
-        
 
         <div class="footer-section footer-contact">
           <h4>Contacto</h4>
@@ -53,11 +51,9 @@ class Footer extends HTMLElement {
             </a>
           </div>
         </div>
-      </div>
 
-      <div class="footer-bottom">
-        <div class="footer-payments">
-          <span class="payment-label">Pagos seguros:</span>
+        <div class="footer-section footer-payments">
+          <h4>Pagos seguros</h4>
           <div class="payment-icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="payment-icon">
               <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.66h6.165c2.235 0 3.955.48 5.113 1.428 1.157.948 1.632 2.342 1.416 4.148-.06.498-.19 1.115-.38 1.84a13.377 13.377 0 0 1-.52 1.68.766.766 0 0 0 .14.862c.09.084.21.126.338.126a.642.642 0 0 0 .337-.091c1.65-.77 2.87-2.002 3.428-3.693.91-2.762.53-5.452-1.058-7.084C20.194 1.55 17.496.36 14.248.36H9.038L8.94.366a.77.77 0 0 0-.764.705l-.299 5.159a.641.641 0 0 0 .632.7h1.648l-.499 8.557a.641.641 0 0 1-.63.574H7.076v.001Z"/>
@@ -70,6 +66,7 @@ class Footer extends HTMLElement {
             </svg>
           </div>
         </div>
+
         <p class="copyright">&copy; 2026 Aparkt. Todos los derechos reservados.</p>
       </div>
     </footer>`;

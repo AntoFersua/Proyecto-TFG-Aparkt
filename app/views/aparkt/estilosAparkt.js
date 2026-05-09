@@ -53,3 +53,18 @@ gsap.to(horizontalSection, {
     anticipatePin: 1,
   },
 });
+
+// Coche que avanza con el scroll horizontal
+const car = document.querySelector(".car");
+gsap.to(car, {
+  x: () => horizontalSection.scrollWidth - 200,
+  ease: "none",
+  scrollTrigger: {
+    trigger: horizontalSection,
+    start: "top top",
+    end: () => "+=" + (horizontalSection.scrollWidth - innerWidth),
+    scrub: 0.5,
+  },
+});
+
+
