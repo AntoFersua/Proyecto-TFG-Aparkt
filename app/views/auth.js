@@ -28,21 +28,14 @@ function obtenerRutaBase() {
 // Variable para almacenar en memoria el usuario actual (cache)
 let usuarioCache = null;
 
-// Variable para almacenar la sesión actual (cache)
-let sesionActual = null;
-
 // FUNCIÓN PRINCIPAL: Obtener sesión
-
 /**
  * Hace fetch al endpoint de sesión para verificar si el usuario está logueado.
- *
  */
 export async function obtenerSesion() {
   try {
     const rutaBase = obtenerRutaBase();
     const endpoint = rutaBase + "controllers/MeController.php";
-    console.log("Ruta base:", rutaBase);
-    console.log("Endpoint:", endpoint);
 
     // Fetch al endpoint con credentials: 'include' para enviar cookies de sesión
     const respuesta = await fetch(endpoint, {
@@ -62,11 +55,9 @@ export async function obtenerSesion() {
 
     // Convertir respuesta a JSON
     const datos = await respuesta.json();
-    console.log("Session response:", datos);
 
     // Guardar en cache el usuario si está logueado
     usuarioCache = datos.logueado ? datos.usuario : null;
-    sesionActual = datos;
 
     // Devolver solo logueado y usuario
     return {
@@ -78,98 +69,9 @@ export async function obtenerSesion() {
     // Si hay error de red o del servidor
     console.error("Error de sesion:", error);
     usuarioCache = null;
-    sesionActual = false;
     // Devolver usuario no logueado por seguridad
-    return sesionActual;
+    return { logueado: false, usuario: null, usuario_id: null };
   }
-}
-
-// FUNCIÓN: Requiere autenticación (redirige si no está logueado)
-/**
- * Verifica la sesión y si no está logueado, redirige a la página de login.
- */
-export async function requiereAuth(urlRedireccionParam = null) {
-  const urlRedireccion = urlRedireccionParam || "../login/login.html";
-
-  const sesion = await obtenerSesion();
-
-  // Si no está logueado, redirigir al login
-  if (!sesion.logueado) {
-    window.location.href = urlRedireccion;
-    return null;
-  }
-
-  // Si está logueado, devolver los datos del usuario
-  return sesion.usuario;
-}
-
-// FUNCIÓN: Obtener usuario actual (desde cache)
-/**
- * Devuelve el usuario cacheado (sin hacer fetch).
- *
- */
-export function obtenerUsuario() {
-  return usuarioCache;
-}
-
-// FUNCIÓN: ¿Está logueado?
-/**
- * Simple comprobacion de si el usuario está logueado
- *
- */
-export function estaLogueado() {
-  return usuarioCache !== null;
-}
-
-// FUNCIÓN: Ocultar elemento si no está logueado
-/**
- * Añade la clase 'hidden' al elemento si el usuario NO está logueado.
- * Sirve para mostrar elementos solo a usuarios NO logueados (ej: botón Login).
- *
- */
-export function ocultarSiNoLogueado(elemento) {
-  if (!usuarioCache) {
-    elemento.classList.add("hidden");
-  }
-}
-
-// FUNCIÓN: Mostrar elemento si está logueado
-/**
- * Añade o quita la clase 'hidden' según si el usuario está logueado.
- * Sirve para mostrar elementos solo a usuarios logueados (ej: perfil).
- *
- */
-export function mostrarSiLogueado(elemento) {
-  if (usuarioCache) {
-    elemento.classList.remove("hidden");
-  } else {
-    elemento.classList.add("hidden");
-  }
-}
-
-// FUNCIÓN: Inicializar UI según autenticación
-/**
- * Busca todos los elementos con atributo data-auth y los muestra/oculta
- * según el estado de sesión.
- *
- * Uso en HTML: <button data-auth="hide">Login</button>
- *              <button data-auth="show">Perfil</button>
- */
-export function inicializarUIAuth() {
-  // Buscar todos los elementos con data-auth="show" o data-auth="hide"
-  const elementosAuth = document.querySelectorAll("[data-auth]");
-
-  elementosAuth.forEach((el) => {
-    const accion = el.dataset.auth;
-
-    if (accion === "show") {
-      // Mostrar solo si está logueado
-      mostrarSiLogueado(el);
-    } else if (accion === "hide") {
-      // Ocultar si está logueado (mostrar si no lo está)
-      ocultarSiNoLogueado(el);
-    }
-  });
 }
 
 // FUNCIÓN PRINCIPAL: Inicializar autenticación en una página
@@ -195,13 +97,6 @@ export async function iniciarAuth(opciones = {}) {
 
   // Si está logueado
   if (sesion.logueado) {
-    // Guardar usuario en cache
-    usuarioCache = sesion.usuario;
-
-    // Actualizar UI (elementos con data-auth)
-    // inicializarUIAuth();
-
-    // Ejecutar callback si existe
     if (alLoguearse) {
       await alLoguearse(usuarioCache);
     }
@@ -229,6 +124,82 @@ export async function iniciarAuth(opciones = {}) {
 export function cerrarSesion() {
   const rutaBase = obtenerRutaBase();
   const urlLogout = rutaBase + "controllers/Logout.php";
-  console.log("Logout URL:", urlLogout);
   window.location.href = urlLogout;
 }
+
+// =============================================================================
+// FUNCIONES NO UTILIZADAS (comentadas - disponibles para uso futuro)
+// =============================================================================
+
+/**
+ * FUNCIÓN: Requiere autenticación (redirige si no está logueado)
+ * Verifica la sesión y si no está logueado, redirige a la página de login.
+ */
+// export async function requiereAuth(urlRedireccionParam = null) {
+//   const urlRedireccion = urlRedireccionParam || "../login/login.html";
+//   const sesion = await obtenerSesion();
+//   if (!sesion.logueado) {
+//     window.location.href = urlRedireccion;
+//     return null;
+//   }
+//   return sesion.usuario;
+// }
+
+/**
+ * FUNCIÓN: Obtener usuario actual (desde cache)
+ * Devuelve el usuario cacheado (sin hacer fetch).
+ */
+// export function obtenerUsuario() {
+//   return usuarioCache;
+// }
+
+/**
+ * FUNCIÓN: ¿Está logueado?
+ * Simple comprobacion de si el usuario está logueado
+ */
+// export function estaLogueado() {
+//   return usuarioCache !== null;
+// }
+
+/**
+ * FUNCIÓN: Ocultar elemento si no está logueado
+ * Añade la clase 'hidden' al elemento si el usuario NO está logueado.
+ * Sirve para mostrar elementos solo a usuarios NO logueados (ej: botón Login).
+ */
+// export function ocultarSiNoLogueado(elemento) {
+//   if (!usuarioCache) {
+//     elemento.classList.add("hidden");
+//   }
+// }
+
+/**
+ * FUNCIÓN: Mostrar elemento si está logueado
+ * Añade o quita la clase 'hidden' según si el usuario está logueado.
+ * Sirve para mostrar elementos solo a usuarios logueados (ej: perfil).
+ */
+// export function mostrarSiLogueado(elemento) {
+//   if (usuarioCache) {
+//     elemento.classList.remove("hidden");
+//   } else {
+//     elemento.classList.add("hidden");
+//   }
+// }
+
+/**
+ * FUNCIÓN: Inicializar UI según autenticación
+ * Busca todos los elementos con atributo data-auth y los muestra/oculta
+ * según el estado de sesión.
+ * Uso en HTML: <button data-auth="hide">Login</button>
+ *              <button data-auth="show">Perfil</button>
+ */
+// export function inicializarUIAuth() {
+//   const elementosAuth = document.querySelectorAll("[data-auth]");
+//   elementosAuth.forEach((el) => {
+//     const accion = el.dataset.auth;
+//     if (accion === "show") {
+//       mostrarSiLogueado(el);
+//     } else if (accion === "hide") {
+//       ocultarSiNoLogueado(el);
+//     }
+//   });
+// }
