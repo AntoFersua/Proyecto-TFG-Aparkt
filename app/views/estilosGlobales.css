@@ -122,9 +122,10 @@ header {
   align-items: center;
   padding: 0 30px;
   background: linear-gradient(to bottom, #005a60 0%, #34af72 100%);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 10;
+  left: 0;
+  z-index: 1000;
 
   .logoHeader {
     display: flex;
@@ -684,7 +685,8 @@ main img {
   height: 16px;
 }
 
-.form-vehiculo {
+.form-vehiculo,
+.form-email {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -711,7 +713,8 @@ main img {
   font-size: 0.85rem;
 }
 
-.form-group select {
+.form-group select,
+.form-group input {
   padding: 10px 15px;
   font-size: 0.85rem;
   border-radius: 8px;
@@ -725,11 +728,13 @@ main img {
   cursor: pointer;
 }
 
-.form-group select:hover {
+.form-group select:hover,
+.form-group input:hover {
   border-color: var(--color-azulOscuro);
 }
 
-.form-group select:focus {
+.form-group select:focus,
+.form-group input:focus {
   outline: none;
   border: solid 2px var(--color-azulOscuro);
   box-shadow: 0 0 0 3px rgba(0, 90, 96, 0.15);
@@ -737,7 +742,10 @@ main img {
 
 .form-group select:focus ~ label,
 .form-group select:active ~ label,
-.form-group select.has-value ~ label {
+.form-group select.has-value ~ label,
+.form-group input:focus ~ label,
+.form-group input:active ~ label,
+.form-group input.has-value ~ label {
   transform: translateY(-51%) translateX(-10px) scale(0.8);
   background-color: #fff;
   padding: 0px 5px;

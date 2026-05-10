@@ -118,6 +118,21 @@ class Usuario extends Model
         return $stmt->execute();
     }
 
+    /**
+     * Actualiza el email de un usuario.
+     * @param int $id ID del usuario
+     * @param string $email Nuevo email
+     * @return bool true si se actualizó correctamente
+     */
+    public function actualizarEmail($id, $email)
+    {
+        $consulta = "UPDATE Usuario SET email = :email WHERE id = :id";
+        $stmt = $this->_conexion->prepare($consulta);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
 
     
 }

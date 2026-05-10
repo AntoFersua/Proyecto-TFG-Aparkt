@@ -12,10 +12,122 @@ class PerfilUsuario extends HTMLElement {
   }
 
   configurarEventos() {
-    console.log('PerfilUsuario: configurando eventos');
     const btnEliminar = this.querySelector('#eliminarCuenta');
-    console.log('PerfilUsuario: btnEliminar', btnEliminar);
     btnEliminar.addEventListener('click', () => this.eliminarCuenta());
+
+    const btnBorrarVehiculo = this.querySelector('#borrarVehiculo');
+    btnBorrarVehiculo.addEventListener('click', () => this.borrarVehiculo());
+
+    const btnCambiarEmail = this.querySelector('.cambiarEmail');
+    btnCambiarEmail.addEventListener('click', (e) => this.cambiarEmail(e));
+
+    const formEmail = this.querySelector('#formEmail');
+    formEmail.addEventListener('submit', (e) => this.enviarCambioEmail.call(this, e));
+
+    const btnCerrar = this.querySelector('#cerrarBanner');
+    btnCerrar.addEventListener('click', () => this.cerrarBanner());
+  }
+
+  cerrarBanner() {
+    const banner = this.querySelector('#bannerUsuario');
+    banner.classList.remove('abierto');
+  }
+
+  /**
+   * Cambia el email del usuario.
+   * Muestra un formulario para introducir el nuevo email.
+   */
+  async cambiarEmail(event) {
+    // Evitar que se ejecute el comportamiento por defecto del botón
+    if (event) event.preventDefault();
+
+    // Obtener elementos del formulario
+    const formEmail = this.querySelector('#formEmail');
+    const formVehiculo = this.querySelector('#formVehiculo');
+
+    // Si el formulario de email está oculto, mostrarlo
+    if (formEmail.style.display === 'none') {
+      formEmail.style.display = 'block';
+      formVehiculo.style.display = 'none';
+    } else {
+      formEmail.style.display = 'none';
+    }
+  }
+
+  /**
+   * Envía el formulario de cambio de email.
+   */
+  async enviarCambioEmail(event) {
+    event.preventDefault();
+
+    const nuevoEmail = this.querySelector('#nuevoEmail').value.trim();
+
+    if (!nuevoEmail) {
+      alert('El email no puede estar vacío');
+      return;
+    }
+
+    const rutaBase = obtenerRutaBase();
+
+    try {
+      const response = await fetch(rutaBase + 'controllers/CambiarEmailController.php', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: nuevoEmail })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Email actualizado correctamente');
+        this.querySelector('#formEmail').style.display = 'none';
+        this.querySelector('#nuevoEmail').value = '';
+      } else {
+        alert(data.message || 'Error al cambiar el email');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al cambiar el email');
+    }
+  }
+
+  /**
+   * Elimina el vehículo del usuario logueado.
+   * Llama al controlador que obtiene el vehículo desde la sesión.
+   */
+  async borrarVehiculo() {
+    // 1. Mostrar confirmación al usuario
+    if (!confirm('¿Estás seguro de que quieres borrar tu vehículo?')) {
+      return;
+    }
+
+    // 2. Obtener la ruta base para construir la URL
+    const rutaBase = obtenerRutaBase();
+
+    try {
+      // 3. Hacer petición POST al controlador de eliminar vehículo
+      const response = await fetch(rutaBase + 'controllers/EliminarVehiculoController.php', {
+        method: 'POST',
+        credentials: 'include' // Enviar cookies de sesión
+      });
+
+      // 4. Convertir respuesta a JSON
+      const data = await response.json();
+
+      // 5. Si success es true, mostrar mensaje y recargar página
+      if (data.success) {
+        alert('Vehículo eliminado correctamente');
+        location.reload();
+      } else {
+        // 6. Si hay error, mostrar mensaje
+        alert(data.message || 'Error al eliminar el vehículo');
+      }
+    } catch (error) {
+      // 7. Error de red
+      console.error('Error:', error);
+      alert('Error al eliminar el vehículo');
+    }
   }
 
   async eliminarCuenta() {
@@ -80,9 +192,9 @@ class PerfilUsuario extends HTMLElement {
             <div class="menu-opciones">
               <button class="opcion-btn">Cambiar contraseña</button>
               <button class="opcion-btn">Editar foto de perfil</button>
-              <button class="opcion-btn">Cambiar email</button>
+              <button class="opcion-btn cambiarEmail">Cambiar email</button>
               <button class="opcion-btn">Editar vehículo</button>
-              <button class="opcion-btn">Borrar vehículo</button>
+              <button class="opcion-btn" id="borrarVehiculo">Borrar vehículo</button>
               <button class="opcion-btn anadirVehiculo">
                 Añadir mi vehículo
               </button>
@@ -113,6 +225,14 @@ class PerfilUsuario extends HTMLElement {
                   <option value="grande">Grande</option>
                 </select>
                 <div id="error-tamanoVehiculo"></div>
+              </div>
+              <button type="submit" class="btn-guardar">Guardar</button>
+            </form>
+            <form id="formEmail" class="form-email" style="display: none">
+              <div class="form-group">
+                <label for="nuevoEmail">Nuevo email</label>
+                <input type="email" id="nuevoEmail" name="nuevoEmail" placeholder="Introduce tu nuevo email">
+                <div id="error-nuevoEmail"></div>
               </div>
               <button type="submit" class="btn-guardar">Guardar</button>
             </form>
