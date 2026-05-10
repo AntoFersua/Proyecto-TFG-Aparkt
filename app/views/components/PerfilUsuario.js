@@ -1,3 +1,5 @@
+import { obtenerRutaBase } from '../auth.js';
+
 class PerfilUsuario extends HTMLElement {
   constructor() {
     super();
@@ -6,6 +8,51 @@ class PerfilUsuario extends HTMLElement {
   // Método que se llama cuando el elemento se conecta al DOM.
   connectedCallback() {
     this.render();
+    this.configurarEventos();
+  }
+
+  configurarEventos() {
+    console.log('PerfilUsuario: configurando eventos');
+    const btnEliminar = this.querySelector('#eliminarCuenta');
+    console.log('PerfilUsuario: btnEliminar', btnEliminar);
+    btnEliminar.addEventListener('click', () => this.eliminarCuenta());
+  }
+
+  async eliminarCuenta() {
+    if (!confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.')) {
+      return;
+    }
+
+    // Obtener la ruta base (para construir la URL correcta)
+    const rutaBase = obtenerRutaBase();
+    console.log('rutaBase:', rutaBase);
+
+    try {
+      // Hacer petición POST al controlador PHP
+      const url = rutaBase + 'controllers/EliminarCuentaController.php';
+      console.log('Fetch URL:', url);
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include' // Enviar cookies de sesión para identificar al usuario
+      });
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      // Convertir respuesta a JSON
+      const data = await response.json();
+      console.log('Data:', data);
+
+      // Si success es true, redirigir al index
+      // success es la propiedad que devuelve el controlador PHP
+      if (data.success) {
+        window.location.href = rutaBase + 'views/index/index.html';
+      } else {
+        alert('Error al eliminar la cuenta');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar la cuenta');
+    }
   }
 
   //Aquí pintamos el HTML del modal PerfilUsuario
@@ -72,7 +119,7 @@ class PerfilUsuario extends HTMLElement {
           </div>
           <div class="menu-inferior">
             <button class="opcion-btn" id="logout">Cerrar sesión</button>
-            <button class="opcion-btn danger">Eliminar cuenta</button>
+            <button class="opcion-btn danger" id="eliminarCuenta">Eliminar cuenta</button>
           </div>
         </div>
       </aside>`;

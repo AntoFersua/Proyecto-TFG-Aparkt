@@ -9,7 +9,7 @@
  */
 
 // FUNCIONES AUXILIARES
-function obtenerRutaBase() {
+export function obtenerRutaBase() {
   const ruta = window.location.pathname;
   // Si está en /app/views/login/ o /app/views/signup/ o /app/views/aparkt/ o /app/views/index/
   if (

@@ -103,6 +103,21 @@ class Usuario extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function eliminarUsuario($id)
+    {
+        // Primero eliminar vehículos asociados
+        $consultaVehiculos = "DELETE FROM Vehiculo WHERE usuario_id = :id";
+        $stmtVehiculos = $this->_conexion->prepare($consultaVehiculos);
+        $stmtVehiculos->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmtVehiculos->execute();
+
+        // Luego eliminar el usuario
+        $consulta = "DELETE FROM Usuario WHERE id = :id";
+        $stmt = $this->_conexion->prepare($consulta);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
 
     
 }
