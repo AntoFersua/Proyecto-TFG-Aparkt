@@ -559,7 +559,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       }
 
       //Obtener el formulario de realizar una búsqueda
-      let formulario = document.querySelector("form");
+      let formulario = document.querySelector("#form-busqueda");
       //Aplicar listener en caso de que sea enviado
       formulario.addEventListener("submit", enviarFormulario);
       //Evento es un objeto
