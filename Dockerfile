@@ -2,6 +2,10 @@ FROM php:8.2-apache
 
 RUN docker-php-ext-install pdo_mysql
 RUN a2enmod rewrite
+RUN a2dismod mpm_event mpm_worker 2>/dev/null; a2enmod mpm_prefork
+
+RUN sed -i 's/80/8080/g' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:8080/g' /etc/apache2/sites-available/000-default.conf
 
 COPY . /var/www/html/
 
@@ -10,10 +14,6 @@ RUN { \
     echo "RewriteRule ^$ /app/views/aparkt/aparkt.html [L]"; \
 } > /var/www/html/.htaccess
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 EXPOSE 8080
 
-ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
