@@ -113,7 +113,10 @@ function inicializarFormulario() {
           window.location.href = '../aparkt/aparkt.html';
         //Si el login es incorrrecto
         } else {
-          alert(t('login.errorLogin'));
+          const msjError = data.errores
+            ? Object.values(data.errores).join('\n')
+            : (data.mensaje || t('login.errorLogin'));
+          alert(msjError);
         }
       })
       .catch((error) => {
