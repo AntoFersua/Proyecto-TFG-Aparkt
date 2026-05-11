@@ -619,6 +619,11 @@ footer {
   }
 }
 
+#svgEuro{
+  padding-top: 10px;
+  padding-left: 8px;
+}
+
 main img {
   height: 300px;
 }
