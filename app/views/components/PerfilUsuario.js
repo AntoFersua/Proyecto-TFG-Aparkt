@@ -73,7 +73,10 @@ class PerfilUsuario extends HTMLElement {
   configurarLabelFlotante() {
     const selects = this.querySelectorAll('#formVehiculo select');
     selects.forEach((select) => {
+      console.log('Select encontrado:', select.id);
+      
       select.addEventListener('change', function () {
+        console.log('Change en:', this.id, 'valor:', this.value);
         if (this.value) {
           this.classList.add('has-value');
         } else {
@@ -82,10 +85,12 @@ class PerfilUsuario extends HTMLElement {
       });
 
       select.addEventListener('focus', function () {
+        console.log('Focus en:', this.id);
         this.classList.add('has-value');
       });
 
       select.addEventListener('blur', function () {
+        console.log('Blur en:', this.id, 'valor:', this.value);
         if (!this.value) {
           this.classList.remove('has-value');
         }
@@ -268,8 +273,7 @@ class PerfilUsuario extends HTMLElement {
               </button>
             </div>
             <form id="formVehiculo" class="form-vehiculo" style="display: none">
-              <div class="form-group">
-                <label for="tipoVehiculo" data-i18n="perfil.tipoVehiculo">Tipo de vehículo</label>
+              <div class="form-group input-field">
                 <select id="tipoVehiculo" name="tipo_vehiculo">
                   <option value=""></option>
                   <option value="turismo" data-i18n="perfil.turismo">Turismo</option>
@@ -279,24 +283,25 @@ class PerfilUsuario extends HTMLElement {
                   <option value="furgo" data-i18n="perfil.furgo">Furgoneta</option>
                   <option value="otro" data-i18n="perfil.otro">Otro</option>
                 </select>
+                <label for="tipoVehiculo" data-i18n="perfil.tipoVehiculo">Tipo de vehículo</label>
                 <div id="error-tipoVehiculo"></div>
               </div>
-              <div class="form-group">
-                <label for="tamanoVehiculo" data-i18n="perfil.tamano">Tamaño</label>
+              <div class="form-group input-field">
                 <select id="tamanoVehiculo" name="tamano">
                   <option value=""></option>
                   <option value="pequeno" data-i18n="perfil.pequeno">Pequeño</option>
                   <option value="mediano" data-i18n="perfil.mediano">Mediano</option>
                   <option value="grande" data-i18n="perfil.grande">Grande</option>
                 </select>
+                <label for="tamanoVehiculo" data-i18n="perfil.tamano">Tamaño</label>
                 <div id="error-tamanoVehiculo"></div>
               </div>
               <button type="submit" class="btn-guardar" data-i18n="perfil.guardar">Guardar</button>
             </form>
             <form id="formEmail" class="form-email" style="display: none">
-              <div class="form-group">
+              <div class="form-group input-field">
+                <input type="email" id="nuevoEmail" name="nuevoEmail" placeholder=" ">
                 <label for="nuevoEmail">Nuevo email</label>
-                <input type="email" id="nuevoEmail" name="nuevoEmail" placeholder="Introduce tu nuevo email">
                 <div id="error-nuevoEmail"></div>
               </div>
               <button type="submit" class="btn-guardar">Guardar</button>

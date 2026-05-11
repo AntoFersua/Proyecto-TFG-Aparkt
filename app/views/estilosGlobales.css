@@ -797,7 +797,76 @@ main img {
   width: 100%;
 }
 
-.form-group label {
+/* Input field con label flotante - estructura: input/select ANTES de label */
+.input-field {
+  position: relative;
+  width: 100%;
+
+  input,
+  select {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    border: solid 1px #8d8d8d;
+    letter-spacing: 1px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8d8d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+
+    option {
+      padding: 10px;
+      font-size: 0.85rem;
+      color: #333;
+      background: white;
+      
+      &:hover {
+        background: var(--color-azulOscuro);
+        color: white;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border: solid 2px var(--color-azulOscuro);
+      box-shadow: 0 0 0 3px rgba(0, 90, 96, 0.15);
+    }
+
+    &:focus ~ label,
+    &:focus ~ label,
+    &.has-value ~ label {
+      transform: translateY(-51%) translateX(-10px) scale(0.8);
+      background-color: var(--bg-primary);
+      padding: 0px 5px;
+      color: var(--color-azulOscuro);
+      font-weight: bold;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 100px;
+    }
+  }
+
+  label {
+    position: absolute;
+    color: #8d8d8d;
+    pointer-events: none;
+    background-color: transparent;
+    left: 15px;
+    transform: translateY(0.6rem);
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+  }
+}
+
+/* Excluir .input-field de los estilos de .form-group */
+.form-group:not(.input-field) label {
   position: absolute;
   color: #8d8d8d;
   pointer-events: none;
@@ -808,8 +877,8 @@ main img {
   font-size: 0.85rem;
 }
 
-.form-group select,
-.form-group input {
+.form-group:not(.input-field) select,
+.form-group:not(.input-field) input {
   padding: 10px 15px;
   font-size: 0.85rem;
   border-radius: 8px;
@@ -823,32 +892,16 @@ main img {
   cursor: pointer;
 }
 
-.form-group select:hover,
-.form-group input:hover {
+.form-group:not(.input-field) select:hover,
+.form-group:not(.input-field) input:hover {
   border-color: var(--color-azulOscuro);
 }
 
-.form-group select:focus,
-.form-group input:focus {
+.form-group:not(.input-field) select:focus,
+.form-group:not(.input-field) input:focus {
   outline: none;
   border: solid 2px var(--color-azulOscuro);
   box-shadow: 0 0 0 3px rgba(0, 90, 96, 0.15);
-}
-
-.form-group select:focus ~ label,
-.form-group select:active ~ label,
-.form-group select.has-value ~ label,
-.form-group input:focus ~ label,
-.form-group input:active ~ label,
-.form-group input.has-value ~ label {
-  transform: translateY(-51%) translateX(-10px) scale(0.8);
-  background-color: #fff;
-  padding: 0px 5px;
-  color: var(--color-azulOscuro);
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: none;
-  border-radius: 100px;
 }
 
 .btn-guardar,

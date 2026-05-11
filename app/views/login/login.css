@@ -10,6 +10,7 @@ main {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--bg-primary);
+  padding-top: 120px;
 }
 
 /*Contenedor tipo móvil*/
@@ -356,11 +357,8 @@ main {
 @media (max-width: 480px) {
   main {
     flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding: 16px;
-    min-height: 95vh;
-    background-position: top center;
+    padding-top: 120px !important;
+    min-height: 80vh;
   }
 
   .main-izquierdo {
@@ -448,17 +446,12 @@ main {
   .telefono form > p {
     font-size: 0.75rem;
   }
-}
-
-@media (max-width: 480px) {
-  main {
-    padding: 12px;
-  }
 
   .telefono {
-    height: 540px;
-    width: 260px;
-    border-radius: 28px;
+    height: 580px;
+    width: 280px;
+    border-radius: 32px;
+    border-width: 2.5px;
 
     form {
       max-width: 220px;
