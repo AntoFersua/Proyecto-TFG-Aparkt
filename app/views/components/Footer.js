@@ -15,7 +15,7 @@ class Footer extends HTMLElement {
         <footer>
       <div class="footer-main">
         <div class="footer-section footer-brand">
-          <img src="../assets/imagotipoAparkt.png" data-i18n-alt="footer.logoAlt" alt="Aparkt Logo" class="footer-logo" />
+          <img src="../assets/imagotipoAparkt.webp" data-i18n-alt="footer.logoAlt" alt="Aparkt Logo" class="footer-logo" />
         </div>
 
         <div class="footer-section footer-contact">
