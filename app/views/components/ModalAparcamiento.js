@@ -8,6 +8,14 @@ class ModalAparcamiento extends HTMLElement {
   connectedCallback() {
     //renderizar el modal
     this.render();
+    //si la plaza esta libre, motrar botón de ocupar
+    if(this.estadoOcupacionPlaza == 0){
+      this.querySelector('#botonOcuparPlaza').classList.remove("visibilidadNone");
+    }
+    //si la plaza esta ocupada, motrar botón de liberar
+    else{
+      this.querySelector('#botonLiberarPlaza').classList.remove("visibilidadNone");
+    }
     //inicializar la variable que almacena la función resolve de la promesa 
     this._resolver = null;
     //crear la promesa que devuelve la acción seleccionada por el usuario, ya sea ocupar o liberar
@@ -159,6 +167,10 @@ class ModalAparcamiento extends HTMLElement {
   font-weight: bold;
   cursor: pointer;
 }
+
+.visibilidadNone{
+  display: none;
+}
 </style>
 
 
@@ -174,14 +186,14 @@ class ModalAparcamiento extends HTMLElement {
     </div>
 
     <div class="modal-cuerpo">
-      <p class="descripcion"><span data-i18n="modalAparcamiento.descripcionAntes">Has seleccionado la plaza</span> <strong>P-242</strong><span data-i18n="modalAparcamiento.descripcionDespues">. ¿Qué acción deseas realizar?</span></p>
+      <p class="descripcion"><span data-i18n="modalAparcamiento.descripcionAntes">Has seleccionado una plaza. </span><span data-i18n="modalAparcamiento.descripcionDespues">¿Qué deseas realizar?</span></p>
 
-      <button class="boton-accion accion-primaria" id="botonLiberarPlaza">
+      <button class="boton-accion accion-primaria visibilidadNone" id="botonLiberarPlaza">
         <span data-i18n="modalAparcamiento.liberarPlaza">Liberar Plaza</span>
         <span>›</span>
       </button>
 
-      <button class="boton-accion accion-secundaria" id="botonOcuparPlaza">
+      <button class="boton-accion accion-secundaria visibilidadNone" id="botonOcuparPlaza">
         <span data-i18n="modalAparcamiento.ocuparPlaza">Ocupar Plaza</span>
         <span>›</span>
       </button>
