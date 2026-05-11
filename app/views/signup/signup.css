@@ -4,7 +4,7 @@ main {
   align-items: center;
   font-family: "Roboto", Arial, Verdana, sans-serif;
   gap: 60px;
-  background-image: url("../assets/fondoAparkt.png");
+  background-image: url("../assets/fondoAparkt.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
