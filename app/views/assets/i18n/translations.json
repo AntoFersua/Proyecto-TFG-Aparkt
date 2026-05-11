@@ -173,8 +173,8 @@
     },
     "modalAparcamiento": {
       "titulo": "Gestionar Plaza",
-      "descripcionAntes": "Has seleccionado la plaza",
-      "descripcionDespues": ". ¿Qué acción deseas realizar?",
+      "descripcionAntes": "Has seleccionado una plaza. ",
+      "descripcionDespues": "¿Qué deseas realizar?",
       "liberarPlaza": "Liberar Plaza",
       "ocuparPlaza": "Ocupar Plaza",
       "cerrar": "Cerrar"
@@ -376,8 +376,8 @@
     },
     "modalAparcamiento": {
       "titulo": "Manage Space",
-      "descripcionAntes": "You have selected space",
-      "descripcionDespues": ". What action do you want to perform?",
+      "descripcionAntes": "You have selected a place. ",
+      "descripcionDespues": "What do you want to do?",
       "liberarPlaza": "Free Space",
       "ocuparPlaza": "Occupy Space",
       "cerrar": "Close"
@@ -579,8 +579,8 @@
     },
     "modalAparcamiento": {
       "titulo": "Gérer la Place",
-      "descripcionAntes": "Vous avez sélectionné la place",
-      "descripcionDespues": ". Quelle action souhaitez-vous effectuer ?",
+      "descripcionAntes": "Vous avez sélectionné la place. ",
+      "descripcionDespues": "Qu'est-ce que vous voulez faire?",
       "liberarPlaza": "Libérer la Place",
       "ocuparPlaza": "Occuper la Place",
       "cerrar": "Fermer"
