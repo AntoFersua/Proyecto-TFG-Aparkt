@@ -5,7 +5,7 @@ main {
   align-items: center;
   font-family: "Roboto", Arial, Verdana, sans-serif;
   gap: 60px;
-  background-image: url("../assets/fondoAparkt.png");
+  background-image: url("../assets/fondoAparkt.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -352,15 +352,138 @@ main {
   }
 }
 
-/*Responsive*/
-@media (max-width: 900px) {
+/*Mobile - Diseño móvil manteniendo el teléfono*/
+@media (max-width: 480px) {
   main {
     flex-direction: column;
-    gap: 30px;
-    padding: 30px 20px;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    min-height: 95vh;
+    background-position: top center;
   }
 
-  .main-izquierdo img {
-    height: 200px;
+  .main-izquierdo {
+    display: none;
+  }
+
+  .telefono {
+    height: 580px;
+    width: 280px;
+    border-radius: 32px;
+    border-width: 2.5px;
+
+    &::after {
+      height: 80px;
+      width: 4px;
+      right: -5px;
+      top: 120px;
+    }
+
+    &::before {
+      height: 50px;
+      width: 4px;
+      right: -5px;
+      top: 220px;
+    }
+
+    > .notch {
+      width: 120px;
+      height: 26px;
+    }
+
+    form {
+      max-width: 240px;
+      padding: 5%;
+
+      .form-contenido {
+        img {
+          height: 80px;
+          width: 80px;
+          display: block;
+        }
+      }
+
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      .form-contenido {
+        gap: 10px;
+      }
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .input-field {
+    input {
+      padding: 10px 15px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .form-options {
+    > a {
+      font-size: 0.72rem;
+    }
+  }
+
+  .checkbox-wrapper span {
+    font-size: 0.72rem;
+  }
+
+  .divider span {
+    font-size: 0.65rem;
+  }
+
+  .btn-google {
+    padding: 9px 16px;
+    font-size: 0.78rem;
+  }
+
+  .telefono form > p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 12px;
+  }
+
+  .telefono {
+    height: 540px;
+    width: 260px;
+    border-radius: 28px;
+
+    form {
+      max-width: 220px;
+      padding: 4%;
+
+      .form-contenido {
+        img {
+          height: 70px;
+          width: 70px;
+        }
+      }
+
+      h2 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .input-field input {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .telefono button[type="submit"] {
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 }

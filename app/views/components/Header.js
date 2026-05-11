@@ -16,7 +16,7 @@ class Header extends HTMLElement {
     this.innerHTML = `
         <header>
       <div class="logoHeader">
-        <img src="../assets/imagotipoAparkt.png" data-i18n-alt="header.logoAlt" alt="Logo" />
+        <img src="../assets/imagotipoAparkt.webp" data-i18n-alt="header.logoAlt" alt="Logo" />
       </div>
       <nav class="navPrincipal">
         <ul>

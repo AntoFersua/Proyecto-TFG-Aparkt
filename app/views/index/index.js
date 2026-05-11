@@ -761,7 +761,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       function añadirMarcadorPersonalizado(longitudX, latitudY, popup) {
         const anunciante = document.createElement("div");
         anunciante.className = "custom-marker";
-        anunciante.innerHTML = `<img src="../assets/imagotipoAparkt.png" alt="anunciante" style="width:60px;height:60px;display:block;">`;
+        anunciante.innerHTML = `<img src="../assets/imagotipoAparkt.webp" alt="anunciante" style="width:60px;height:60px;display:block;">`;
 
         const markerAnunciante = new mapboxgl.Marker({
           className: "estadoVisualMarker",
