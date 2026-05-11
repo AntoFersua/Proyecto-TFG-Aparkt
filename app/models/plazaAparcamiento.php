@@ -7,7 +7,7 @@ class PlazaAparcamiento extends Model
 {
     public function crearPlaza($ubicacion, $tipo, $tamano, $zonaId, $sourceID, $capaID, $usuarioId = null)
     {
-        $consulta = "INSERT INTO plazaaparcamiento (ubicacion, tipo, tamano, zona_id, sourceID, capaID, usuario_id) 
+        $consulta = "INSERT INTO PlazaAparcamiento (ubicacion, tipo, tamano, zona_id, sourceID, capaID, usuario_id) 
                 VALUES (ST_GeomFromText(:ubicacion), :tipo, :tamano, :zona_id, :sourceID, :capaID, :usuario_id)";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -36,8 +36,8 @@ class PlazaAparcamiento extends Model
          * ST_X devuelve la longitud y ST_Y devuelve la latitud. */
         $consulta = "SELECT p.id, ST_AsText(p.ubicacion) AS ubicacion, ST_X(p.ubicacion) AS longitud, ST_Y(p.ubicacion) AS latitud,
                     p.tamano, p.sourceID, p.capaID, p.tipo, p.zona_id, p.ocupado, p.usuario_id, p.hora_reporte, z.id AS zona_id
-                    FROM plazaaparcamiento p
-                    LEFT JOIN zona z ON p.zona_id = z.id";
+                    FROM PlazaAparcamiento p
+                    LEFT JOIN Zona z ON p.zona_id = z.id";
 
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->execute();
@@ -48,7 +48,7 @@ class PlazaAparcamiento extends Model
     public function obtenerPorId($id)
     {
         $consulta = "SELECT p.*, ST_X(p.ubicacion) as latitud, ST_Y(p.ubicacion) as longitud
-                    FROM plazaaparcamiento p
+                    FROM PlazaAparcamiento p
                     WHERE p.id = :id";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -61,7 +61,7 @@ class PlazaAparcamiento extends Model
     public function obtenerPorZona($zonaId)
     {
         $consulta = "SELECT p.*, ST_X(p.ubicacion) as latitud, ST_Y(p.ubicacion) as longitud
-                    FROM plazaaparcamiento p
+                    FROM PlazaAparcamiento p
                     WHERE p.zona_id = :zona_id";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -74,7 +74,7 @@ class PlazaAparcamiento extends Model
     public function obtenerDisponibles()
     {
         $consulta = "SELECT p.*, ST_X(p.ubicacion) as latitud, ST_Y(p.ubicacion) as longitud
-                    FROM plazaaparcamiento p
+                    FROM PlazaAparcamiento p
                     WHERE p.ocupado = 0";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -86,7 +86,7 @@ class PlazaAparcamiento extends Model
     public function obtenerPorUsuario($usuarioId)
     {
         $consulta = "SELECT p.*, ST_X(p.ubicacion) as latitud, ST_Y(p.ubicacion) as longitud
-                    FROM plazaaparcamiento p
+                    FROM PlazaAparcamiento p
                     WHERE p.usuario_id = :usuario_id";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -98,7 +98,7 @@ class PlazaAparcamiento extends Model
 
     public function actualizarPlaza($id, $tipo, $tamano, $zonaId, $sourceID, $capaID)
     {
-        $consulta = "UPDATE plazaaparcamiento 
+        $consulta = "UPDATE PlazaAparcamiento 
                 SET tipo = :tipo, tamano = :tamano, zona_id = :zona_id, sourceID = :sourceID, capaID = :capaID
                 WHERE id = :id";
 
@@ -118,7 +118,7 @@ class PlazaAparcamiento extends Model
 
     public function ocuparPlaza($sourceID, $usuarioID)
     {
-        $consulta = "UPDATE plazaaparcamiento 
+        $consulta = "UPDATE PlazaAparcamiento 
                 SET ocupado = 1, usuario_id = :usuarioID, hora_reporte = NOW()
                 WHERE sourceID = :sourceID";
 
@@ -134,7 +134,7 @@ class PlazaAparcamiento extends Model
 
     public function liberarPlaza($sourceID)
     {
-        $consulta = "UPDATE plazaaparcamiento 
+        $consulta = "UPDATE PlazaAparcamiento 
                 SET ocupado = 0, usuario_id = NULL, hora_reporte = NOW()
                 WHERE sourceID = :sourceID";
 
@@ -147,7 +147,7 @@ class PlazaAparcamiento extends Model
 
     public function eliminarPlaza($id)
     {
-        $consulta = "DELETE FROM plazaaparcamiento WHERE id = :id";
+        $consulta = "DELETE FROM PlazaAparcamiento WHERE id = :id";
 
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
