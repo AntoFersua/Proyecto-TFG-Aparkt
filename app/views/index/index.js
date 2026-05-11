@@ -200,7 +200,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         const aparcamiento24 = estadoAparcamiento(-4.478042, 36.721132, 3, "aparcamiento24", "aparcamiento24-fill", "rgba(0, 255, 0, 0.3)", "green");
         const aparcamiento25 = estadoAparcamiento(-4.478005, 36.721189, 3, "aparcamiento25", "aparcamiento25-fill", "rgba(255, 0, 0, 0.3)", "red");
         const aparcamiento26 = estadoAparcamiento(-4.477965, 36.721239, 3, "aparcamiento26", "aparcamiento26-fill", "rgba(0, 255, 0, 0.3)", "green");
-*/
+*/      
+        let estadoOcupacion; //variable que se usará para determinar el estado de la plaza de aparacmiento en función de su color de estado
         // Función para abrir el modal del aparcamiento
         async function abrirModalAparcamiento() {
           //busca si existe un modal de aparcamiento en el DOM
@@ -211,10 +212,54 @@ window.addEventListener("DOMContentLoaded", async function () {
           }
           //crear un elemento de modal-aparcamiento
           const modal = document.createElement("modal-aparcamiento");
+          //asignar estado de la plaza para en función del estado actual de la plaza se enseña un botón u otro, de esta forma se le pasa el valor al modal
+          modal.estadoOcupacionPlaza = estadoOcupacion; 
+          //ENVIAR POR PARAMETRO?????????????????????????????''
           //añade el modal al body
           document.body.appendChild(modal);
           //retorna la promesa una vez que el modal haya sido cerrado
           return await modal.resultado;
+        }
+
+        function actualizarOcupacionPlazas() {
+          //obtener datos de la BBDD desde PlazaAparcamientoController.php
+          fetch("../../controllers/PlazaAparcamientoController.php")
+            .then(function (response) {
+               //sacar el estado de la respuesta 
+              console.log("Status:", response.status);
+              //convertir la respuesta a json
+              return response.json();
+            })
+            .then(function (data) {
+              //si el estado es correcto
+              if (data.status === "ok") {
+                //obtener los datos de las plazas
+                const plazasEspecificadas = data.data;
+                //recorrer datos del id de la capa y ocupación de cada plaza y guardar en variables 
+                plazasEspecificadas.forEach(function (plaza) {
+                  let capaIDPlaza = plaza.capaID;
+                  let ocupadoPlaza = plaza.ocupado;
+                  let colorRellenoPlaza;
+                  let colorBordePlaza;
+                  //determinar el color segun el estado de ocupación, verde está libre y rojo está ocupado
+                  if (ocupadoPlaza == 0) {
+                    colorRellenoPlaza = "rgba(0, 255, 0, 0.3)";
+                    colorBordePlaza = "green";
+                  } else {
+                    colorRellenoPlaza = "rgba(255, 0, 0, 0.3)";
+                    colorBordePlaza = "red";
+                  }
+                  //actualizar los colores del estado de las plazas en el mapa
+                  mapa.setPaintProperty(capaIDPlaza, 'fill-color', colorRellenoPlaza);
+                  mapa.setPaintProperty(capaIDPlaza, 'fill-outline-color', colorBordePlaza);
+                });
+
+              }
+
+            })
+            .catch(function (err) {
+              console.error("Error al actualizar el estado de ocupación de las plazas:", err);
+            });
         }
 
         //crear array de aparcamientos
@@ -281,6 +326,12 @@ window.addEventListener("DOMContentLoaded", async function () {
                   console.log(e.features[0]["source"]);
                   //guardar valor del aparcamiento seleccionado antes del await, los datos del objeto se limpian
                   let aparcamientoSeleccionado = e.features[0]["source"];
+
+                  //guardar valor del color del estado 
+                  let colorEstado = e.features[0]["layer"]["paint"]["fill-color"];
+                  console.log(colorEstado); //da un objeto ar {r: 0, g: 1, b: 0, a: 0.3}, la r o la g varian en funcion del estado del aparcamiento
+                  estadoOcupacion = (colorEstado.g == 1) ? 0 : 1; //0 es libre y 1 es ocupado
+
                   //abrir el modal y esperar la respuesta del usuario y guardarla, la acción será ocupar o liberar
                   let accion = await abrirModalAparcamiento();
                   console.log(accion);
@@ -342,6 +393,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         //si el status es ok
                         if (data.status === "ok") {
                           alert(data.mensaje);
+                          //llamar función de actualizarPlazas para cambiar el estado de ocupación (rojo o verde)
+                          actualizarOcupacionPlazas(); 
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
                           alert(data.mensaje || "Error al guardar el estado");
@@ -380,6 +433,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         //si el status es ok
                         if (data.status === "ok") {
                           alert(data.mensaje);
+                          //llamar función de actualizarPlazas para cambiar el estado de ocupación (rojo o verde)
+                          actualizarOcupacionPlazas(); 
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
                           alert(data.mensaje || t('index.errorGuardarEstado'));
