@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-i18n-title="index.title">Mapa Aparkt</title>
     <link rel="stylesheet" type="text/css" href="../estilosGlobales.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.css"
       rel="stylesheet"
@@ -14,73 +15,20 @@
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
     <script src="../validacionVehiculo.js"></script>
     <script src="index.js" type="module"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      #mapa {
-        width: 100%;
-        position: absolute;
-        top: 70px;
-        bottom: 0;
-      }
-      #form-busqueda {
-        position: absolute;
-        top: 10px;
-        left: 20px;
-        z-index: 5;
-      }
-      input[type="text"] {
-        width: 300px;
-        height: 20px;
-        font-size: 16px;
-        padding: 10px 20px;
-      }
-      input[type="submit"] {
-        padding: 10px 20px;
-        font-size: 16px;
-      }
-      #mostrarEstadosAparcamientos {
-        position: absolute;
-        bottom: 120px;
-        left: 20px;
-        z-index: 5;
-        }
-        #mostrarAparcamientos {
-        position: absolute;
-        bottom: 100px;
-        left: 20px;
-        z-index: 5;
-        }
-        #mostrarMarcadoresAnunciante {
-        position: absolute;
-        bottom: 80px;
-        left: 20px;
-        z-index: 5;
-        }
-        #mostrarMarcadoresUsuario {
-        position: absolute;
-        bottom: 60px;
-        left: 20px;
-        z-index: 5;
-        }
-        .estadoVisualMarker{
-            display: none;
-        }
-    </style>
   </head>
   <body>
     <app-header></app-header>
+    <perfil-usuario></perfil-usuario>
     <div id="mapa"></div>
     <form action="" method="get" id="form-busqueda">
       <input type="text" id="busqueda" placeholder="Escribe una dirección" data-i18n-placeholder="index.placeholderDireccion" />
       <input type="submit" value="Enviar" data-i18n-value="index.enviar" />
     </form>
-    <button id="mostrarEstadosAparcamientos" data-i18n="index.mostrarEstados">Mostrar estados aparcamientos</button>
-    <button id="mostrarAparcamientos" data-i18n="index.mostrarAparcamientos">Mostrar aparcamientos</button>
-    <button id="mostrarMarcadoresUsuario" data-i18n="index.mostrarMarcadoresUser">Mostrar marcadores usuario</button>
-    <button id="mostrarMarcadoresAnunciante" data-i18n="index.mostrarMarcadoresAnunciante">Mostrar marcadores anunciantes</button>
+    <div id="interactividad">
+      <button id="mostrarEstadosAparcamientos">
+        Mostrar estados aparcamientos
+      </button>
+    </div>
     <script src="../modoOscuro.js"></script>
   </body>
 </html>

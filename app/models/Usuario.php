@@ -103,6 +103,36 @@ class Usuario extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function eliminarUsuario($id)
+    {
+        // Primero eliminar vehículos asociados
+        $consultaVehiculos = "DELETE FROM Vehiculo WHERE usuario_id = :id";
+        $stmtVehiculos = $this->_conexion->prepare($consultaVehiculos);
+        $stmtVehiculos->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmtVehiculos->execute();
+
+        // Luego eliminar el usuario
+        $consulta = "DELETE FROM Usuario WHERE id = :id";
+        $stmt = $this->_conexion->prepare($consulta);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Actualiza el email de un usuario.
+     * @param int $id ID del usuario
+     * @param string $email Nuevo email
+     * @return bool true si se actualizó correctamente
+     */
+    public function actualizarEmail($id, $email)
+    {
+        $consulta = "UPDATE Usuario SET email = :email WHERE id = :id";
+        $stmt = $this->_conexion->prepare($consulta);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
 
     
 }

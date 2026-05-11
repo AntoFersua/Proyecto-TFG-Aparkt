@@ -2,6 +2,7 @@
 import '../components/Header.js';
 import '../components/Footer.js';
 import '../components/Modalpuntos.js';
+import '../components/PerfilUsuario.js';
 
 import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
 import { cargarTraducciones, aplicarTraducciones } from '../translator.js';
@@ -27,9 +28,12 @@ function configurarUIUsuarioLogueado(usuario) {
   }
 
   const botonPerfil = document.getElementById('perfilUsuario');
+  console.log('aparkt.js - botonPerfil:', botonPerfil);
   if (botonPerfil) {
     botonPerfil.addEventListener('click', () => {
+      console.log('aparkt.js - click en botonPerfil');
       const banner = document.getElementById('bannerUsuario');
+      console.log('aparkt.js - banner:', banner);
       if (banner) {
         banner.classList.add('abierto');
       }

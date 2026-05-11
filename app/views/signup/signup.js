@@ -13,6 +13,19 @@ async function iniciarPagina() {
       if (botonLogout) {
         botonLogout.addEventListener('click', () => cerrarSesion());
       }
+
+      const botonPerfil = document.getElementById('perfilUsuario');
+      console.log('signup.js - botonPerfil:', botonPerfil);
+      if (botonPerfil) {
+        botonPerfil.addEventListener('click', () => {
+          console.log('signup.js - click en botonPerfil');
+          const banner = document.getElementById('bannerUsuario');
+          console.log('signup.js - banner:', banner);
+          if (banner) {
+            banner.classList.add('abierto');
+          }
+        });
+      }
     },
     alNoLoguearse: () => {
       configurarUIUsuarioNoLogueado();

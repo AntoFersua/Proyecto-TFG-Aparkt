@@ -1,3 +1,5 @@
+import { obtenerRutaBase } from '../auth.js';
+
 class PerfilUsuario extends HTMLElement {
   constructor() {
     super();
@@ -6,6 +8,163 @@ class PerfilUsuario extends HTMLElement {
   // Método que se llama cuando el elemento se conecta al DOM.
   connectedCallback() {
     this.render();
+    this.configurarEventos();
+  }
+
+  configurarEventos() {
+    const btnEliminar = this.querySelector('#eliminarCuenta');
+    btnEliminar.addEventListener('click', () => this.eliminarCuenta());
+
+    const btnBorrarVehiculo = this.querySelector('#borrarVehiculo');
+    btnBorrarVehiculo.addEventListener('click', () => this.borrarVehiculo());
+
+    const btnCambiarEmail = this.querySelector('.cambiarEmail');
+    btnCambiarEmail.addEventListener('click', (e) => this.cambiarEmail(e));
+
+    const formEmail = this.querySelector('#formEmail');
+    formEmail.addEventListener('submit', (e) => this.enviarCambioEmail.call(this, e));
+
+    const btnCerrar = this.querySelector('#cerrarBanner');
+    btnCerrar.addEventListener('click', () => this.cerrarBanner());
+  }
+
+  cerrarBanner() {
+    const banner = this.querySelector('#bannerUsuario');
+    banner.classList.remove('abierto');
+  }
+
+  /**
+   * Cambia el email del usuario.
+   * Muestra un formulario para introducir el nuevo email.
+   */
+  async cambiarEmail(event) {
+    // Evitar que se ejecute el comportamiento por defecto del botón
+    if (event) event.preventDefault();
+
+    // Obtener elementos del formulario
+    const formEmail = this.querySelector('#formEmail');
+    const formVehiculo = this.querySelector('#formVehiculo');
+
+    // Si el formulario de email está oculto, mostrarlo
+    if (formEmail.style.display === 'none') {
+      formEmail.style.display = 'block';
+      formVehiculo.style.display = 'none';
+    } else {
+      formEmail.style.display = 'none';
+    }
+  }
+
+  /**
+   * Envía el formulario de cambio de email.
+   */
+  async enviarCambioEmail(event) {
+    event.preventDefault();
+
+    const nuevoEmail = this.querySelector('#nuevoEmail').value.trim();
+
+    if (!nuevoEmail) {
+      alert('El email no puede estar vacío');
+      return;
+    }
+
+    const rutaBase = obtenerRutaBase();
+
+    try {
+      const response = await fetch(rutaBase + 'controllers/CambiarEmailController.php', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: nuevoEmail })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Email actualizado correctamente');
+        this.querySelector('#formEmail').style.display = 'none';
+        this.querySelector('#nuevoEmail').value = '';
+      } else {
+        alert(data.message || 'Error al cambiar el email');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al cambiar el email');
+    }
+  }
+
+  /**
+   * Elimina el vehículo del usuario logueado.
+   * Llama al controlador que obtiene el vehículo desde la sesión.
+   */
+  async borrarVehiculo() {
+    // 1. Mostrar confirmación al usuario
+    if (!confirm('¿Estás seguro de que quieres borrar tu vehículo?')) {
+      return;
+    }
+
+    // 2. Obtener la ruta base para construir la URL
+    const rutaBase = obtenerRutaBase();
+
+    try {
+      // 3. Hacer petición POST al controlador de eliminar vehículo
+      const response = await fetch(rutaBase + 'controllers/EliminarVehiculoController.php', {
+        method: 'POST',
+        credentials: 'include' // Enviar cookies de sesión
+      });
+
+      // 4. Convertir respuesta a JSON
+      const data = await response.json();
+
+      // 5. Si success es true, mostrar mensaje y recargar página
+      if (data.success) {
+        alert('Vehículo eliminado correctamente');
+        location.reload();
+      } else {
+        // 6. Si hay error, mostrar mensaje
+        alert(data.message || 'Error al eliminar el vehículo');
+      }
+    } catch (error) {
+      // 7. Error de red
+      console.error('Error:', error);
+      alert('Error al eliminar el vehículo');
+    }
+  }
+
+  async eliminarCuenta() {
+    if (!confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.')) {
+      return;
+    }
+
+    // Obtener la ruta base (para construir la URL correcta)
+    const rutaBase = obtenerRutaBase();
+    console.log('rutaBase:', rutaBase);
+
+    try {
+      // Hacer petición POST al controlador PHP
+      const url = rutaBase + 'controllers/EliminarCuentaController.php';
+      console.log('Fetch URL:', url);
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include' // Enviar cookies de sesión para identificar al usuario
+      });
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      // Convertir respuesta a JSON
+      const data = await response.json();
+      console.log('Data:', data);
+
+      // Si success es true, redirigir al index
+      // success es la propiedad que devuelve el controlador PHP
+      if (data.success) {
+        window.location.href = rutaBase + 'views/index/index.html';
+      } else {
+        alert('Error al eliminar la cuenta');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar la cuenta');
+    }
   }
 
   //Aquí pintamos el HTML del modal PerfilUsuario
@@ -31,12 +190,12 @@ class PerfilUsuario extends HTMLElement {
         <div class="banner-body">
           <div class="menu-superior">
             <div class="menu-opciones">
-              <button class="opcion-btn" data-i18n="perfil.cambiarPassword">Cambiar contraseña</button>
-              <button class="opcion-btn" data-i18n="perfil.editarFoto">Editar foto de perfil</button>
-              <button class="opcion-btn" data-i18n="perfil.cambiarEmail">Cambiar email</button>
-              <button class="opcion-btn" data-i18n="perfil.editarVehiculo">Editar vehículo</button>
-              <button class="opcion-btn" data-i18n="perfil.borrarVehiculo">Borrar vehículo</button>
-              <button class="opcion-btn anadirVehiculo" data-i18n="perfil.anadirVehiculo">
+              <button class="opcion-btn">Cambiar contraseña</button>
+              <button class="opcion-btn">Editar foto de perfil</button>
+              <button class="opcion-btn cambiarEmail">Cambiar email</button>
+              <button class="opcion-btn">Editar vehículo</button>
+              <button class="opcion-btn" id="borrarVehiculo">Borrar vehículo</button>
+              <button class="opcion-btn anadirVehiculo">
                 Añadir mi vehículo
               </button>
               <button class="opcion-btn verPuntuacion" data-i18n="perfil.verPuntuacion">
@@ -69,10 +228,18 @@ class PerfilUsuario extends HTMLElement {
               </div>
               <button type="submit" class="btn-guardar" data-i18n="perfil.guardar">Guardar</button>
             </form>
+            <form id="formEmail" class="form-email" style="display: none">
+              <div class="form-group">
+                <label for="nuevoEmail">Nuevo email</label>
+                <input type="email" id="nuevoEmail" name="nuevoEmail" placeholder="Introduce tu nuevo email">
+                <div id="error-nuevoEmail"></div>
+              </div>
+              <button type="submit" class="btn-guardar">Guardar</button>
+            </form>
           </div>
           <div class="menu-inferior">
-            <button class="opcion-btn" id="logout" data-i18n="perfil.cerrarSesion">Cerrar sesión</button>
-            <button class="opcion-btn danger" data-i18n="perfil.eliminarCuenta">Eliminar cuenta</button>
+            <button class="opcion-btn" id="logout">Cerrar sesión</button>
+            <button class="opcion-btn danger" id="eliminarCuenta">Eliminar cuenta</button>
           </div>
         </div>
       </aside>`;

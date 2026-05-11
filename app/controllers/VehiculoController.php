@@ -45,6 +45,17 @@ class VehiculoController
             exit();
         }
 
+        // Limitar a un vehículo por usuario
+        $vehiculosExistentes = $this->vehiculoModelo->obtenerPorUsuario($usuarioId);
+        if (!empty($vehiculosExistentes)) {
+            echo json_encode([
+                "status" => "error",
+                "mensaje" => "Ya tienes un vehículo registrado. Solo puedes tener uno."
+            ]);
+            exit();
+        }
+
+        // Crear el vehículo si no existe ninguno
         $id = $this->vehiculoModelo->crearVehiculo($usuarioId, $tipoVehiculo, $tamano);
 
         echo json_encode([
