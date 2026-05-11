@@ -12,14 +12,17 @@ class LoginController
     }
     public function login()
     {
-        // Obtener el contenido raw del body
-        $inputJSON = file_get_contents('php://input');
-        // Convertir a array asociativo
-        $DatosPost = json_decode($inputJSON, true);
-        $errores = [];
-        //obtener datos del frontend
-        $usuario = trim($DatosPost['usuario'] ?? '');
-        $contrasena = trim($DatosPost['contrasena'] ?? '');
+        header('Content-Type: application/json');
+
+        try {
+            // Obtener el contenido raw del body
+            $inputJSON = file_get_contents('php://input');
+            // Convertir a array asociativo
+            $DatosPost = json_decode($inputJSON, true);
+            $errores = [];
+            //obtener datos del frontend
+            $usuario = trim($DatosPost['usuario'] ?? '');
+            $contrasena = trim($DatosPost['contrasena'] ?? '');
 
         //validaciones básicas
         if ($usuario == '') {
@@ -28,9 +31,6 @@ class LoginController
         if ($contrasena == '') {
             $errores['contrasena'] = "Introduce una contraseña";
         }
-
-        //indicar cabecera json y devolver respuesta al frontend
-        header('Content-Type: application/json');
 
         //si hay errores de validación básica, devolverlos
         if (!empty($errores)) {
@@ -113,6 +113,12 @@ class LoginController
             "vehiculo_user" => $_SESSION['vehiculo'],
             "mensaje" => "Usuario inició sesión correctamente"
         ]);
+        } catch (PDOException $e) {
+            echo json_encode([
+                "status" => "error",
+                "mensaje" => "Error en la base de datos: " . $e->getMessage()
+            ]);
+        }
     }
 }
 //Ejecuta automaticamente el proceso de login cuando se accede al archivo LoginController

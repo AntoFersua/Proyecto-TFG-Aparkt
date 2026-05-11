@@ -8,4 +8,4 @@ WORKDIR /var/www/html
 
 EXPOSE ${PORT:-8080}
 
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} server.php"]
+CMD ["sh", "-c", "php -d display_errors=0 -d log_errors=1 -S 0.0.0.0:${PORT:-8080} server.php"]
