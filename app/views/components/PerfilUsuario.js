@@ -26,6 +26,71 @@ class PerfilUsuario extends HTMLElement {
 
     const btnCerrar = this.querySelector('#cerrarBanner');
     btnCerrar.addEventListener('click', () => this.cerrarBanner());
+
+    // Label flotante para selects del formulario de vehículo
+    this.configurarLabelFlotante();
+
+    // Mostrar/ocultar formulario vehículo
+    const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
+    const formVehiculo = this.querySelector('#formVehiculo');
+    let vehiculoVisible = false;
+    
+    if (btnAnadirVehiculo && formVehiculo) {
+      btnAnadirVehiculo.addEventListener('click', (e) => {
+        e.stopPropagation();
+        vehiculoVisible = !vehiculoVisible;
+        if (vehiculoVisible) {
+          btnAnadirVehiculo.textContent = 'Cancelar';
+          formVehiculo.style.display = 'flex';
+        } else {
+          btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+          formVehiculo.style.display = 'none';
+        }
+      });
+    }
+
+    // Label flotante para input de email
+    const inputEmail = this.querySelector('#nuevoEmail');
+    if (inputEmail) {
+      inputEmail.addEventListener('focus', () => {
+        inputEmail.classList.add('has-value');
+      });
+      inputEmail.addEventListener('blur', () => {
+        if (!inputEmail.value) {
+          inputEmail.classList.remove('has-value');
+        }
+      });
+      inputEmail.addEventListener('input', () => {
+        if (inputEmail.value) {
+          inputEmail.classList.add('has-value');
+        } else {
+          inputEmail.classList.remove('has-value');
+        }
+      });
+    }
+  }
+
+  configurarLabelFlotante() {
+    const selects = this.querySelectorAll('#formVehiculo select');
+    selects.forEach((select) => {
+      select.addEventListener('change', function () {
+        if (this.value) {
+          this.classList.add('has-value');
+        } else {
+          this.classList.remove('has-value');
+        }
+      });
+
+      select.addEventListener('focus', function () {
+        this.classList.add('has-value');
+      });
+
+      select.addEventListener('blur', function () {
+        if (!this.value) {
+          this.classList.remove('has-value');
+        }
+      });
+    });
   }
 
   cerrarBanner() {

@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========================================================================
-  // FORMULARIO AÑADIR VEHÍCULO
+  // FORMULARIO AÑADIR VEHÍCULO - Movido a PerfilUsuario.js
   // ========================================================================
 
-  const btnAnadirVehiculo = document.querySelector(".anadirVehiculo");
+  /*const btnAnadirVehiculo = document.querySelector(".anadirVehiculo");
   const formVehiculo = document.getElementById("formVehiculo");
 
   if (btnAnadirVehiculo && formVehiculo) {
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formVehiculo.style.display = "none";
       }
     });
-  }
+  }*/
 
   if (formVehiculo) {
     console.log("JustValidate:", typeof window.JustValidate);
