@@ -1,13 +1,14 @@
 <?php
 
-    $_servidor="localhost";
-    $_usuario="root";
-    $_contrasena="";
-    $_bd="aparkt";
+    $_servidor = getenv('MYSQLHOST') ?: getenv('MYSQL_HOST') ?: 'localhost';
+    $_usuario = getenv('MYSQLUSER') ?: getenv('MYSQL_USER') ?: 'root';
+    $_contrasena = getenv('MYSQLPASSWORD') ?: getenv('MYSQL_PASSWORD') ?: '';
+    $_bd = getenv('MYSQLDATABASE') ?: getenv('MYSQL_DATABASE') ?: 'aparkt';
+    $_puerto = getenv('MYSQLPORT') ?: getenv('MYSQL_PORT') ?: '3306';
 
     try {
         $_conexion = new PDO(
-            "mysql:host=$_servidor;dbname=$_bd;charset=utf8mb4",
+            "mysql:host=$_servidor;port=$_puerto;dbname=$_bd;charset=utf8mb4",
             $_usuario,
             $_contrasena
         );
