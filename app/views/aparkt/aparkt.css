@@ -191,7 +191,7 @@
           transform: translateY(-8px) scale(1.03);
           outline: none;
           box-shadow: var(--shadow-card);
-          background-image: url("../assets/fondoAparkt.png");
+          background-image: url("../assets/fondoAparkt.webp");
         }
       }
     }
