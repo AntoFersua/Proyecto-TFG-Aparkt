@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title data-i18n-title="aparkt.title">Document</title>
     <link rel="stylesheet" href="../estilosGlobales.css" />
     <link rel="stylesheet" href="aparkt.css" />
     <link
@@ -39,53 +39,53 @@
         </svg>
       </button>
       <div class="banner-header">
-        <h2>Mi Perfil</h2>
+        <h2 data-i18n="perfil.miPerfil">Mi Perfil</h2>
       </div>
       <div class="banner-body">
         <div class="menu-superior">
           <div class="menu-opciones">
-            <button class="opcion-btn">Cambiar contraseña</button>
-            <button class="opcion-btn">Editar foto de perfil</button>
-            <button class="opcion-btn">Cambiar email</button>
-            <button class="opcion-btn">Editar vehículo</button>
-            <button class="opcion-btn">Borrar vehículo</button>
-            <button class="opcion-btn anadirVehiculo">
+            <button class="opcion-btn" data-i18n="perfil.cambiarPassword">Cambiar contraseña</button>
+            <button class="opcion-btn" data-i18n="perfil.editarFoto">Editar foto de perfil</button>
+            <button class="opcion-btn" data-i18n="perfil.cambiarEmail">Cambiar email</button>
+            <button class="opcion-btn" data-i18n="perfil.editarVehiculo">Editar vehículo</button>
+            <button class="opcion-btn" data-i18n="perfil.borrarVehiculo">Borrar vehículo</button>
+            <button class="opcion-btn anadirVehiculo" data-i18n="perfil.anadirVehiculo">
               Añadir mi vehículo
             </button>
-            <button class="opcion-btn verPuntuacion">
+            <button class="opcion-btn verPuntuacion" data-i18n="perfil.verPuntuacion">
               Ver puntuación
               </button>
           </div>
           <form id="formVehiculo" class="form-vehiculo" style="display: none">
             <div class="form-group">
-              <label for="tipoVehiculo">Tipo de vehículo</label>
+              <label for="tipoVehiculo" data-i18n="perfil.tipoVehiculo">Tipo de vehículo</label>
               <select id="tipoVehiculo" name="tipo_vehiculo">
                 <option value=""></option>
-                <option value="turismo">Turismo</option>
-                <option value="ranchera">Ranchera</option>
-                <option value="todoterreno">Todoterreno</option>
-                <option value="monovolumen">Monovolumen</option>
-                <option value="furgo">Furgoneta</option>
-                <option value="otro">Otro</option>
+                <option value="turismo" data-i18n="perfil.turismo">Turismo</option>
+                <option value="ranchera" data-i18n="perfil.ranchera">Ranchera</option>
+                <option value="todoterreno" data-i18n="perfil.todoterreno">Todoterreno</option>
+                <option value="monovolumen" data-i18n="perfil.monovolumen">Monovolumen</option>
+                <option value="furgo" data-i18n="perfil.furgo">Furgoneta</option>
+                <option value="otro" data-i18n="perfil.otro">Otro</option>
               </select>
               <div id="error-tipoVehiculo"></div>
             </div>
             <div class="form-group">
-              <label for="tamanoVehiculo">Tamaño</label>
+              <label for="tamanoVehiculo" data-i18n="perfil.tamano">Tamaño</label>
               <select id="tamanoVehiculo" name="tamano">
                 <option value=""></option>
-                <option value="pequeno">Pequeño</option>
-                <option value="mediano">Mediano</option>
-                <option value="grande">Grande</option>
+                <option value="pequeno" data-i18n="perfil.pequeno">Pequeño</option>
+                <option value="mediano" data-i18n="perfil.mediano">Mediano</option>
+                <option value="grande" data-i18n="perfil.grande">Grande</option>
               </select>
               <div id="error-tamanoVehiculo"></div>
             </div>
-            <button type="submit" class="btn-guardar">Guardar</button>
+            <button type="submit" class="btn-guardar" data-i18n="perfil.guardar">Guardar</button>
           </form>
         </div>
         <div class="menu-inferior">
-          <button class="opcion-btn" id="logout">Cerrar sesión</button>
-          <button class="opcion-btn danger">Eliminar cuenta</button>
+          <button class="opcion-btn" id="logout" data-i18n="perfil.cerrarSesion">Cerrar sesión</button>
+          <button class="opcion-btn danger" data-i18n="perfil.eliminarCuenta">Eliminar cuenta</button>
         </div>
       </div>
     </aside>
@@ -103,6 +103,7 @@
           <img
             src="../assets/imgCarrusel/Empresa_busca_aparcamiento_202604241132.jpeg"
             alt="Imagen 1"
+            data-i18n-alt="aparkt.imgAlt1"
           />
         </div>
 
@@ -110,6 +111,7 @@
           <img
             src="../assets/imgCarrusel/Person_holding_smartphone_202604250309.jpeg"
             alt="Imagen 2"
+            data-i18n-alt="aparkt.imgAlt2"
           />
         </div>
 
@@ -117,39 +119,40 @@
           <img
             src="../assets/imgCarrusel/quiero_un_video_202604241142.jpeg"
             alt="Imagen 3"
+            data-i18n-alt="aparkt.imgAlt3"
           />
         </div>
       </div>
       <section class="seccion-principal contenedor">
-        <h1 class="titulo-principal">
+        <h1 class="titulo-principal" data-i18n="aparkt.heroH1">
           Aparca más fácil <br />
           que nunca con <span class="texto-verde">Aparkt</span>
         </h1>
-        <p class="descripcion">
+        <p class="descripcion" data-i18n="aparkt.heroDescripcion">
           Nuestra plataforma te ayuda a localizar espacios disponibles cerca de
           tu destino en tiempo real, ahorrándote tiempo y estrés.
         </p>
         <div class="contenedor-tarjetas">
           <div class="tarjeta">
             <div class="numero">1</div>
-            <h3>Buscar</h3>
-            <p>
+            <h3 data-i18n="aparkt.paso1Titulo">Buscar</h3>
+            <p data-i18n="aparkt.paso1Desc">
               Encuentra aparcamiento en segundos, introduce tu destino y
               visualiza las plazas disponibles cerca de él en tiempo real.
             </p>
           </div>
           <div class="tarjeta">
             <div class="numero">2</div>
-            <h3>Aparcar</h3>
-            <p>
+            <h3 data-i18n="aparkt.paso2Titulo">Aparcar</h3>
+            <p data-i18n="aparkt.paso2Desc">
               Elige la opción que mejor se adapte a ti, llega sin complicaciones
               y estaciona de forma rápida y segura.
             </p>
           </div>
           <div class="tarjeta">
             <div class="numero">3</div>
-            <h3>Indicar</h3>
-            <p>
+            <h3 data-i18n="aparkt.paso3Titulo">Indicar</h3>
+            <p data-i18n="aparkt.paso3Desc">
               Confirma que has estacionado para actualizar la disponibilidad y
               ayudar a otros conductores a encontrar espacio fácilmente.
             </p>
@@ -162,43 +165,43 @@
           src="../index/index.html#mapa"
         ></iframe>
         <div class="mapa-visitar">
-           <h2>Visita nuestro mapa</h2>
-           <a href="../index/index.html">Aparkt</a>
+           <h2 data-i18n="aparkt.mapaTitulo">Visita nuestro mapa</h2>
+           <a href="../index/index.html" data-i18n="aparkt.mapaLink">Aparkt</a>
         </div>
       </section>
 
       <section class="horizontal">
         <section class="seccion-recompensas">
           <div class="contenedor">
-            <h2>Recompensas</h2>
+            <h2 data-i18n="aparkt.recompensasTitulo">Recompensas</h2>
             <div class="grid-recompensas">
-              <div>Regístrate</div>
-              <div>Colabora</div>
-              <div>Indica</div>
-              <div>Canjea</div>
+              <div data-i18n="aparkt.recompensa1">Regístrate</div>
+              <div data-i18n="aparkt.recompensa2">Colabora</div>
+              <div data-i18n="aparkt.recompensa3">Indica</div>
+              <div data-i18n="aparkt.recompensa4">Canjea</div>
             </div>
           </div>
         </section>
 
         <section class="contenedor seccion-historia">
           <div class="texto-historia">
-            <h2>Historia</h2>
-            <p>Facilitamos el aparcamiento en ciudades.</p>
+            <h2 data-i18n="aparkt.historiaTitulo">Historia</h2>
+            <p data-i18n="aparkt.historiaDesc">Facilitamos el aparcamiento en ciudades.</p>
           </div>
           <div class="estadisticas">
-            <div class="estadistica">+15k usuarios</div>
-            <div class="estadistica">+5 ciudades</div>
-            <div class="estadistica">4.8 rating</div>
-            <div class="estadistica">+56 plazas</div>
+            <div class="estadistica" data-i18n="aparkt.statUsuarios">+15k usuarios</div>
+            <div class="estadistica" data-i18n="aparkt.statCiudades">+5 ciudades</div>
+            <div class="estadistica" data-i18n="aparkt.statRating">4.8 rating</div>
+            <div class="estadistica" data-i18n="aparkt.statPlazas">+56 plazas</div>
           </div>
         </section>
       </section>
 
       <section class="contenedor seccion-equipo">
-        <div>Antonio</div>
-        <div>Adrián</div>
-        <div>Celia</div>
-        <div>Noemí</div>
+        <div data-i18n="aparkt.team1">Antonio</div>
+        <div data-i18n="aparkt.team2">Adrián</div>
+        <div data-i18n="aparkt.team3">Celia</div>
+        <div data-i18n="aparkt.team4">Noemí</div>
       </section>
     </main>
 

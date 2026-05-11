@@ -4,6 +4,7 @@ import '../components/Footer.js';
 import '../components/Modalpuntos.js';
 
 import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
+import { cargarTraducciones, aplicarTraducciones } from '../translator.js';
 
 let usuarioActual = null;
 
@@ -48,6 +49,10 @@ function configurarUIUsuarioNoLogueado() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', iniciarPagina);
+document.addEventListener('DOMContentLoaded', async () => {
+  await cargarTraducciones();
+  aplicarTraducciones();
+  iniciarPagina();
+});
 
 export { usuarioActual };

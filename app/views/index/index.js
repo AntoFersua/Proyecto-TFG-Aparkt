@@ -2,10 +2,13 @@ import { iniciarAuth, obtenerUsuario, cerrarSesion } from '../auth.js';
 import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/ModalAparcamiento.js";
+import { cargarTraducciones, aplicarTraducciones, t } from '../translator.js';
 
 let usuarioActual = null;
 
 window.addEventListener("DOMContentLoaded", async function () {
+  await cargarTraducciones();
+  aplicarTraducciones();
   // Verificar sesión
   await iniciarAuth({
     alLoguearse: (usuario) => {
@@ -113,10 +116,10 @@ window.addEventListener("DOMContentLoaded", async function () {
             //si es visible, ocualtar estados y cambiar mensaje
             if (estado === 'visible') {
               mapa.setLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility', 'none');
-              botonEstadosAparcamientos.textContent = "Mostrar estados aparcamientos";
+              botonEstadosAparcamientos.textContent = t('index.mostrarEstados');
             } else {
               mapa.setLayoutProperty(arrayEstadosAparcamientos[i].layerID, 'visibility', 'visible');
-              botonEstadosAparcamientos.textContent = "Ocultar estados aparcamientos";
+              botonEstadosAparcamientos.textContent = t('index.ocultarEstados');
             }
           }
 
@@ -290,14 +293,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                           alert(data.mensaje);
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
-                          alert(data.mensaje || "Error al guardar el estado");
+                          alert(data.mensaje || t('index.errorGuardarEstado'));
                           console.log("Error");
                         }
                       })
                       //capturar errores
                       .catch((err) => {
                         console.error(err);
-                        alert("Error al guardar datos");
+                        alert(t('index.errorGuardarDatos'));
                       });
                       
                   }else if(accion == "liberar"){
@@ -326,14 +329,14 @@ window.addEventListener("DOMContentLoaded", async function () {
 
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
-                          alert(data.mensaje || "Error al guardar el estado");
+                          alert(data.mensaje || t('index.errorGuardarEstado'));
                           console.log("Error");
                         }
                       })
                       //capturar errores
                       .catch((err) => {
                         console.error(err);
-                        alert("Error al guardar datos");
+                        alert(t('index.errorGuardarDatos'));
                       });
                       
                   }
@@ -383,10 +386,10 @@ window.addEventListener("DOMContentLoaded", async function () {
             //si es visible, ocualtar estados y cambiar mensaje
             if (estadoPlazas === 'visible') {
               mapa.setLayoutProperty(arrayAparcamientos[i].layerID, 'visibility', 'none');
-              botonAparcamientos.textContent = "Mostrar aparcamientos";
+              botonAparcamientos.textContent = t('index.mostrarAparcamientos');
             } else {
               mapa.setLayoutProperty(arrayAparcamientos[i].layerID, 'visibility', 'visible');
-              botonAparcamientos.textContent = "Ocultar aparcamientos";
+              botonAparcamientos.textContent = t('index.ocultarAparcamientos');
             }
           }
 
@@ -437,7 +440,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             const address =
               datos.features[0]?.properties?.full_address ||
               datos.features[0]?.properties?.name ||
-              "Dirección no encontrada";
+              t('index.direccionNoEncontrada');
             alert(
               "Coordenadas: " +
               longitud.toFixed(6) +
@@ -489,7 +492,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 essential: true, //Asegura que la animación se realice
               });
             } else {
-              alert("No se encontraron resultados para: " + searchText);
+              alert(t('index.sinResultados').replace('{query}', searchText));
             }
           })
           //En caso de error
@@ -593,7 +596,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       let estadoMostar;
       function cambiarVisibilidadMarkUsuario() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
-        if (botonMarcadoresUsuario.textContent == "Mostrar marcadores usuario") {
+        if (botonMarcadoresUsuario.textContent == t('index.mostrarMarcadoresUser')) {
           estadoMostar = true;
         } else {
           estadoMostar = false;
@@ -605,12 +608,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             arrayMarcadoresUsurio[i].removeClassName('estadoVisualMarker');
             //si es el último elemento 
             if (i == (arrayMarcadoresUsurio.length - 1)) {
-              botonMarcadoresUsuario.textContent = "Ocultar marcadores usuario";
+              botonMarcadoresUsuario.textContent = t('index.ocultarMarcadoresUser');
             }
           } else {
             arrayMarcadoresUsurio[i].addClassName('estadoVisualMarker');
             if (i == (arrayMarcadoresUsurio.length - 1)) {
-              botonMarcadoresUsuario.textContent = "Mostrar marcadores usuario";
+              botonMarcadoresUsuario.textContent = t('index.mostrarMarcadoresUser');
             }
           }
         }
@@ -649,7 +652,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       let estadoMostarPersonalizados;
       function cambiarVisibilidadMarkPersonalizado() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
-        if (botonMarcadoresAnunciante.textContent == "Mostrar marcadores anunciantes") {
+        if (botonMarcadoresAnunciante.textContent == t('index.mostrarMarcadoresAnunciante')) {
           estadoMostarPersonalizados = true;
         } else {
           estadoMostarPersonalizados = false;
@@ -661,12 +664,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             arrayMarcadoresPersonalizados[i].removeClassName('estadoVisualMarker');
             //si es el último elemento 
             if (i == (arrayMarcadoresPersonalizados.length - 1)) {
-              botonMarcadoresAnunciante.textContent = "Ocultar marcadores anunciantes";
+              botonMarcadoresAnunciante.textContent = t('index.ocultarMarcadoresAnunciante');
             }
           } else {
             arrayMarcadoresPersonalizados[i].addClassName('estadoVisualMarker');
             if (i == (arrayMarcadoresPersonalizados.length - 1)) {
-              botonMarcadoresAnunciante.textContent = "Mostrar marcadores anunciantes";
+              botonMarcadoresAnunciante.textContent = t('index.mostrarMarcadoresAnunciante');
             }
           }
         }

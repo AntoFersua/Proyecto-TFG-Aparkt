@@ -168,29 +168,27 @@ class ModalAparcamiento extends HTMLElement {
     <div class="modal-header">
       <div class="header-left">
         <div class="icono-header">🅿️</div>
-        <div class="titulo-modal">Gestionar Plaza</div>
+        <div class="titulo-modal" data-i18n="modalAparcamiento.titulo">Gestionar Plaza</div>
       </div>
       <button class="boton-cerrar">✕</button>
     </div>
 
     <div class="modal-cuerpo">
-      <p class="descripcion">
-        Has seleccionado la plaza <strong>P-242</strong>. ¿Qué acción deseas realizar?
-      </p>
+      <p class="descripcion"><span data-i18n="modalAparcamiento.descripcionAntes">Has seleccionado la plaza</span> <strong>P-242</strong><span data-i18n="modalAparcamiento.descripcionDespues">. ¿Qué acción deseas realizar?</span></p>
 
       <button class="boton-accion accion-primaria" id="botonLiberarPlaza">
-        <span>Liberar Plaza</span>
+        <span data-i18n="modalAparcamiento.liberarPlaza">Liberar Plaza</span>
         <span>›</span>
       </button>
 
       <button class="boton-accion accion-secundaria" id="botonOcuparPlaza">
-        <span>Ocupar Plaza</span>
+        <span data-i18n="modalAparcamiento.ocuparPlaza">Ocupar Plaza</span>
         <span>›</span>
       </button>
     </div>
 
     <div class="modal-footer">
-      <button class="boton-cerrar-footer">Cerrar</button>
+      <button class="boton-cerrar-footer" data-i18n="modalAparcamiento.cerrar">Cerrar</button>
     </div>
   </div>
 </div>

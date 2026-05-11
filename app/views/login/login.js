@@ -4,12 +4,15 @@ import "../components/Header.js";
 import "../components/PerfilUsuario.js";
 import "../components/Modalpuntos.js";
 import '../components/Footer.js';
+import { cargarTraducciones, aplicarTraducciones, t } from '../translator.js';
 
 //Variable que guarda al usuario (en caso de que exista sesión)
 let usuarioActual = null;
 
 //Se ejecuta cuando el DOM está completamente cargado
 document.addEventListener("DOMContentLoaded", async function () {
+  await cargarTraducciones();
+  aplicarTraducciones();
   console.log("Inicializando Login");
 
   //Inicializa el sistema de autenticación
@@ -50,7 +53,7 @@ function configurarUIUsuarioNoLogueado() {
   const botonPerfil = document.getElementById('perfilUsuario');
   if (botonPerfil) {
     botonPerfil.addEventListener('click', () => {
-      alert("Ya estás en la página de inicio de sesión");
+      alert(t('login.yaEnLogin'));
     });
   }
 }
@@ -69,7 +72,7 @@ function inicializarFormulario() {
   validador.addField("#email", [
     {
       rule: "required",
-      errorMessage: "El email es obligatorio",
+      errorMessage: t('login.errorEmail'),
     },
   ], {
     errorsContainer: "#error-email",
@@ -79,7 +82,7 @@ function inicializarFormulario() {
   validador.addField("#password", [
     {
       rule: "required",
-      errorMessage: "La contraseña es obligatoria",
+      errorMessage: t('login.errorPassword'),
     },
   ], {
     errorsContainer: "#error-password",
@@ -110,12 +113,12 @@ function inicializarFormulario() {
           window.location.href = '../aparkt/aparkt.html';
         //Si el login es incorrrecto
         } else {
-          alert("Error en el login");
+          alert(t('login.errorLogin'));
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Error de conexión");
+        alert(t('login.errorConexion'));
       });
   });
 }

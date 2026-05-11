@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mapa Aparkt</title>
+    <title data-i18n-title="index.title">Mapa Aparkt</title>
     <link rel="stylesheet" type="text/css" href="../estilosGlobales.css" />
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.css"
@@ -74,13 +74,13 @@
     <app-header></app-header>
     <div id="mapa"></div>
     <form action="" method="get" id="form-busqueda">
-      <input type="text" id="busqueda" placeholder="Escribe una dirección" />
-      <input type="submit" value="Enviar" />
+      <input type="text" id="busqueda" placeholder="Escribe una dirección" data-i18n-placeholder="index.placeholderDireccion" />
+      <input type="submit" value="Enviar" data-i18n-value="index.enviar" />
     </form>
-    <button id="mostrarEstadosAparcamientos">Mostrar estados aparcamientos</button>
-    <button id="mostrarAparcamientos">Mostrar aparcamientos</button>
-    <button id="mostrarMarcadoresUsuario">Mostrar marcadores usuario</button>
-    <button id="mostrarMarcadoresAnunciante">Mostrar marcadores anunciantes</button>
+    <button id="mostrarEstadosAparcamientos" data-i18n="index.mostrarEstados">Mostrar estados aparcamientos</button>
+    <button id="mostrarAparcamientos" data-i18n="index.mostrarAparcamientos">Mostrar aparcamientos</button>
+    <button id="mostrarMarcadoresUsuario" data-i18n="index.mostrarMarcadoresUser">Mostrar marcadores usuario</button>
+    <button id="mostrarMarcadoresAnunciante" data-i18n="index.mostrarMarcadoresAnunciante">Mostrar marcadores anunciantes</button>
     <script src="../modoOscuro.js"></script>
   </body>
 </html>

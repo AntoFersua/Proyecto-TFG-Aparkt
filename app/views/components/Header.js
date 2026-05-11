@@ -16,29 +16,29 @@ class Header extends HTMLElement {
     this.innerHTML = `
         <header>
       <div class="logoHeader">
-        <img src="../assets/imagotipoAparkt.png" alt="Logo" />
+        <img src="../assets/imagotipoAparkt.png" data-i18n-alt="header.logoAlt" alt="Logo" />
       </div>
       <nav class="navPrincipal">
         <ul>
-          <li><a href="../index/index.html">Mapa</a></li>
-          <li><a href="../aparkt/aparkt.html">Aparkt</a></li>
-          <li><a href="../login/login.html">Log In</a></li>
-          <li><a href="../signup/signup.html">Sign Up</a></li>
+          <li><a href="../index/index.html" data-i18n="nav.mapa">Mapa</a></li>
+          <li><a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a></li>
+          <li><a href="../login/login.html" data-i18n="nav.login">Log In</a></li>
+          <li><a href="../signup/signup.html" data-i18n="nav.signup">Sign Up</a></li>
         </ul>
       </nav>
       <div id="headerDerecha">
-        <button type="button" id="cambiarIdioma" aria-label="Cambiar idioma">
+        <button type="button" id="cambiarIdioma" data-i18n-aria-label="header.cambiarIdioma" aria-label="Cambiar idioma">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-translate" viewBox="0 0 16 16">
             <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
             <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
           </svg>
         </button>
-        <button type="button" id="perfilUsuario" aria-label="Perfil de usuario">
+        <button type="button" id="perfilUsuario" data-i18n-aria-label="header.perfilUsuario" aria-label="Perfil de usuario">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-person" viewBox="0 0 16 16">
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
           </svg>
         </button>
-        <button type="button" id="modoOscuro" aria-label="Cambiar tema">
+        <button type="button" id="modoOscuro" data-i18n-aria-label="header.modoOscuro" aria-label="Cambiar tema">
           <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>

@@ -164,32 +164,32 @@ class Modalpuntos extends HTMLElement {
     <div class="modal-content">
 
       <div class="modal-header">
-        <div class="modal-title">Mis Recompensas</div>
+        <div class="modal-title" data-i18n="modalPuntos.titulo">Mis Recompensas</div>
 
         <div class="points-circle">
           <div class="points-value">${puntos}</div>
-          <div class="points-label">Puntos</div>
+          <div class="points-label" data-i18n="modalPuntos.puntos">Puntos</div>
         </div>
       </div>
 
       <div class="rewards-list">
         <div class="reward-item">
-          <span class="reward-text">Crear plazas</span>
-          <span class="reward-points">+${this.puntosCrear} pts</span>
+          <span class="reward-text" data-i18n="modalPuntos.crearPlazas">Crear plazas</span>
+          <span class="reward-points">+${this.puntosCrear} <span data-i18n="modalPuntos.pts">pts</span></span>
         </div>
 
         <div class="reward-item">
-          <span class="reward-text">Ocupar plazas</span>
-          <span class="reward-points">+${this.puntosOcupar} pts</span>
+          <span class="reward-text" data-i18n="modalPuntos.ocuparPlazas">Ocupar plazas</span>
+          <span class="reward-points">+${this.puntosOcupar} <span data-i18n="modalPuntos.pts">pts</span></span>
         </div>
 
         <div class="reward-item">
-          <span class="reward-text">Liberar plazas</span>
-          <span class="reward-points">+${this.puntosLiberar} pts</span>
+          <span class="reward-text" data-i18n="modalPuntos.liberarPlazas">Liberar plazas</span>
+          <span class="reward-points">+${this.puntosLiberar} <span data-i18n="modalPuntos.pts">pts</span></span>
         </div>
       </div>
 
-      <button class="modal-button">Cerrar</button>
+      <button class="modal-button" data-i18n="modalPuntos.cerrar">Cerrar</button>
 
     </div>
   </div>

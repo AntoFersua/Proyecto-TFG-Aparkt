@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Crea tu cuenta en Aparkt" />
+    <meta name="description" content="Crea tu cuenta en Aparkt" data-i18n-meta="signup.description" />
     <meta name="keywords" content="Aparkt, Cuenta, Aparcamiento" />
     <meta name="author" content="Aparkt" />
-    <title>Sign Up</title>
+    <title data-i18n-title="signup.title">Sign Up</title>
     <script src="../just-validate.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../estilosGlobales.css" />
     <link rel="stylesheet" type="text/css" href="signup.css" />
@@ -34,8 +34,8 @@
 
         <form id="formUsuario">
           <div class="form-contenido">
-            <h2>CREAR CUENTA</h2>
-            <img src="../assets/imagotipoAparkt.png" alt="Aparkt" />
+            <h2 data-i18n="signup.crearCuenta">CREAR CUENTA</h2>
+            <img src="../assets/imagotipoAparkt.png" alt="Aparkt" data-i18n-alt="signup.aparktAlt" />
 
             <!-- Indicador de paso -->
             <div class="indicador-paso">
@@ -55,7 +55,7 @@
                     placeholder=" "
                     name="nombre"
                   />
-                  <label for="inputNombre">Nombre</label>
+                  <label for="inputNombre" data-i18n="signup.nombre">Nombre</label>
                   <div id="error-nombre"></div>
                 </div>
                 <div class="input-field">
@@ -65,7 +65,7 @@
                     placeholder=" "
                     name="apellido"
                   />
-                  <label for="inputApellidos">Apellidos</label>
+                  <label for="inputApellidos" data-i18n="signup.apellidos">Apellidos</label>
                   <div id="error-apellidos"></div>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                     placeholder=" "
                     name="email"
                   />
-                  <label for="inputCorreo">Correo Electrónico</label>
+                  <label for="inputCorreo" data-i18n="signup.correo">Correo Electrónico</label>
                   <div id="error-email"></div>
                 </div>
                 <div class="input-field">
@@ -89,20 +89,20 @@
                     placeholder=" "
                     name="telefono"
                   />
-                  <label for="inputTelefono">Teléfono</label>
+                  <label for="inputTelefono" data-i18n="signup.telefono">Teléfono</label>
                   <div id="error-telefono"></div>
                 </div>
                 <div class="input-field">
                   <select id="inputCiudad" name="ciudad">
-                    <option value="" disabled selected>
+                    <option value="" disabled selected data-i18n="signup.seleccionaCiudad">
                       Selecciona tu ciudad
                     </option>
-                    <option value="Malaga">Malaga</option>
-                    <option value="Sevilla">Sevilla</option>
-                    <option value="Granada">Granada</option>
-                    <option value="Cordoba">Cordoba</option>
+                    <option value="Malaga" data-i18n="signup.malaga">Malaga</option>
+                    <option value="Sevilla" data-i18n="signup.sevilla">Sevilla</option>
+                    <option value="Granada" data-i18n="signup.granada">Granada</option>
+                    <option value="Cordoba" data-i18n="signup.cordoba">Cordoba</option>
                   </select>
-                  <label for="inputCiudad">Ciudad</label>
+                  <label for="inputCiudad" data-i18n="signup.ciudad">Ciudad</label>
                   <div id="error-ciudad"></div>
                 </div>
               </div>
@@ -116,12 +116,13 @@
                     placeholder=" "
                     name="contrasena"
                   />
-                  <label for="inputContrasena">Contraseña</label>
+                  <label for="inputContrasena" data-i18n="signup.contrasena">Contraseña</label>
                   <div id="error-contrasena"></div>
                   <button
                     type="button"
                     class="ver-contrasena"
                     aria-label="Mostrar contraseña"
+                    data-i18n-aria-label="signup.mostrarPassword"
                   >
                     <svg viewBox="0 0 24 24">
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
@@ -136,12 +137,13 @@
                     placeholder=" "
                     name="confirmarContrasena"
                   />
-                  <label for="confirmarContrasena">Confirmar Contraseña</label>
+                  <label for="confirmarContrasena" data-i18n="signup.confirmarContrasena">Confirmar Contraseña</label>
                   <div id="error-confirmarContrasena"></div>
                   <button
                     type="button"
                     class="ver-contrasena"
                     aria-label="Mostrar contraseña"
+                    data-i18n-aria-label="signup.mostrarPassword"
                   >
                     <svg viewBox="0 0 24 24">
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
@@ -151,7 +153,7 @@
                 </div>
                 <label class="checkbox-wrapper">
                   <input id="aceptarTerminos" type="checkbox" name="terminos" />
-                  <span
+                  <span data-i18n="signup.aceptarTerminos"
                     >Acepto los Términos de servicio y política de
                     privacidad</span
                   >
@@ -164,20 +166,20 @@
           <!-- Botones navegación -->
           <div class="nav-pasos">
             <div class="nav-carrusel"></div>
-            <button type="submit" class="btn-crear" id="btnCrear">
+            <button type="submit" class="btn-crear" id="btnCrear" data-i18n="signup.crearCuentaBtn">
               Crear Cuenta
             </button>
           </div>
 
           <p>
-            ¿Ya tienes cuenta? <a href="../login/login.html">Iniciar sesión</a>
+            <span data-i18n="signup.yaTienesCuenta">¿Ya tienes cuenta?</span> <a href="../login/login.html" data-i18n="signup.iniciarSesion">Iniciar sesión</a>
           </p>
         </form>
       </article>
 
       <!-- Logo (derecha) -->
       <div class="main-izquierdo">
-        <img src="../assets/isotipoAparkt.png" alt="Logo" />
+        <img src="../assets/isotipoAparkt.png" alt="Logo" data-i18n-alt="signup.logoAlt" />
       </div>
     </main>
 

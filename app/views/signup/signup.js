@@ -4,6 +4,7 @@ import '../components/PerfilUsuario.js';
 import '../components/Footer.js';
 
 import { iniciarAuth, cerrarSesion } from '../auth.js';
+import { cargarTraducciones, aplicarTraducciones, t } from '../translator.js';
 
 async function iniciarPagina() {
   await iniciarAuth({
@@ -28,7 +29,11 @@ function configurarUIUsuarioNoLogueado() {
   }
 }
 
-iniciarPagina();
+(async () => {
+  await cargarTraducciones();
+  aplicarTraducciones();
+  iniciarPagina();
+})();
 
 // Validación con JustValidate
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,15 +56,15 @@ document.addEventListener("DOMContentLoaded", function () {
   validador.addField(
     "#inputNombre",
     [
-      { rule: "required", errorMessage: "El nombre es obligatorio" },
-      { rule: "minLength", value: 2, errorMessage: "Mínimo 2 caracteres" },
-      { rule: "maxLength", value: 20, errorMessage: "Máximo 20 caracteres" },
+      { rule: "required", errorMessage: t('signup.errorNombre') },
+      { rule: "minLength", value: 2, errorMessage: t('signup.errorNombreMin') },
+      { rule: "maxLength", value: 20, errorMessage: t('signup.errorNombreMax') },
       {
         rule: "custom",
         validator: (value) => {
           return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(value);
         },
-        errorMessage: "El nombre solo puede contener letras",
+        errorMessage: t('signup.errorNombreLetras'),
       },
     ],
     {
@@ -71,15 +76,15 @@ document.addEventListener("DOMContentLoaded", function () {
   validador.addField(
     "#inputApellidos",
     [
-      { rule: "required", errorMessage: "El apellido es obligatorio" },
-      { rule: "minLength", value: 2, errorMessage: "Mínimo 2 caracteres" },
-      { rule: "maxLength", value: 50, errorMessage: "Máximo 50 caracteres" },
+      { rule: "required", errorMessage: t('signup.errorApellidos') },
+      { rule: "minLength", value: 2, errorMessage: t('signup.errorApellidosMin') },
+      { rule: "maxLength", value: 50, errorMessage: t('signup.errorApellidosMax') },
       {
         rule: "custom",
         validator: (value) => {
           return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(value);
         },
-        errorMessage: "El apellido solo puede contener letras",
+        errorMessage: t('signup.errorApellidosLetras'),
       },
     ],
     {
@@ -89,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // CIUDAD (select)
   /*validador.addField("#inputCiudad", [
-    { rule: "required", errorMessage: "Selecciona una ciudad" },
+    { rule: "required", errorMessage: t('signup.errorCiudad') },
   ], {
     errorsContainer: '#error-ciudad'
   });*/
@@ -98,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function () {
   validador.addField(
     "#inputCorreo",
     [
-      { rule: "required", errorMessage: "El email es obligatorio" },
-      { rule: "email", errorMessage: "Email inválido" },
+      { rule: "required", errorMessage: t('signup.errorEmail') },
+      { rule: "email", errorMessage: t('signup.errorEmailInvalido') },
     ],
     {
       errorsContainer: "#error-email",
@@ -115,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         validator: (value) => {
           return /^\d{9,15}$/.test(value);
         },
-        errorMessage: "El teléfono debe tener entre 9 y 15 números",
+        errorMessage: t('signup.errorTelefono'),
       },
     ],
     {
@@ -129,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     [
       {
         rule: "required",
-        errorMessage: "La contraseña es obligatoria",
+        errorMessage: t('signup.errorPassword'),
       },
       {
         rule: "custom",
@@ -138,8 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
             value,
           );
         },
-        errorMessage:
-          "La contraseña debe tener 6-15 caracteres, una mayúscula, una minúscula, un número y un símbolo",
+        errorMessage: t('signup.errorPasswordComplejidad'),
       },
     ],
     {
@@ -151,12 +155,12 @@ document.addEventListener("DOMContentLoaded", function () {
   validador.addField(
     "#confirmarContrasena",
     [
-      { rule: "required", errorMessage: "Repite la contraseña" },
+      { rule: "required", errorMessage: t('signup.errorConfirmar') },
       {
         validator: (value, fields) => {
           return value === fields["#inputContrasena"].elem.value;
         },
-        errorMessage: "Las contraseñas no coinciden",
+        errorMessage: t('signup.errorCoincidir'),
       },
     ],
     {
@@ -170,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
     [
       {
         rule: "required",
-        errorMessage: "Debes aceptar los términos",
+        errorMessage: t('signup.errorTerminos'),
       },
     ],
     {
@@ -204,12 +208,12 @@ document.addEventListener("DOMContentLoaded", function () {
           alert(data.mensaje);
           window.location.href = "../login/login.html";
         } else {
-          alert(data.mensaje || "Error en el registro");
+          alert(data.mensaje || t('signup.errorRegistro'));
         }
       })
       .catch((err) => {
         console.error(err);
-        alert("Error de conexión");
+        alert(t('signup.errorConexion'));
       });
   });
 });

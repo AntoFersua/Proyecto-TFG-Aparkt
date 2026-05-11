@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--SEO-->
-    <meta name="description" content="Inicia sesión en Aparkt" />
+    <meta name="description" content="Inicia sesión en Aparkt" data-i18n-meta="login.description" />
     <meta name="keywords" content="Sesión, Aparkt, Aparcamiento" />
     <meta name="author" content="Aparkt" />
-    <title>Log In</title>
+    <title data-i18n-title="login.title">Log In</title>
      <!-- Estilos globales del proyecto -->
     <link rel="stylesheet" type="text/css" href="../estilosGlobales.css" />
     <!-- Estilos específicos del login -->
@@ -31,7 +31,7 @@
     <main>
       <!-- Logo Aparkt -->
       <div class="main-izquierdo">
-        <img src="../assets/isotipoAparkt.png" alt="Logo" />
+        <img src="../assets/isotipoAparkt.png" alt="Logo" data-i18n-alt="login.logoAlt" />
       </div>
       
       <!--Simulación de pantalla de móvil-->
@@ -41,8 +41,8 @@
         <!--Formulario para loguearse-->
         <form id="loginForm" novalidate>
           <div class="form-contenido">
-            <h2>BIENVENIDO</h2>
-            <img src="../assets/imagotipoAparkt.png" alt="Aparkt" />
+            <h2 data-i18n="login.bienvenido">BIENVENIDO</h2>
+            <img src="../assets/imagotipoAparkt.png" alt="Aparkt" data-i18n-alt="login.aparktAlt" />
 
             <!-- Email -->
             <div class="input-field" id="emailGroup">
@@ -53,7 +53,7 @@
                 placeholder=" "
                 autocomplete="email"
               />
-              <label for="email">Email</label>
+              <label for="email" data-i18n="login.email">Email</label>
               <div id="error-email"></div>
             </div>
 
@@ -66,13 +66,14 @@
                 placeholder=" "
                 autocomplete="current-password"
               />
-              <label for="password">Contraseña</label>
+              <label for="password" data-i18n="login.password">Contraseña</label>
               <div id="error-password"></div>
               <button
                 type="button"
                 class="ver-contrasena"
                 id="togglePassword"
                 aria-label="Mostrar contraseña"
+                data-i18n-aria-label="login.mostrarPassword"
               >
                 <svg viewBox="0 0 24 24">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
@@ -85,17 +86,17 @@
             <div class="form-options">
               <label class="checkbox-wrapper">
                 <input type="checkbox" name="recordar" />
-                <span>Recuérdame</span>
+                <span data-i18n="login.recordarme">Recuérdame</span>
               </label>
-              <a href="#">¿Olvidaste tu contraseña?</a>
+              <a href="#" data-i18n="login.olvidastePassword">¿Olvidaste tu contraseña?</a>
             </div>
 
             <!-- Botón de iniciar sesión -->
-            <button type="submit">Iniciar sesión</button>
+            <button type="submit" data-i18n="login.iniciarSesion">Iniciar sesión</button>
 
             <!-- otra opcion -->
             <div class="opcion2">
-              <span>o continúa con</span>
+              <span data-i18n="login.oContinuaCon">o continúa con</span>
             </div>
 
             <!-- Google -->
@@ -103,6 +104,7 @@
               type="button"
               class="btn-google"
               aria-label="Iniciar sesión con Google"
+              data-i18n-aria-label="login.iniciarSesionGoogle"
             >
               <svg viewBox="0 0 24 24">
                 <path
@@ -122,13 +124,13 @@
                   fill="#EA4335"
                 />
               </svg>
-              <span>Continuar con Google</span>
+              <span data-i18n="login.continuarGoogle">Continuar con Google</span>
             </button>
           </div>
 
           <!-- Enlace para crear usuario nuevo -->
           <p>
-            ¿Nuevo usuario? <a href="../signup/signup.html">Crear cuenta</a>
+            <span data-i18n="login.nuevoUsuario">¿Nuevo usuario?</span> <a href="../signup/signup.html" data-i18n="login.crearCuenta">Crear cuenta</a>
           </p>
         </form>
       </article>
