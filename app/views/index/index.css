@@ -175,7 +175,7 @@ body {
 @media (max-width: 600px) {
   .btn-lupa {
     left: 12px;
-    bottom: max(150px, calc(150px + env(safe-area-inset-bottom)));
+    bottom: max(170px, calc(170px + env(safe-area-inset-bottom)));
   }
 }
 
