@@ -226,8 +226,11 @@ class HeaderMap extends HTMLElement {
 
             header {
                 top: auto;
-                bottom: 20px;
-                transform: translate(-50%, 0);
+                bottom: 12px;
+                left: 10px;
+                right: 10px;
+                transform: translate(0, 0);
+                width: auto;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
