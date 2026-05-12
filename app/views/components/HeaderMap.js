@@ -198,6 +198,94 @@ class HeaderMap extends HTMLElement {
             color: #5c7a48;
         }
 
+        .iconos-container {
+            position: relative;
+            display: none;
+        }
+
+        .iconos-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 8px;
+            background: #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .iconos-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .iconos-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: #666;
+            fill: none;
+        }
+
+        .iconos-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: white;
+            border: 1px solid rgba(92, 122, 72, 0.15);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-width: auto;
+            width: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s ease;
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            padding: 4px;
+            gap: 2px;
+        }
+
+        .iconos-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            display: flex;
+        }
+
+        .iconos-dropdown button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            color: #333;
+        }
+
+        .iconos-dropdown button:hover {
+            background: #f5f5f5;
+        }
+
+        .iconos-dropdown button svg {
+            width: 16px;
+            height: 16px;
+            stroke: #666;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .iconos-dropdown button span {
+            display: none;
+        }
+
         #headerDerecha button.icon-btn {
             width: 28px;
             height: 28px;
@@ -274,13 +362,15 @@ class HeaderMap extends HTMLElement {
                 font-size: 13px;
             }
 
-            #headerDerecha button.icon-btn,
+            #headerDerecha > button.icon-btn {
+                display: none;
+            }
+
             .menu-btn {
                 width: 24px;
                 height: 24px;
             }
 
-            #headerDerecha button.icon-btn svg,
             .menu-btn svg {
                 width: 10px;
                 height: 10px;
@@ -295,6 +385,32 @@ class HeaderMap extends HTMLElement {
             .menu-dropdown a {
                 padding: 10px 14px;
                 font-size: 13px;
+            }
+
+            .iconos-container {
+                display: block !important;
+            }
+
+            .iconos-dropdown {
+                display: flex !important;
+                bottom: calc(100% + 6px);
+                top: auto;
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .iconos-dropdown.active {
+                transform: translateX(50%) translateY(0);
+            }
+
+            .iconos-dropdown button {
+                width: 28px;
+                height: 28px;
+            }
+
+            .iconos-dropdown button svg {
+                width: 14px;
+                height: 14px;
             }
         }
 
@@ -362,6 +478,42 @@ class HeaderMap extends HTMLElement {
             color: #8fb37a;
         }
 
+        :host-context([data-theme="dark"]) .iconos-btn,
+        [data-theme="dark"] .iconos-btn {
+            background: #333;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-btn:hover,
+        [data-theme="dark"] .iconos-btn:hover {
+            background: #444;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-btn svg,
+        [data-theme="dark"] .iconos-btn svg {
+            stroke: #aaa;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-dropdown,
+        [data-theme="dark"] .iconos-dropdown {
+            background: #2a2a2a;
+            border-color: rgba(92, 122, 72, 0.3);
+        }
+
+        :host-context([data-theme="dark"]) .iconos-dropdown button,
+        [data-theme="dark"] .iconos-dropdown button {
+            color: #e0e0e0;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-dropdown button:hover,
+        [data-theme="dark"] .iconos-dropdown button:hover {
+            background: #333;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-dropdown button svg,
+        [data-theme="dark"] .iconos-dropdown button svg {
+            stroke: #aaa;
+        }
+
         </style>
 
         <header>
@@ -392,6 +544,46 @@ class HeaderMap extends HTMLElement {
                         <a href="../aparkt/aparkt.html">Aparkt</a>
                         <a href="../login/login.html">Log In</a>
                         <a href="../signup/signup.html">Sign Up</a>
+                    </div>
+                </div>
+
+                <div class="iconos-container">
+                    <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <div class="iconos-dropdown" id="iconosDropdown">
+                        <button type="button" id="cambiarIdiomaDrop">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
+                                <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" stroke="#666" stroke-width="1.2" fill="none"/>
+                                <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" stroke="#666" stroke-width="1.2" fill="none"/>
+                            </svg>
+                            <span>Idioma</span>
+                        </button>
+                        <button type="button" id="perfilUsuarioDrop">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" stroke="#666" stroke-width="1.2" fill="none"/>
+                            </svg>
+                            <span>Perfil</span>
+                        </button>
+                        <button type="button" id="modoOscuroDrop">
+                            <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <span>Tema</span>
+                        </button>
                     </div>
                 </div>
 
@@ -453,6 +645,8 @@ class HeaderMap extends HTMLElement {
             menuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 menuDropdown.classList.toggle('active');
+                const iconosDropdown = this.querySelector('#iconosDropdown');
+                if (iconosDropdown) iconosDropdown.classList.remove('active');
             });
 
             document.addEventListener('click', () => {
@@ -460,12 +654,78 @@ class HeaderMap extends HTMLElement {
             });
         }
 
+        const iconosBtn = this.querySelector('#iconosBtn');
+        const iconosDropdown = this.querySelector('#iconosDropdown');
+        
+        if (iconosBtn && iconosDropdown) {
+            iconosBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                iconosDropdown.classList.toggle('active');
+                if (menuDropdown) menuDropdown.classList.remove('active');
+            });
+
+            document.addEventListener('click', () => {
+                iconosDropdown.classList.remove('active');
+            });
+        }
+
         const btnIdioma = this.querySelector('#cambiarIdioma');
+        const btnIdiomaDrop = this.querySelector('#cambiarIdiomaDrop');
+        
+        const abrirModalIdioma = async () => {
+            await import('./ModalIdioma.js');
+            const modal = document.createElement('modal-idioma');
+            document.body.appendChild(modal);
+        };
+
         if (btnIdioma) {
-            btnIdioma.addEventListener('click', async () => {
-                await import('./ModalIdioma.js');
-                const modal = document.createElement('modal-idioma');
-                document.body.appendChild(modal);
+            btnIdioma.addEventListener('click', abrirModalIdioma);
+        }
+        if (btnIdiomaDrop) {
+            btnIdiomaDrop.addEventListener('click', (e) => {
+                e.stopPropagation();
+                iconosDropdown.classList.remove('active');
+                abrirModalIdioma();
+            });
+        }
+
+        const btnPerfil = this.querySelector('#perfilUsuario');
+        const btnPerfilDrop = this.querySelector('#perfilUsuarioDrop');
+        
+        if (btnPerfil) {
+            btnPerfil.addEventListener('click', () => {
+                const evento = new CustomEvent('abrirPerfil');
+                document.dispatchEvent(evento);
+            });
+        }
+        if (btnPerfilDrop) {
+            btnPerfilDrop.addEventListener('click', (e) => {
+                e.stopPropagation();
+                iconosDropdown.classList.remove('active');
+                const evento = new CustomEvent('abrirPerfil');
+                document.dispatchEvent(evento);
+            });
+        }
+
+        const btnModoOscuro = this.querySelector('#modoOscuro');
+        const btnModoOscuroDrop = this.querySelector('#modoOscuroDrop');
+        
+        const alternarModoOscuro = () => {
+            var actual = document.documentElement.getAttribute('data-theme');
+            var nuevo = actual === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', nuevo);
+            document.documentElement.style.colorScheme = nuevo;
+            localStorage.setItem('modoOscuro', nuevo === 'dark' ? 'true' : 'false');
+        };
+
+        if (btnModoOscuro) {
+            btnModoOscuro.addEventListener('click', alternarModoOscuro);
+        }
+        if (btnModoOscuroDrop) {
+            btnModoOscuroDrop.addEventListener('click', (e) => {
+                e.stopPropagation();
+                iconosDropdown.classList.remove('active');
+                alternarModoOscuro();
             });
         }
     }
