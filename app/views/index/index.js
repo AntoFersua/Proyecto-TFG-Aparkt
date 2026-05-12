@@ -13,6 +13,28 @@ let usuarioActual = null;
 let idUsuarioActual = null;
 
 window.addEventListener("DOMContentLoaded", async function () {
+  
+  // Botón de lupa para interactividad
+  const btnLupa = document.getElementById('btn-lupa');
+  const menuInteractividad = document.getElementById('menu-interactividad');
+  
+  if (btnLupa && menuInteractividad) {
+    btnLupa.addEventListener('click', (e) => {
+      e.stopPropagation();
+      btnLupa.classList.toggle('active');
+      menuInteractividad.classList.toggle('active');
+    });
+
+    document.addEventListener('click', () => {
+      btnLupa.classList.remove('active');
+      menuInteractividad.classList.remove('active');
+    });
+
+    menuInteractividad.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
   await cargarTraducciones();
   aplicarTraducciones();
   // Verificar sesión
