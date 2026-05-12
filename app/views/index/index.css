@@ -54,19 +54,7 @@ body {
 }
 
 #interactividad {
-  position: absolute;
-  left: 20px;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  bottom: 40px;
-}
-
-@media (max-width: 600px) {
-  #interactividad {
-    display: none;
-  }
+  display: none;
 }
 
 #interactividad button {
@@ -187,7 +175,7 @@ body {
 @media (max-width: 600px) {
   .btn-lupa {
     left: 12px;
-    bottom: max(130px, calc(130px + env(safe-area-inset-bottom)));
+    bottom: max(150px, calc(150px + env(safe-area-inset-bottom)));
   }
 }
 
@@ -214,7 +202,7 @@ body {
 @media (max-width: 600px) {
   .menu-interactividad {
     left: 12px;
-    bottom: max(190px, calc(190px + env(safe-area-inset-bottom)));
+    bottom: max(210px, calc(210px + env(safe-area-inset-bottom)));
   }
 }
 
