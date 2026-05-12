@@ -268,6 +268,70 @@ class HeaderMap extends HTMLElement {
             }
         }
 
+        /* Dark Mode */
+        :host-context([data-theme="dark"]) header,
+        [data-theme="dark"] header {
+            background: rgba(30, 30, 30, 0.96);
+            border-color: rgba(92, 122, 72, 0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        :host-context([data-theme="dark"]) .buscador input[type="text"],
+        [data-theme="dark"] .buscador input[type="text"] {
+            color: #e0e0e0;
+            background: #2a2a2a;
+            border-color: rgba(92, 122, 72, 0.35);
+        }
+
+        :host-context([data-theme="dark"]) .buscador input[type="text"]::placeholder,
+        [data-theme="dark"] .buscador input[type="text"]::placeholder {
+            color: #777;
+        }
+
+        :host-context([data-theme="dark"]) .buscador input[type="text"]:focus,
+        [data-theme="dark"] .buscador input[type="text"]:focus {
+            background: #333;
+            border-color: #5c7a48;
+        }
+
+        :host-context([data-theme="dark"]) .menu-btn,
+        [data-theme="dark"] .menu-btn,
+        :host-context([data-theme="dark"]) #headerDerecha button.icon-btn,
+        [data-theme="dark"] #headerDerecha button.icon-btn {
+            background: #333;
+        }
+
+        :host-context([data-theme="dark"]) .menu-btn:hover,
+        [data-theme="dark"] .menu-btn:hover,
+        :host-context([data-theme="dark"]) #headerDerecha button.icon-btn:hover,
+        [data-theme="dark"] #headerDerecha button.icon-btn:hover {
+            background: #444;
+        }
+
+        :host-context([data-theme="dark"]) .menu-btn svg,
+        [data-theme="dark"] .menu-btn svg,
+        :host-context([data-theme="dark"]) #headerDerecha button.icon-btn svg,
+        [data-theme="dark"] #headerDerecha button.icon-btn svg {
+            stroke: #aaa;
+        }
+
+        :host-context([data-theme="dark"]) .menu-dropdown,
+        [data-theme="dark"] .menu-dropdown {
+            background: #2a2a2a;
+            border-color: rgba(92, 122, 72, 0.3);
+        }
+
+        :host-context([data-theme="dark"]) .menu-dropdown a,
+        [data-theme="dark"] .menu-dropdown a {
+            color: #e0e0e0;
+        }
+
+        :host-context([data-theme="dark"]) .menu-dropdown a:hover,
+        [data-theme="dark"] .menu-dropdown a:hover {
+            background: #333;
+            color: #8fb37a;
+        }
+
         </style>
 
         <header>
