@@ -15,15 +15,13 @@
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
     <script src="../validacionVehiculo.js"></script>
     <script src="index.js" type="module"></script>
+    <script src="../components/HeaderMap.js"></script>
   </head>
   <body>
-    <app-header></app-header>
+    <header-map></header-map>
     <perfil-usuario></perfil-usuario>
     <div id="mapa"></div>
-    <form action="" method="get" id="form-busqueda">
-      <input type="text" id="busqueda" placeholder="Escribe una dirección" data-i18n-placeholder="index.placeholderDireccion" />
-      <input type="submit" value="Enviar" data-i18n-value="index.enviar" />
-    </form>
+    
     <div id="interactividad">
       <button id="mostrarEstadosAparcamientos">
         Mostrar estados aparcamientos

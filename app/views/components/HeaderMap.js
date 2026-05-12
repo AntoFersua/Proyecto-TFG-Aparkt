@@ -16,225 +16,188 @@ class HeaderMap extends HTMLElement {
 
         header {
             position: absolute;
-            top: 18px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
 
-            width: calc(100% - 40px);
-            max-width: 1450px;
+            width: calc(100% - 20px);
+            max-width: 800px;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 12px 18px;
+            padding: 6px 10px;
 
             background: rgba(255, 255, 255, 0.96);
 
             border: 1px solid rgba(92, 122, 72, 0.15);
 
-            border-radius: 22px;
+            border-radius: 12px;
 
             backdrop-filter: blur(12px);
 
             box-shadow:
-                0 4px 18px rgba(0,0,0,0.08),
-                0 2px 6px rgba(0,0,0,0.04);
+                0 2px 10px rgba(0,0,0,0.06),
+                0 1px 4px rgba(0,0,0,0.03);
 
             z-index: 9999;
 
             font-family: "Inter", sans-serif;
+            gap: 8px;
         }
 
         .logoHeader {
             display: flex;
             align-items: center;
-            min-width: 180px;
+            flex-shrink: 0;
         }
 
         .logoHeader img {
-            height: 52px;
+            height: 28px;
             object-fit: contain;
         }
 
-        .navPrincipal {
+        .buscador {
             flex: 1;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            min-width: 0;
         }
 
-        .navPrincipal ul {
-            position: relative;
-
+        .buscador form {
             display: flex;
             align-items: center;
-            gap: 10px;
-
-            list-style: none;
-
-            padding: 8px;
-            margin: 0;
-
-            background: #f7f7f4;
-
-            border: 1px solid #dde5d6;
-
-            border-radius: 18px;
-
-            overflow: hidden;
+            width: 100%;
+            gap: 4px;
         }
 
-        .navPrincipal ul li {
-            position: relative;
-            z-index: 2;
-        }
-
-        .navPrincipal ul li a {
-            position: relative;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 12px 18px;
-
-            text-decoration: none;
-
-            color: #4b3829;
-
-            font-size: 15px;
-            font-weight: 600;
-
+        .buscador input[type="text"] {
+            flex: 1;
+            min-width: 0;
+            height: 28px;
+            padding: 0 10px;
+            font-size: 13px;
+            border: 1.5px solid rgba(92, 122, 72, 0.25);
             border-radius: 14px;
-
-            transition:
-                color 0.2s ease,
-                background 0.2s ease,
-                transform 0.2s ease;
+            outline: none;
+            font-family: inherit;
+            color: #333;
+            background: #fafafa;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .navPrincipal ul li a:hover {
-            color: #355126;
-            background: rgba(92, 122, 72, 0.08);
+        .buscador input[type="text"]::placeholder {
+            color: #999;
         }
 
-        .nav-circulo {
-            position: absolute;
-
-            width: 70px;
-            height: 70px;
-
-            border-radius: 50%;
-
-            background: rgba(92, 122, 72, 0.12);
-
-            top: 50%;
-            left: 0;
-
-            transform: translateY(-50%) scale(0);
-
-            transition:
-                transform 0.28s ease,
-                left 0.28s ease;
-
-            z-index: 0;
-
-            pointer-events: none;
+        .buscador input[type="text"]:focus {
+            border-color: #5c7a48;
+            box-shadow: 0 1px 6px rgba(92, 122, 72, 0.12);
+            background: #fff;
         }
 
-        .span-delante,
-        .span-detras {
-            position: absolute;
-
-            width: 70px;
-            height: 70px;
-
-            border-radius: 50%;
-
-            top: 50%;
-            left: 0;
-
-            transform: translateY(-50%) scale(0);
-
-            transition:
-                transform 0.3s ease,
-                left 0.3s ease;
-
-            pointer-events: none;
+        .buscador input[type="submit"] {
+            height: 28px;
+            padding: 0 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            border-radius: 14px;
+            background: #5c7a48;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 1px 3px rgba(92, 122, 72, 0.15);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .span-delante {
-            background: rgba(92, 122, 72, 0.18);
-            filter: blur(2px);
-            z-index: 0;
-        }
-
-        .span-detras {
-            background: rgba(92, 122, 72, 0.08);
-            transform: scale(1.4);
-            filter: blur(10px);
-            z-index: 0;
+        .buscador input[type="submit"]:hover {
+            background: #4e683d;
         }
 
         #headerDerecha {
             display: flex;
             align-items: center;
-            gap: 10px;
-
-            min-width: 180px;
-            justify-content: flex-end;
+            gap: 4px;
+            flex-shrink: 0;
         }
 
         #headerDerecha button {
-            width: 46px;
-            height: 46px;
+            width: 28px;
+            height: 28px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             border: none;
-            border-radius: 14px;
+            border-radius: 8px;
 
             background: #5c7a48;
 
             cursor: pointer;
 
             transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
+                transform 0.15s ease,
+                background 0.2s ease;
         }
 
         #headerDerecha button:hover {
             background: #4e683d;
-
-            transform: translateY(-2px);
-
-            box-shadow: 0 6px 14px rgba(92, 122, 72, 0.22);
+            transform: scale(1.05);
         }
 
-        @media (max-width: 1100px) {
+        #headerDerecha button svg {
+            width: 14px;
+            height: 14px;
+            stroke: #666;
+            fill: none;
+        }
+
+        #headerDerecha button {
+            background: #f0f0f0;
+        }
+
+        #headerDerecha button:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
 
             header {
-                flex-direction: column;
-                gap: 16px;
-                padding: 16px;
+                top: 8px;
+                padding: 6px 8px;
+                gap: 6px;
+                border-radius: 10px;
             }
 
-            .navPrincipal {
-                width: 100%;
+            .logoHeader img {
+                height: 24px;
             }
 
-            .navPrincipal ul {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
+            .buscador input[type="text"] {
+                height: 26px;
+                font-size: 12px;
+                padding: 0 8px;
             }
 
-            #headerDerecha {
-                width: 100%;
-                justify-content: center;
+            .buscador input[type="submit"] {
+                height: 26px;
+                padding: 0 8px;
+                font-size: 11px;
+            }
+
+            #headerDerecha button {
+                width: 26px;
+                height: 26px;
+            }
+
+            #headerDerecha button svg {
+                width: 12px;
+                height: 12px;
             }
         }
 
@@ -246,27 +209,43 @@ class HeaderMap extends HTMLElement {
                 <img src="../assets/imagotipoAparkt.webp" alt="Logo">
             </div>
 
-            <nav class="navPrincipal">
-                <ul>
-                    <li><a href="../index/index.html">Mapa</a></li>
-                    <li><a href="../aparkt/aparkt.html">Aparkt</a></li>
-                    <li><a href="../login/login.html">Log In</a></li>
-                    <li><a href="../signup/signup.html">Sign Up</a></li>
-                </ul>
-            </nav>
+            <div class="buscador">
+                <form id="form-busqueda-header" method="get">
+                    <input type="text" id="busqueda-header" placeholder="Dirección" data-i18n-placeholder="index.placeholderDireccion" />
+                    <input type="submit" value="Buscar" data-i18n-value="index.enviar" />
+                </form>
+            </div>
 
             <div id="headerDerecha">
 
-                <button type="button" id="cambiarIdioma">
-                    🌍
+                <button type="button" id="cambiarIdioma" aria-label="Cambiar idioma">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
+                        <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" stroke="#666" stroke-width="1.2" fill="none"/>
+                        <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" stroke="#666" stroke-width="1.2" fill="none"/>
+                    </svg>
                 </button>
 
-                <button type="button" id="perfilUsuario">
-                    👤
+                <button type="button" id="perfilUsuario" aria-label="Perfil de usuario">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" stroke="#666" stroke-width="1.2" fill="none"/>
+                    </svg>
                 </button>
 
-                <button type="button" id="modoOscuro">
-                    🌙
+                <button type="button" id="modoOscuro" aria-label="Cambiar tema">
+                    <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
                 </button>
 
             </div>
@@ -276,70 +255,27 @@ class HeaderMap extends HTMLElement {
     }
 
     initJS() {
-
-        const navUl = this.querySelector(".navPrincipal ul");
-
-        if (navUl) {
-
-            const navLinks = this.querySelectorAll(".navPrincipal ul li");
-
-            let spanDelante = document.createElement("span");
-            spanDelante.className = "span-delante";
-            navUl.appendChild(spanDelante);
-
-            let spanDetras = document.createElement("span");
-            spanDetras.className = "span-detras";
-            navUl.appendChild(spanDetras);
-
-            let circle = document.createElement("div");
-            circle.className = "nav-circulo";
-            navUl.appendChild(circle);
-
-            function moverCirculo(li) {
-
-                const liRect = li.getBoundingClientRect();
-                const ulRect = navUl.getBoundingClientRect();
-
-                const left =
-                    liRect.left -
-                    ulRect.left +
-                    liRect.width / 2 -
-                    35;
-
-                circle.style.transform =
-                    `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-
-                spanDelante.style.transform =
-                    `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-
-                spanDetras.style.transform =
-                    `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-            }
-
-            function ocultarCirculo() {
-
-                circle.style.transform =
-                    "translateY(-50%) scale(0)";
-
-                spanDelante.style.transform =
-                    "translateY(-50%) scale(0)";
-
-                spanDetras.style.transform =
-                    "translateY(-50%) scale(0)";
-            }
-
-            navLinks.forEach((li) => {
-
-                li.addEventListener(
-                    "mouseenter",
-                    () => moverCirculo(li)
-                );
+        const formBusqueda = this.querySelector('#form-busqueda-header');
+        if (formBusqueda) {
+            formBusqueda.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const inputBusqueda = this.querySelector('#busqueda-header');
+                if (inputBusqueda && inputBusqueda.value.trim()) {
+                    const evento = new CustomEvent('buscarDireccion', {
+                        detail: { direccion: inputBusqueda.value.trim() }
+                    });
+                    document.dispatchEvent(evento);
+                }
             });
+        }
 
-            navUl.addEventListener(
-                "mouseleave",
-                ocultarCirculo
-            );
+        const btnIdioma = this.querySelector('#cambiarIdioma');
+        if (btnIdioma) {
+            btnIdioma.addEventListener('click', async () => {
+                await import('./ModalIdioma.js');
+                const modal = document.createElement('modal-idioma');
+                document.body.appendChild(modal);
+            });
         }
     }
 }
