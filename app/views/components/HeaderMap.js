@@ -16,7 +16,7 @@ class HeaderMap extends HTMLElement {
 
         header {
             position: absolute;
-            top: 10px;
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
 
@@ -27,7 +27,7 @@ class HeaderMap extends HTMLElement {
             align-items: center;
             justify-content: space-between;
 
-            padding: 6px 10px;
+            padding: 8px 12px;
 
             background: rgba(255, 255, 255, 0.96);
 
@@ -51,6 +51,7 @@ class HeaderMap extends HTMLElement {
             display: flex;
             align-items: center;
             flex-shrink: 0;
+            height: 100%;
         }
 
         .logoHeader img {
@@ -75,11 +76,11 @@ class HeaderMap extends HTMLElement {
         .buscador input[type="text"] {
             flex: 1;
             min-width: 0;
-            height: 28px;
-            padding: 0 10px;
-            font-size: 13px;
+            height: 34px;
+            padding: 0 14px;
+            font-size: 15px;
             border: 1.5px solid rgba(92, 122, 72, 0.25);
-            border-radius: 14px;
+            border-radius: 17px;
             outline: none;
             font-family: inherit;
             color: #333;
@@ -98,12 +99,12 @@ class HeaderMap extends HTMLElement {
         }
 
         .buscador input[type="submit"] {
-            height: 28px;
-            padding: 0 10px;
-            font-size: 12px;
+            height: 34px;
+            padding: 0 16px;
+            font-size: 14px;
             font-weight: 600;
             border: none;
-            border-radius: 14px;
+            border-radius: 17px;
             background: #5c7a48;
             color: white;
             cursor: pointer;
@@ -224,47 +225,73 @@ class HeaderMap extends HTMLElement {
         @media (max-width: 600px) {
 
             header {
-                top: 8px;
-                padding: 6px 8px;
-                gap: 6px;
-                border-radius: 10px;
+                top: auto;
+                bottom: 20px;
+                transform: translate(-50%, 0);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 8px 10px;
+                gap: 5px;
+                border-radius: 14px;
+            }
+
+            .logoHeader {
+                order: 1;
+                flex: 0 0 auto;
+                align-items: center;
             }
 
             .logoHeader img {
-                height: 24px;
+                height: 22px;
+            }
+
+            #headerDerecha {
+                order: 2;
+                flex: 0 0 auto;
+                align-items: center;
+            }
+
+            .buscador {
+                order: 3;
+                width: 100%;
+                max-width: none;
+                margin-top: 4px;
             }
 
             .buscador input[type="text"] {
-                height: 26px;
-                font-size: 12px;
-                padding: 0 8px;
+                height: 40px;
+                font-size: 16px;
+                padding: 0 14px;
             }
 
             .buscador input[type="submit"] {
-                height: 26px;
-                padding: 0 8px;
-                font-size: 11px;
+                height: 40px;
+                padding: 0 14px;
+                font-size: 13px;
             }
 
             #headerDerecha button.icon-btn,
             .menu-btn {
-                width: 26px;
-                height: 26px;
+                width: 24px;
+                height: 24px;
             }
 
             #headerDerecha button.icon-btn svg,
             .menu-btn svg {
-                width: 12px;
-                height: 12px;
+                width: 10px;
+                height: 10px;
             }
 
             .menu-dropdown {
+                bottom: calc(100% + 6px);
+                top: auto;
                 min-width: 120px;
             }
 
             .menu-dropdown a {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 10px 14px;
+                font-size: 13px;
             }
         }
 
