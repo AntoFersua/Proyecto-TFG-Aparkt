@@ -117,9 +117,10 @@
 
 #mapa {
   width: 100%;
-  position: absolute;
-  top: 50px;
-  bottom: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1;
 }
 
