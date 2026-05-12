@@ -1,5 +1,12 @@
 /* Estilos de botones estilo Google Maps */
 
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100dvh;
+}
+
 #form-busqueda {
   position: absolute;
   top: 80px;
