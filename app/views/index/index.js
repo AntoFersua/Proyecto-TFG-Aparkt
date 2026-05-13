@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     },
   });
 
-  console.log("Usuario actual en DOMContentLoaded:", idUsuarioActual);
+  //console.log("Usuario actual en DOMContentLoaded:", idUsuarioActual);
 
   // Cargar mapa
   fetch("../../config/config.php")
@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         projection: "globe",
         zoom: 15,
         //Coordenadas Teatinos
-        center: [-4.475468174458712, 36.72410119432091],
+        center: [-4.478687, 36.720945],
       });
 
       //Cuando el estilo del mapa se carga, se establece la niebla por defecto
@@ -146,17 +146,68 @@ window.addEventListener("DOMContentLoaded", async function () {
         //mapa.removeSource(zona1.sourceID);
 
         const zona2 = estadoAparcamiento(
-          -4.476059,
-          36.72896,
-          500,
+          -4.478242,
+          36.720887,
+          180,
           "zona2",
           "zona2-fill",
-          "rgba(255, 0, 0, 0.3)",
-          "red",
+          "rgba(0, 255, 0, 0.3)", 
+          "green"
         );
 
+        const zona3 = estadoAparcamiento(
+          -4.473810,
+          36.720816,
+          140,
+          "zona3",
+          "zona3-fill",
+          "rgba(0, 255, 0, 0.3)", 
+          "green"
+        );
+
+        const zona4 = estadoAparcamiento(
+          -4.475607,
+          36.723248,
+          160,
+          "zona4",
+          "zona4-fill",
+          "rgba(255, 0, 0, 0.3)",
+          "red"
+        );
+
+        const zona5 = estadoAparcamiento(
+          -4.483850,
+          36.721974,
+          200,
+          "zona5",
+          "zona5-fill",
+          "rgba(255, 0, 0, 0.3)",
+          "red"
+        );
+
+        const zona6 = estadoAparcamiento(
+          -4.479964,
+          36.723565,
+          100,
+          "zona6",
+          "zona6-fill",
+          "rgba(255, 165, 0, 0.3)", 
+          "orange"
+        );
+
+        const zona7 = estadoAparcamiento(
+          -4.482157,
+          36.719429,
+          100,
+          "zona7",
+          "zona7-fill",
+          "rgba(255, 165, 0, 0.3)", 
+          "orange"
+        );
+
+
         //array con todas las zonas de estados creadas
-        let arrayEstadosAparcamientos = [zona1, zona2];
+        let arrayEstadosAparcamientos = [zona1, zona2, zona3, zona4, zona5, zona6, zona7];
 
         function cambiarEstado() {
           //recorrer el array arrayEstadosAparcamientos
@@ -382,11 +433,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log("boton liberr accion " + accionBotonLiberar);
                     console.log(accion2); 
                   }*/
-
-                  //obtener el id del usuario actual
-                  let usuarioActual = 1;
-                  let usuarioRegistrado = usuarioActual ?? null;
-
+                  
+                  
                   //si la acción es ocupar
                   if (accion == "ocupar") {
                     console.log("entrao ocupar");
@@ -394,7 +442,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     const datos = {
                       sourceID: aparcamientoSeleccionado,
                       action: accion,
-                      usuarioID: usuarioRegistrado,
+                      usuarioID: idUsuarioActual,
                     };
                     console.log(datos);
                     //enviar datos al backend mediante POST en json
@@ -434,7 +482,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     const datos = {
                       sourceID: aparcamientoSeleccionado,
                       action: accion,
-                      usuarioID: usuarioRegistrado,
+                      //el dato de usuarioID se envia para futuros cambios, de momento no tiene importancia ya que al liberar la plaza, el usuario se va a poner a NULL ya que la plaza esta libre
+                      usuarioID: idUsuarioActual,
                     };
                     console.log(datos);
                     //enviar datos al backend mediante POST en json
@@ -545,9 +594,9 @@ window.addEventListener("DOMContentLoaded", async function () {
           }
 
           mapa.on("click", ModalAparcamiento);
-
-          //mapa.on("click", obtenerDireccionDeCoordenadas);
 */
+          //mapa.on("click", obtenerDireccionDeCoordenadas);
+
       });
 
       //Obtener las coordenadas y la dirección de una ubi específica
@@ -871,7 +920,7 @@ async function configurarUIUsuarioLogueado(usuario) {
 
   idUsuarioActual = await obtenerIdUsuario();
 
-  console.log("ID Usuario actual:", idUsuarioActual);
+  //console.log("ID Usuario actual:", idUsuarioActual);
 
   // Botón de perfil - abrir banner
   const perfilBtn = document.getElementById("perfilUsuario");

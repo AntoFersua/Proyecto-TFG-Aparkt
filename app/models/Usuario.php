@@ -126,7 +126,7 @@ class Usuario extends Model
      */
     public function actualizarEmail($id, $email)
     {
-        $consulta = "UPDATE Usuario SET email = :email WHERE id = :id";
+        $consulta = "UPDATE usuario SET email = :email WHERE id = :id";
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
