@@ -8,7 +8,7 @@ class Vehiculo extends Model
     // CREATE
     public function crearVehiculo($usuarioId, $tipoVehiculo, $tamano, $plazaId = null)
     {
-        $consulta = "INSERT INTO vehiculo 
+        $consulta = "INSERT INTO Vehiculo 
                 (usuario_id, tipo_vehiculo, tamano, plaza_aparcamiento_id)
                 VALUES (:usuario_id, :tipo_vehiculo, :tamano, :plaza_id)";
 
@@ -33,7 +33,7 @@ class Vehiculo extends Model
     // READ: todos por usuario
     public function obtenerPorUsuario($usuarioId)
     {
-        $consulta = "SELECT * FROM vehiculo WHERE usuario_id = :usuario_id";
+        $consulta = "SELECT * FROM Vehiculo WHERE usuario_id = :usuario_id";
 
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->bindValue(":usuario_id", $usuarioId, PDO::PARAM_INT);
@@ -45,7 +45,7 @@ class Vehiculo extends Model
     // READ: uno por id
     public function obtenerPorId($id, $usuarioId)
     {
-        $consulta = "SELECT * FROM vehiculo 
+        $consulta = "SELECT * FROM Vehiculo 
                 WHERE id = :id AND usuario_id = :usuario_id";
 
         $stmt = $this->_conexion->prepare($consulta);
@@ -59,7 +59,7 @@ class Vehiculo extends Model
     // UPDATE
     public function actualizarVehiculo($id, $usuarioId, $tipoVehiculo, $tamano, $plazaId = null)
     {
-        $consulta = "UPDATE vehiculo 
+        $consulta = "UPDATE Vehiculo 
                 SET tipo_vehiculo = :tipo_vehiculo,
                     tamano = :tamano,
                     plaza_aparcamiento_id = :plaza_id
@@ -86,7 +86,7 @@ class Vehiculo extends Model
     // DELETE
     public function eliminarVehiculo($id, $usuarioId)
     {
-        $consulta = "DELETE FROM vehiculo 
+        $consulta = "DELETE FROM Vehiculo 
                 WHERE id = :id AND usuario_id = :usuario_id";
 
         $stmt = $this->_conexion->prepare($consulta);

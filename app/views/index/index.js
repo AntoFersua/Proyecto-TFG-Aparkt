@@ -13,6 +13,28 @@ let usuarioActual = null;
 let idUsuarioActual = null;
 
 window.addEventListener("DOMContentLoaded", async function () {
+  
+  // Botón de lupa para interactividad
+  const btnLupa = document.getElementById('btn-lupa');
+  const menuInteractividad = document.getElementById('menu-interactividad');
+  
+  if (btnLupa && menuInteractividad) {
+    btnLupa.addEventListener('click', (e) => {
+      e.stopPropagation();
+      btnLupa.classList.toggle('active');
+      menuInteractividad.classList.toggle('active');
+    });
+
+    document.addEventListener('click', () => {
+      btnLupa.classList.remove('active');
+      menuInteractividad.classList.remove('active');
+    });
+
+    menuInteractividad.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
   await cargarTraducciones();
   aplicarTraducciones();
   // Verificar sesión
@@ -668,7 +690,14 @@ window.addEventListener("DOMContentLoaded", async function () {
       //Obtener el formulario de realizar una búsqueda
       let formulario = document.querySelector("#form-busqueda");
       //Aplicar listener en caso de que sea enviado
-      formulario.addEventListener("submit", enviarFormulario);
+      if (formulario) {
+        formulario.addEventListener("submit", enviarFormulario);
+      }
+
+      //Escuchar evento de búsqueda desde el header
+      document.addEventListener('buscarDireccion', function(e) {
+        buscarLugar({ value: e.detail.direccion });
+      });
       //Evento es un objeto
       function enviarFormulario(evento) {
         //Obtener el input
