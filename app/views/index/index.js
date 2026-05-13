@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     },
   });
 
-  console.log("Usuario actual en DOMContentLoaded:", idUsuarioActual);
+  //console.log("Usuario actual en DOMContentLoaded:", idUsuarioActual);
 
   // Cargar mapa
   fetch("../../config/config.php")
@@ -411,11 +411,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log("boton liberr accion " + accionBotonLiberar);
                     console.log(accion2); 
                   }*/
-
-                  //obtener el id del usuario actual
-                  let usuarioActual = 1;
-                  let usuarioRegistrado = usuarioActual ?? null;
-
+                  
+                  
                   //si la acción es ocupar
                   if (accion == "ocupar") {
                     console.log("entrao ocupar");
@@ -423,7 +420,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     const datos = {
                       sourceID: aparcamientoSeleccionado,
                       action: accion,
-                      usuarioID: usuarioRegistrado,
+                      usuarioID: idUsuarioActual,
                     };
                     console.log(datos);
                     //enviar datos al backend mediante POST en json
@@ -463,7 +460,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     const datos = {
                       sourceID: aparcamientoSeleccionado,
                       action: accion,
-                      usuarioID: usuarioRegistrado,
+                      //el dato de usuarioID se envia para futuros cambios, de momento no tiene importancia ya que al liberar la plaza, el usuario se va a poner a NULL ya que la plaza esta libre
+                      usuarioID: idUsuarioActual,
                     };
                     console.log(datos);
                     //enviar datos al backend mediante POST en json
@@ -893,7 +891,7 @@ async function configurarUIUsuarioLogueado(usuario) {
 
   idUsuarioActual = await obtenerIdUsuario();
 
-  console.log("ID Usuario actual:", idUsuarioActual);
+  //console.log("ID Usuario actual:", idUsuarioActual);
 
   // Botón de perfil - abrir banner
   const perfilBtn = document.getElementById("perfilUsuario");
