@@ -78,8 +78,8 @@ class Usuario extends Model
 
     public function verificarVehiculoPorEmail($email)
     {
-        $consulta = "SELECT COUNT(v.id) as total FROM usuario u 
-                    LEFT JOIN vehiculo v ON u.id = v.usuario_id 
+        $consulta = "SELECT COUNT(v.id) as total FROM Usuario u 
+                    LEFT JOIN Vehiculo v ON u.id = v.usuario_id 
                     WHERE u.email = :email AND v.id IS NOT NULL";
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
@@ -92,9 +92,9 @@ class Usuario extends Model
     public function obtenerVehiculosPorEmail($email)
     {
         $consulta = "SELECT v.*, p.id as plaza_id, p.tipo as plaza_tipo, p.tamano as plaza_tamano
-                    FROM usuario u 
-                    LEFT JOIN vehiculo v ON u.id = v.usuario_id
-                    LEFT JOIN plazaaparcamiento p ON v.plaza_aparcamiento_id = p.id
+                    FROM Usuario u 
+                    LEFT JOIN Vehiculo v ON u.id = v.usuario_id
+                    LEFT JOIN PlazaAparcamiento p ON v.plaza_aparcamiento_id = p.id
                     WHERE u.email = :email";
         $stmt = $this->_conexion->prepare($consulta);
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);

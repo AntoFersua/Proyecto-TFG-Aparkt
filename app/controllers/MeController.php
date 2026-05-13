@@ -16,8 +16,6 @@ session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'Lax'
 ]);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 
 // Inicia o recupera la sesión actual del usuario
 session_start();
@@ -39,14 +37,19 @@ $response = [
 
 // If user is logged in, also fetch their score
 if ($logueado && isset($_SESSION['usuario_id'])) {
-    $conexion = require __DIR__ . '/../models/Conexion.php';
-    require_once __DIR__ . '/../models/SistemaPuntuacion.php';
-    $puntuacionModel = new SistemaPuntuacion($conexion);
-    $response['puntuacion'] = $puntuacionModel->obtenerPuntuacion($_SESSION['usuario_id']);
-    $response['usuario_id'] = $_SESSION['usuario_id'];
-    $response['puntosCrear'] = SistemaPuntuacion::PUNTOS_CREAR;
-    $response['puntosOcupar'] = SistemaPuntuacion::PUNTOS_OCUPAR;
-    $response['puntosLiberar'] = SistemaPuntuacion::PUNTOS_LIBERAR;
+    try {
+        $conexion = require __DIR__ . '/../models/Conexion.php';
+        require_once __DIR__ . '/../models/SistemaPuntuacion.php';
+        $puntuacionModel = new SistemaPuntuacion($conexion);
+        $response['puntuacion'] = $puntuacionModel->obtenerPuntuacion($_SESSION['usuario_id']);
+        $response['usuario_id'] = $_SESSION['usuario_id'];
+        $response['puntosCrear'] = SistemaPuntuacion::PUNTOS_CREAR;
+        $response['puntosOcupar'] = SistemaPuntuacion::PUNTOS_OCUPAR;
+        $response['puntosLiberar'] = SistemaPuntuacion::PUNTOS_LIBERAR;
+    } catch (PDOException $e) {
+        $response['puntuacion'] = 0;
+        $response['error_bd'] = $e->getMessage();
+    }
 }
 
 echo json_encode($response);
