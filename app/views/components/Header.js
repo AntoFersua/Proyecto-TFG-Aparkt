@@ -15,10 +15,18 @@ class Header extends HTMLElement {
   render() {
     this.innerHTML = `
         <header>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div class="logoHeader">
         <img src="../assets/imagotipoAparkt.webp" data-i18n-alt="header.logoAlt" alt="Logo" />
       </div>
-      <nav class="navPrincipal">
+      <div class="logoMobile">
+        <img src="../assets/isotipoAparkt.webp" data-i18n-alt="header.logoAlt" alt="Isotipo" />
+      </div>
+      <nav class="navPrincipal" aria-label="Navegación principal">
         <ul>
           <li><a href="../index/index.html" data-i18n="nav.mapa">Mapa</a></li>
           <li><a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a></li>
@@ -61,6 +69,17 @@ class Header extends HTMLElement {
 
   //Se inicializa la lógica del menú de navegación
   initJS() {
+    const menuToggle = this.querySelector('.menu-toggle');
+    const navPrincipal = this.querySelector('.navPrincipal');
+    
+    if (menuToggle && navPrincipal) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = navPrincipal.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isOpen);
+      });
+    }
+
     const navUl = this.querySelector(".navPrincipal ul");
     if (navUl) {
       const navLinks = this.querySelectorAll(".navPrincipal ul li");

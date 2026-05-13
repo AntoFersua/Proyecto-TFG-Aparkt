@@ -1100,9 +1100,17 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
     .contenedor-tarjetas {
       flex-direction: column;
+      padding-inline: 0px;
+
+      .tarjeta {
+        background-image: url("../assets/fondoAparkt.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
     }
 
     section {
