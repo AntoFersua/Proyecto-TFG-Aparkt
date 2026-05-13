@@ -575,7 +575,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
           mapa.on("click", ModalAparcamiento);
 */
-          mapa.on("click", obtenerDireccionDeCoordenadas);
+          //mapa.on("click", obtenerDireccionDeCoordenadas);
 
       });
 
