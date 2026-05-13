@@ -45,6 +45,8 @@ class HeaderMap extends HTMLElement {
 
             font-family: "Inter", sans-serif;
             gap: 8px;
+
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .logoHeader {
@@ -85,7 +87,7 @@ class HeaderMap extends HTMLElement {
             font-family: inherit;
             color: #333;
             background: #fafafa;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
         }
 
         .buscador input[type="text"]::placeholder {
@@ -140,7 +142,7 @@ class HeaderMap extends HTMLElement {
             border-radius: 8px;
             background: #f0f0f0;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, background-color 0.3s ease;
         }
 
         .menu-btn:hover {
@@ -166,7 +168,7 @@ class HeaderMap extends HTMLElement {
             opacity: 0;
             visibility: hidden;
             transform: translateY(-8px);
-            transition: all 0.2s ease;
+            transition: all 0.2s ease, background 0.3s ease, border-color 0.3s ease;
             z-index: 10000;
         }
 
@@ -213,7 +215,7 @@ class HeaderMap extends HTMLElement {
             border-radius: 8px;
             background: #f0f0f0;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, background-color 0.3s ease;
         }
 
         .iconos-btn:hover {
