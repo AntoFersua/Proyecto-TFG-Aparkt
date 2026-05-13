@@ -6,65 +6,103 @@ import "../components/Modalpuntos.js";
 import '../components/Footer.js';
 import { cargarTraducciones, aplicarTraducciones, t } from '../translator.js';
 
-//Variable que guarda al usuario (en caso de que exista sesión)
+//Guardamos el usuario actual si existe sesión iniciada
 let usuarioActual = null;
 
-//Se ejecuta cuando el DOM está completamente cargado
+//Se ejecuta cuando el DOM ya está cargado completamente (la página ya existe en pantalla)
 document.addEventListener("DOMContentLoaded", async function () {
+
+  //Cargamos el sistema de traducciones antes de pintar nada
   await cargarTraducciones();
+
+  //Aplicamos el idioma seleccionado al HTML. IMPORTANTE que sea lo priemro porque si no traemos los idiomas no carga los mensajes en ese idioma
   aplicarTraducciones();
+
   console.log("Inicializando Login");
 
-  //Inicializa el sistema de autenticación
+  //Inicializa el sistema de autenticación (comprueba si hay sesión o no)
   await iniciarAuth({
-    //Lo que pasa si esta logueado
+
+    //CASO 1: el usuario está logueado
     alLoguearse: (usuario) => {
+
+      //Guardamos el usuario en memoria
       usuarioActual = usuario;
+
+      //Configuramos la interfaz cuando hay sesión activa
       configurarUIUsuarioLogueado();
+
+      //Inicializamos validación del formulario de login
       inicializarFormulario();
+
+      //Activamos el botón de mostrar/ocultar contraseña
       inicializarTogglePassword();
     },
-    //Usuario no logueado
+
+    //CASO 2: el usuario NO está logueado
     alNoLoguearse: () => {
+
+      //Configuramos la interfaz para usuario sin sesión
       configurarUIUsuarioNoLogueado();
+
+      //Inicializamos validación del formulario igualmente
       inicializarFormulario();
+
+      //Activamos el toggle de contraseña igualmente
       inicializarTogglePassword();
     }
   });
 });
 
-//Función para cuando el usuario está LOGUEADO
+//Función que configura la UI cuando el usuario ya está logueado
 function configurarUIUsuarioLogueado() {
+
+  //Botón de perfil del usuario
   const botonPerfil = document.getElementById('perfilUsuario');
+
+  //Banner desplegable del usuario
   const banner = document.getElementById('bannerUsuario');
   
+  //Si existen los elementos, activamos comportamiento del perfil
   if (botonPerfil && banner) {
     botonPerfil.addEventListener('click', () => {
+
+      //Abrimos/cerramos el banner del usuario
       banner.classList.toggle('abierto');
     });
   }
 
+  //Botón de logout (cerrar sesión)
   const botonLogout = document.getElementById('logout');
+
   if (botonLogout) {
+
+    //Al hacer click, cerramos sesión
     botonLogout.addEventListener('click', () => cerrarSesion());
   }
 }
 
-// Toggle mostrar/ocultar contraseña
+//Función para mostrar/ocultar contraseña en el input
 function inicializarTogglePassword() {
+
   const toggleButton = document.getElementById('togglePassword');
   const passwordInput = document.getElementById('password');
 
+  //Solo si existen los dos elementos
   if (toggleButton && passwordInput) {
+
     toggleButton.addEventListener('click', () => {
+
+      //Si está en password lo pasamos a text y viceversa
       const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+
       passwordInput.setAttribute('type', type);
       
-      // Cambiar icono
+      //Cambiamos el icono según el estado del input
       if (type === 'text') {
         toggleButton.innerHTML = `
           <svg viewBox="0 0 24 24">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
             <line x1="1" y1="1" x2="23" y2="23"/>
           </svg>
         `;
@@ -80,27 +118,36 @@ function inicializarTogglePassword() {
   }
 }
 
-//Función cuando el usuario NO ESTÁ LOGUEADO
+//Función cuando el usuario NO está logueado
 function configurarUIUsuarioNoLogueado() {
+
   const botonPerfil = document.getElementById('perfilUsuario');
+
+  //Si existe el botón de perfil
   if (botonPerfil) {
+
     botonPerfil.addEventListener('click', () => {
+
+      //Mostramos mensaje o redirigimos según el idioma actual
       alert(t('login.yaEnLogin'));
     });
   }
 }
 
-//Funcion para validar el formulario
+//Función que inicializa la validación del formulario de login
 function inicializarFormulario() {
-  // Inicializar JustValidate
+
+  //Inicializamos la librería de validación JustValidate
   const validador = new JustValidate("#loginForm", {
-    //Validamos antes de enviar
+
+    //Valida antes de enviar el formulario
     validateBeforeSubmitting: true,
-    //Enfocamos al primer campo con error
+
+    //Enfoca automáticamente el primer error encontrado
     focusInvalidField: true,
   });
 
-  // Validación EMAIL. Es obligatorio
+  //VALIDACIÓN DEL EMAIL (obligatorio)
   validador.addField("#email", [
     {
       rule: "required",
@@ -110,7 +157,7 @@ function inicializarFormulario() {
     errorsContainer: "#error-email",
   });
 
-  // Validación CONTRASEÑA
+  //VALIDACIÓN DE CONTRASEÑA (obligatoria)
   validador.addField("#password", [
     {
       rule: "required",
@@ -120,17 +167,18 @@ function inicializarFormulario() {
     errorsContainer: "#error-password",
   });
 
-  // Cuando el formulario es válido
+  //Cuando el formulario es válido y pasa todas las validaciones
   validador.onSuccess((event) => {
+
     event.preventDefault();
 
-    //Recogemos los datos del formulario
+    //Recogemos datos del formulario
     const datos = {
       usuario: document.querySelector("#email").value.trim(),
       contrasena: document.querySelector("#password").value.trim(),
     };
 
-    //Petición mediante Fetch al Backedn PHP para login
+    //Enviamos los datos al backend PHP para hacer login
     fetch("../../controllers/LoginController.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -138,20 +186,24 @@ function inicializarFormulario() {
     })
       .then((response) => response.json())
       .then((data) => {
-        //Si todo es correcto
+
+        //Si el login es correcto
         if (data.status === "ok") {
           alert(data.mensaje);
-          //redirigimos a la app principal aparkt
+
+          //Redirigimos a la app principal
           window.location.href = '../aparkt/aparkt.html';
-        //Si el login es incorrrecto
+
+        //Si el login falla
         } else {
           alert(t('login.errorLogin'));
         }
       })
       .catch((error) => {
+
+        //Error de conexión con el backend
         console.error("Error:", error);
         alert(t('login.errorConexion'));
       });
   });
 }
-
