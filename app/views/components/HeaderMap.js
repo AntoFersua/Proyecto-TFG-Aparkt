@@ -381,8 +381,10 @@ class HeaderMap extends HTMLElement {
             }
 
             .menu-dropdown {
-                bottom: calc(100% + 6px);
+                bottom: calc(100% + 26px);
                 top: auto;
+                left: 0;
+                right: auto;
                 min-width: 120px;
             }
 
