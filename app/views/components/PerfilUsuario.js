@@ -42,6 +42,9 @@ class PerfilUsuario extends HTMLElement {
     // Label flotante para selects del formulario de vehículo
     this.configurarLabelFlotante();
 
+    // Drag para bottom sheet en móvil
+    this.configurarDrag();
+
     // Mostrar/ocultar formulario vehículo
     const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
     const formVehiculo = this.querySelector('#formVehiculo');
