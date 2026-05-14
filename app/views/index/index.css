@@ -57,43 +57,6 @@ body {
   }
 }
 
-#interactividad {
-  position: absolute;
-  left: 20px;
-  z-index: 80;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  bottom: 40px;
-
-  #interactividad button {
-    height: 44px;
-    padding: 0 20px;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    border-radius: 22px;
-    background: white;
-    color: #333;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  #interactividad button:hover {
-    background: #f1f1f1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    transform: translateY(-1px);
-  }
-
-  #interactividad button:active {
-    background: #e8e8e8;
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
 .btn-lupa {
   position: absolute;
   width: 50px;
@@ -110,150 +73,75 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
 }
 
-    &:hover {
-      background: #f1f1f1;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      transform: translateY(-1px);
-    }
+.btn-lupa:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
 
-    &:active {
-      background: #e8e8e8;
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-  }
+.btn-lupa svg {
+  width: 24px;
+  height: 24px;
+  stroke: #5c7a48;
+}
 
+.btn-lupa.active svg {
+  transform: rotate(90deg);
+}
+
+[data-theme="dark"] .btn-lupa {
+  background: #333;
+}
+
+[data-theme="dark"] .btn-lupa svg {
+  stroke: #aaa;
+}
+
+.menu-interactividad {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 140;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  transform: translateY(-8px);
+}
+
+.menu-interactividad.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .menu-interactividad button {
+  background: #333;
+  color: #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .menu-interactividad button:hover {
+  background: #444;
+}
+
+@media (min-width: 601px) {
   .btn-lupa {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 150;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+    left: 20px;
+    bottom: 20px;
   }
-
-  .btn-lupa:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  }
-
-  .btn-lupa svg {
-    width: 24px;
-    height: 24px;
-    stroke: #5c7a48;
-  }
-
-  .btn-lupa.active svg {
-    transform: rotate(90deg);
-  }
-
-  [data-theme="dark"] .btn-lupa {
-    background: #333;
-  }
-
-  [data-theme="dark"] .btn-lupa svg {
-    stroke: #aaa;
-  }
-
-  [data-theme="dark"] .menu-interactividad button {
-    background: #333;
-    color: #e0e0e0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-
-  [data-theme="dark"] .menu-interactividad button:hover {
-    background: #444;
-  }
-
-  @media (min-width: 601px) {
-    .btn-lupa {
-      left: 20px;
-      bottom: 20px;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .btn-lupa {
-      left: 12px;
-      bottom: max(100px, calc(100px + env(safe-area-inset-bottom)));
-    }
-  }
-
   .menu-interactividad {
-    position: absolute;
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 140;
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
+    left: 20px;
+    bottom: 80px;
   }
-
-  .menu-interactividad.active {
-    display: flex;
-  }
-
-  @media (min-width: 601px) {
-    .menu-interactividad {
-      left: 20px;
-      bottom: 80px;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .menu-interactividad {
-      left: 12px;
-      bottom: max(210px, calc(210px + env(safe-area-inset-bottom)));
-    }
-  }
-
-  .menu-interactividad button {
-    height: 40px;
-    padding: 0 16px;
-    font-size: 13px;
-    font-weight: 500;
-    border: none;
-    border-radius: 20px;
-    background: white;
-    color: #333;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    text-align: left;
-  }
-
-  .menu-interactividad button:hover {
-    background: #f5f5f5;
-    transform: translateY(-1px);
-  }
-
-  #mapa {
-    width: 100%;
-    height: 100dvh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  .estadoVisualMarker {
-    display: none;
-  }
-
+}
 
 @media (max-width: 600px) {
+  .btn-lupa {
+    left: 12px;
+    bottom: max(100px, calc(100px + env(safe-area-inset-bottom)));
+  }
   .menu-interactividad {
     left: 12px;
     bottom: max(210px, calc(210px + env(safe-area-inset-bottom)));

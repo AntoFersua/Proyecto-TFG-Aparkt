@@ -936,7 +936,7 @@ async function configurarUIUsuarioLogueado(usuario) {
   }
 
   // Buscamos el contenedor existente
-  const contenedor = document.getElementById("interactividad");
+  const contenedor = document.getElementById("menu-interactividad");
 
   // BOTÓN: Mostrar aparcamientos
   const btnAparcamientos = document.createElement("button");
