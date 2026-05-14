@@ -449,6 +449,7 @@ header {
 @media (max-width: 480px) {
   header {
     padding: 0 15px;
+    z-index: 95;
 
     .logoHeader img {
       height: 40px;
@@ -1127,13 +1128,14 @@ main img {
 
 .error-mensaje {
   color: #c62828;
-  font-size: 12px;
+  font-size: 10px;
   display: block;
 }
 
 .error-field {
   border-color: #c62828 !important;
   box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15) !important;
+  font-size: 10px;
 }
 
 .hidden {
@@ -1146,4 +1148,101 @@ main img {
 
 #bannerUsuario {
   z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .banner-lateral {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    /*max-height: 85vh;
+    */
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25);
+    padding: 24px 20px;
+    background: var(--bg-primary);
+    z-index: 2000;
+    touch-action: none;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    border-radius: none;
+    -webkit-border-radius: none;
+    -moz-border-radius: none;
+    -ms-border-radius: none;
+    -o-border-radius: none;
+  }
+
+  .banner-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .banner-lateral .cerrar-banner {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-secondary);
+    border: none;
+  }
+
+  .banner-lateral::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    cursor: grab;
+  }
+
+  .banner-lateral .menu-opciones {
+    padding-top: 8px;
+    gap: 10px;
+  }
+
+  .banner-lateral .opcion-btn {
+    padding: 14px 16px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  .banner-lateral .menu-inferior {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 10px;
+  }
+
+  .banner-lateral .menu-vehiculos {
+    gap: 10px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+  .banner-lateral .form-vehiculo,
+  .banner-lateral .form-email {
+    padding: 14px;
+    gap: 14px;
+    border-radius: 12px;
+  }
+
+  .banner-lateral.abierto {
+    transform: translateY(0);
+    animation: none;
+  }
+
+  .banner-lateral.dragging {
+    transition: none;
+  }
 }

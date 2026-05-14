@@ -62,6 +62,7 @@ async function iniciarPagina() {
           console.log('signup.js - banner:', banner);
 
           if (banner) {
+            banner.style.transform = '';
             banner.classList.add('abierto');
           }
 

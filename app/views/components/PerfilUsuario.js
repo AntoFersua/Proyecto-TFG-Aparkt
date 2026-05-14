@@ -27,6 +27,9 @@ class PerfilUsuario extends HTMLElement {
     const btnCerrar = this.querySelector('#cerrarBanner');
     btnCerrar.addEventListener('click', () => this.cerrarBanner());
 
+    // Drag para bottom sheet en móvil
+    this.configurarDrag();
+
     // Label flotante para selects del formulario de vehículo
     this.configurarLabelFlotante();
 
@@ -71,6 +74,69 @@ class PerfilUsuario extends HTMLElement {
     }
   }
 
+  configurarDrag() {
+    const banner = this.querySelector('#bannerUsuario');
+    if (!banner) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let isDragging = false;
+    let startTransform = 0;
+
+    const handleStart = (e) => {
+      const touch = e.touches ? e.touches[0] : e;
+      const rect = banner.getBoundingClientRect();
+      
+      // Solo permitir drag en los primeros 80px (área de la tira)
+      if (touch.clientY < rect.top + 80) {
+        startY = touch.clientY;
+        isDragging = true;
+        currentY = 0;
+        startTransform = 0;
+        banner.classList.add('dragging');
+      }
+    };
+
+    const handleMove = (e) => {
+      if (!isDragging) return;
+      
+      const touch = e.touches ? e.touches[0] : e;
+      const deltaY = touch.clientY - startY;
+      
+      // Limitar el movimiento entre 0 (completo) y 85vh (oculto)
+      const maxTranslate = window.innerHeight * 0.85;
+      currentY = Math.max(0, Math.min(deltaY, maxTranslate));
+      
+      banner.style.transform = `translateY(${currentY}px)`;
+    };
+
+    const handleEnd = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      banner.classList.remove('dragging');
+      
+      // Si se ha arrastrado más del 40%, ocultar completamente
+      const maxTranslate = window.innerHeight * 0.85;
+      const threshold = maxTranslate * 0.4;
+      
+      if (currentY > threshold) {
+        this.cerrarBanner();
+      } else {
+        banner.style.transform = '';
+      }
+    };
+
+    // Touch events
+    banner.addEventListener('touchstart', handleStart, { passive: true });
+    banner.addEventListener('touchmove', handleMove, { passive: false });
+    banner.addEventListener('touchend', handleEnd);
+    
+    // Mouse events (para testing en desktop)
+    banner.addEventListener('mousedown', handleStart);
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleEnd);
+  }
+
   configurarLabelFlotante() {
     const selects = this.querySelectorAll('#formVehiculo select');
     selects.forEach((select) => {
@@ -102,6 +168,7 @@ class PerfilUsuario extends HTMLElement {
   cerrarBanner() {
     const banner = this.querySelector('#bannerUsuario');
     banner.classList.remove('abierto');
+    banner.style.transform = '';
   }
 
   /**

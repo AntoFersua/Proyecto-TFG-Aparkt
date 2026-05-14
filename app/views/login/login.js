@@ -66,7 +66,7 @@ function configurarUIUsuarioLogueado() {
   //Si existen los elementos, activamos comportamiento del perfil
   if (botonPerfil && banner) {
     botonPerfil.addEventListener('click', () => {
-
+      banner.style.transform = '';
       //Abrimos/cerramos el banner del usuario
       banner.classList.toggle('abierto');
     });

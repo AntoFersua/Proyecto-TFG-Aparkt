@@ -35,6 +35,7 @@ function configurarUIUsuarioLogueado(usuario) {
       const banner = document.getElementById('bannerUsuario');
       console.log('aparkt.js - banner:', banner);
       if (banner) {
+        banner.style.transform = '';
         banner.classList.add('abierto');
       }
     });

@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCerrarBanner.addEventListener("click", function (e) {
       e.stopPropagation();
       banner.classList.remove("abierto");
+      banner.style.transform = '';
     });
   }
 
@@ -62,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (banner && banner.classList.contains("abierto")) {
       if (!banner.contains(e.target) && !botonPerfil.contains(e.target)) {
         banner.classList.remove("abierto");
+        banner.style.transform = '';
       }
     }
   });
