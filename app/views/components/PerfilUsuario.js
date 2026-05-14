@@ -33,15 +33,16 @@ class PerfilUsuario extends HTMLElement {
     // Mostrar/ocultar formulario vehículo
     const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
     const formVehiculo = this.querySelector('#formVehiculo');
-    let vehiculoVisible = false;
+    this.vehiculoVisible = false;
     
     if (btnAnadirVehiculo && formVehiculo) {
       btnAnadirVehiculo.addEventListener('click', (e) => {
         e.stopPropagation();
-        vehiculoVisible = !vehiculoVisible;
-        if (vehiculoVisible) {
+        this.vehiculoVisible = !this.vehiculoVisible;
+        if (this.vehiculoVisible) {
           btnAnadirVehiculo.textContent = 'Cancelar';
           formVehiculo.style.display = 'flex';
+          formEmail.style.display = 'none';
         } else {
           btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
           formVehiculo.style.display = 'none';
@@ -119,6 +120,11 @@ class PerfilUsuario extends HTMLElement {
     if (formEmail.style.display === 'none') {
       formEmail.style.display = 'block';
       formVehiculo.style.display = 'none';
+      const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
+      if (btnAnadirVehiculo) {
+        btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+      }
+      this.vehiculoVisible = false;
     } else {
       formEmail.style.display = 'none';
     }
@@ -318,3 +324,4 @@ class PerfilUsuario extends HTMLElement {
 
 // Registrar el componente personalizado
 customElements.define("perfil-usuario", PerfilUsuario);
+

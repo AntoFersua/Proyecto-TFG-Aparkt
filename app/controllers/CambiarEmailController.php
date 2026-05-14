@@ -68,7 +68,7 @@ try {
     // Responder según el resultado
     if ($actualizado) {
         // Actualizar también el email en la sesión
-        $_SESSION['usuario']['email'] = $nuevoEmail;
+        $_SESSION['usuario'] = $nuevoEmail;
         echo json_encode(['success' => true, 'message' => 'Email actualizado correctamente']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Error al actualizar el email']);
