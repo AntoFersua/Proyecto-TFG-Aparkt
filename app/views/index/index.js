@@ -929,7 +929,6 @@ async function configurarUIUsuarioLogueado(usuario) {
     perfilBtn.addEventListener("click", () => {
       const banner = document.getElementById("bannerUsuario");
       if (banner) {
-        banner.style.transform = '';
         banner.classList.add("abierto");
       }
     });
