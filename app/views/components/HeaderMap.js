@@ -132,24 +132,25 @@ class HeaderMap extends HTMLElement {
             position: relative;
         }
 
-        .menu-btn {
+        #headerDerecha button.menu-btn {
             width: 28px;
             height: 28px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
-            border-radius: 8px;
-            background: #f0f0f0;
+            border-radius: 50%;
+            background: #ffffff;
             cursor: pointer;
             transition: background 0.2s ease, background-color 0.3s ease;
         }
 
-        .menu-btn:hover {
-            background: #e0e0e0;
+        #headerDerecha button.menu-btn:hover {
+            background: var(--color-verde, #34af72);
         }
 
-        .menu-btn svg {
+        #headerDerecha button.menu-btn svg {
             width: 16px;
             height: 16px;
             stroke: #666;
@@ -291,23 +292,24 @@ class HeaderMap extends HTMLElement {
         #headerDerecha button.icon-btn {
             width: 28px;
             height: 28px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
-            border-radius: 8px;
-            background: #f0f0f0;
+            border-radius: 50%;
+            background: #ffffff;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, background-color 0.3s ease;
         }
 
         #headerDerecha button.icon-btn:hover {
-            background: #e0e0e0;
+            background: var(--color-verde, #34af72);
         }
 
         #headerDerecha button.icon-btn svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             stroke: #666;
             fill: none;
         }
@@ -368,12 +370,12 @@ class HeaderMap extends HTMLElement {
                 display: none;
             }
 
-            .menu-btn {
+            #headerDerecha button.menu-btn {
                 width: 24px;
                 height: 24px;
             }
 
-            .menu-btn svg {
+            #headerDerecha button.menu-btn svg {
                 width: 10px;
                 height: 10px;
             }
@@ -442,22 +444,22 @@ class HeaderMap extends HTMLElement {
             border-color: #5c7a48;
         }
 
-        :host-context([data-theme="dark"]) .menu-btn,
-        [data-theme="dark"] .menu-btn,
+        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn,
+        [data-theme="dark"] #headerDerecha button.menu-btn,
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn,
         [data-theme="dark"] #headerDerecha button.icon-btn {
             background: #333;
         }
 
-        :host-context([data-theme="dark"]) .menu-btn:hover,
-        [data-theme="dark"] .menu-btn:hover,
+        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn:hover,
+        [data-theme="dark"] #headerDerecha button.menu-btn:hover,
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn:hover,
         [data-theme="dark"] #headerDerecha button.icon-btn:hover {
-            background: #444;
+            background: var(--color-verde, #34af72);
         }
 
-        :host-context([data-theme="dark"]) .menu-btn svg,
-        [data-theme="dark"] .menu-btn svg,
+        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn svg,
+        [data-theme="dark"] #headerDerecha button.menu-btn svg,
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn svg,
         [data-theme="dark"] #headerDerecha button.icon-btn svg {
             stroke: #aaa;
@@ -590,20 +592,24 @@ class HeaderMap extends HTMLElement {
                 </div>
 
                 <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
-                        <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" stroke="#666" stroke-width="1.2" fill="none"/>
-                        <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" stroke="#666" stroke-width="1.2" fill="none"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <g transform="scale(1.5)" stroke-width="1.333">
+                            <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" fill="none"/>
+                            <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" fill="none"/>
+                        </g>
                     </svg>
                 </button>
 
                 <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" stroke="#666" stroke-width="1.2" fill="none"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <g transform="scale(1.5)" stroke-width="1.333">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" fill="none"/>
+                        </g>
                     </svg>
                 </button>
 
                 <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema">
-                    <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -614,7 +620,7 @@ class HeaderMap extends HTMLElement {
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
-                    <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                     </svg>
                 </button>
@@ -709,27 +715,8 @@ class HeaderMap extends HTMLElement {
             });
         }
 
-        const btnModoOscuro = this.querySelector('#modoOscuro');
-        const btnModoOscuroDrop = this.querySelector('#modoOscuroDrop');
-        
-        const alternarModoOscuro = () => {
-            var actual = document.documentElement.getAttribute('data-theme');
-            var nuevo = actual === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', nuevo);
-            document.documentElement.style.colorScheme = nuevo;
-            localStorage.setItem('modoOscuro', nuevo === 'dark' ? 'true' : 'false');
-        };
-
-        if (btnModoOscuro) {
-            btnModoOscuro.addEventListener('click', alternarModoOscuro);
-        }
-        if (btnModoOscuroDrop) {
-            btnModoOscuroDrop.addEventListener('click', (e) => {
-                e.stopPropagation();
-                iconosDropdown.classList.remove('active');
-                alternarModoOscuro();
-            });
-        }
+        // El toggle de modo oscuro se gestiona desde modoOscuro.js
+        // (incluye actualización de iconos para ambos botones)
     }
 }
 

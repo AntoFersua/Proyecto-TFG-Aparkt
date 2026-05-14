@@ -1,4 +1,5 @@
 import { obtenerRutaBase } from '../auth.js';
+import './Modalpuntos.js';
 
 class PerfilUsuario extends HTMLElement {
   constructor() {
@@ -26,6 +27,17 @@ class PerfilUsuario extends HTMLElement {
 
     const btnCerrar = this.querySelector('#cerrarBanner');
     btnCerrar.addEventListener('click', () => this.cerrarBanner());
+
+    // Botón ver puntuación
+    const btnPuntuacion = this.querySelector('.verPuntuacion');
+    if (btnPuntuacion) {
+      btnPuntuacion.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (document.querySelector('modal-puntos')) return;
+        const modal = document.createElement('modal-puntos');
+        document.body.appendChild(modal);
+      });
+    }
 
     // Label flotante para selects del formulario de vehículo
     this.configurarLabelFlotante();
