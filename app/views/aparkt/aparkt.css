@@ -1100,41 +1100,64 @@
     }
   }
 
+  @media (max-width: 768px) {
+    #aparkt {
+      padding-inline: 0 !important;
+    }
+
+    .car-container {
+      display: none !important;
+    }
+
+    .horizontal {
+      display: block;
+      width: 100%;
+      height: auto;
+
+      &::before {
+        display: none;
+      }
+
+      > section {
+        width: 100%;
+        min-height: auto;
+        padding: 40px 20px;
+      }
+    }
+  }
+
   @media (max-width: 480px) {
     .contenedor-tarjetas {
       flex-direction: column;
-      padding-inline: 0px;
+      padding-inline: 15px !important;
 
       .tarjeta {
         background-image: url("../assets/fondoAparkt.webp");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        padding: 10px;
+        display: grid !important;
+        justify-items: center;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+          "numero texto"
+          "titulo texto";
+
+        .numero {
+          grid-area: numero;  
       }
-    }
 
-    section {
-      padding-inline: 20px;
-    }
+        h3 {
+          grid-area: titulo;
+          font-size: 1.5rem;
+        }
 
-    .grid-recompensas {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .seccion-equipo {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .seccion-historia {
-      flex-direction: column;
-    }
-
-    .preguntasFrecuentes > div:last-child {
-      grid-template-columns: 1fr;
-      gap: 15px;
-
-      details {
-        grid-column: span 1;
+        p {
+          grid-area: texto;
+          font-size: 0.9rem;
+        }
       }
     }
 

@@ -221,6 +221,7 @@ main {
   justify-content: center;
   opacity: 0.5;
   transition: opacity 0.2s;
+  top: 50%;
 
   &:hover {
     opacity: 1;
@@ -350,8 +351,9 @@ main {
 @media (max-width: 480px) {
   main {
     flex-direction: column;
-    padding-top: 120px !important;
-    min-height: 80vh;
+    padding-top: 55px !important;
+    min-height: 70vh;
+    margin-top: 60px;
   }
 
   .main-izquierdo {

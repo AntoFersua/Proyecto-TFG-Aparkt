@@ -357,8 +357,9 @@ main {
 @media (max-width: 480px) {
   main {
     flex-direction: column;
-    padding-top: 120px !important;
-    min-height: 80vh;
+    padding-top: 55px !important;
+    min-height: 70vh;
+    margin-top: 60px;
   }
 
   .main-izquierdo {
