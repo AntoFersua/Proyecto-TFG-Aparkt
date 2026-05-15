@@ -204,7 +204,7 @@ class HeaderMap extends HTMLElement {
 
         .iconos-container {
             position: relative;
-            display: block;
+            display: none;
         }
 
         .iconos-btn {
@@ -374,6 +374,10 @@ class HeaderMap extends HTMLElement {
                 height: 40px;
                 padding: 0 14px;
                 font-size: 13px;
+            }
+
+            #headerDerecha > button.icon-btn {
+                display: none;
             }
 
             .menu-dropdown {
@@ -594,9 +598,37 @@ class HeaderMap extends HTMLElement {
                     </div>
                 </div>
 
-                <button type="button" id="cambiarIdioma" style="display:none"></button>
-                <button type="button" id="perfilUsuario" style="display:none"></button>
-                <button type="button" id="modoOscuro" style="display:none"></button>
+                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </button>
+
+                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </button>
+
+                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema">
+                    <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#666"/>
+                    </svg>
+                </button>
 
             </div>
         </header>
