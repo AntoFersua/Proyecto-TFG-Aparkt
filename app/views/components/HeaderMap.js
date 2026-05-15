@@ -133,8 +133,8 @@ class HeaderMap extends HTMLElement {
         }
 
         #headerDerecha button.menu-btn {
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
             padding: 0;
             display: flex;
             align-items: center;
@@ -150,9 +150,10 @@ class HeaderMap extends HTMLElement {
             background: var(--color-verde, #34af72);
         }
 
+
         #headerDerecha button.menu-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             stroke: #666;
             fill: none;
         }
@@ -160,7 +161,8 @@ class HeaderMap extends HTMLElement {
         .menu-dropdown {
             position: absolute;
             top: calc(100% + 6px);
-            right: 0;
+            left: 0;
+            transform: translateY(-8px);
             background: white;
             border: 1px solid rgba(92, 122, 72, 0.15);
             border-radius: 8px;
@@ -169,7 +171,7 @@ class HeaderMap extends HTMLElement {
             opacity: 0;
             visibility: hidden;
             transform: translateY(-8px);
-            transition: all 0.2s ease, background 0.3s ease, border-color 0.3s ease;
+            transition: all 0.2s ease;
             z-index: 10000;
         }
 
@@ -198,34 +200,34 @@ class HeaderMap extends HTMLElement {
 
         .menu-dropdown a:hover {
             background: #f5f5f5;
-            color: #5c7a48;
         }
 
         .iconos-container {
             position: relative;
-            display: none;
+            display: block;
         }
 
         .iconos-btn {
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
-            border-radius: 8px;
-            background: #f0f0f0;
+            border-radius: 50%;
+            background: #ffffff;
             cursor: pointer;
             transition: background 0.2s ease, background-color 0.3s ease;
         }
 
         .iconos-btn:hover {
-            background: #e0e0e0;
+            background: var(--color-verde, #34af72);
         }
 
         .iconos-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             stroke: #666;
             fill: none;
         }
@@ -234,21 +236,29 @@ class HeaderMap extends HTMLElement {
             position: absolute;
             top: calc(100% + 6px);
             right: 0;
+            transform: translateY(-8px);
             background: white;
             border: 1px solid rgba(92, 122, 72, 0.15);
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            min-width: auto;
-            width: auto;
+            min-width: 34px;
+            width: 34px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-8px);
             transition: all 0.2s ease;
             z-index: 10000;
             display: none;
             flex-direction: column;
-            padding: 4px;
+            align-items: center;
+            padding: 4px 2px;
             gap: 2px;
+        }
+
+        .iconos-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            display: flex;
         }
 
         .iconos-dropdown.active {
@@ -262,8 +272,8 @@ class HeaderMap extends HTMLElement {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             padding: 0;
             border: none;
             background: transparent;
@@ -290,8 +300,8 @@ class HeaderMap extends HTMLElement {
         }
 
         #headerDerecha button.icon-btn {
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
             padding: 0;
             display: flex;
             align-items: center;
@@ -308,8 +318,8 @@ class HeaderMap extends HTMLElement {
         }
 
         #headerDerecha button.icon-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             stroke: #666;
             fill: none;
         }
@@ -366,26 +376,13 @@ class HeaderMap extends HTMLElement {
                 font-size: 13px;
             }
 
-            #headerDerecha > button.icon-btn {
-                display: none;
-            }
-
-            #headerDerecha button.menu-btn {
-                width: 24px;
-                height: 24px;
-            }
-
-            #headerDerecha button.menu-btn svg {
-                width: 10px;
-                height: 10px;
-            }
-
             .menu-dropdown {
                 bottom: calc(100% + 26px);
                 top: auto;
                 left: 0;
                 right: auto;
                 min-width: 120px;
+                transform: none;
             }
 
             .menu-dropdown a {
@@ -394,29 +391,17 @@ class HeaderMap extends HTMLElement {
             }
 
             .iconos-container {
-                display: block !important;
+                display: block;
             }
 
             .iconos-dropdown {
-                display: flex !important;
                 bottom: calc(100% + 6px);
                 top: auto;
-                right: 50%;
-                transform: translateX(50%);
+                transform: translateY(8px);
             }
 
             .iconos-dropdown.active {
-                transform: translateX(50%) translateY(0);
-            }
-
-            .iconos-dropdown button {
-                width: 28px;
-                height: 28px;
-            }
-
-            .iconos-dropdown button svg {
-                width: 14px;
-                height: 14px;
+                transform: translateY(0);
             }
         }
 
@@ -447,14 +432,20 @@ class HeaderMap extends HTMLElement {
         }
 
         :host-context([data-theme="dark"]) #headerDerecha button.menu-btn,
-        [data-theme="dark"] #headerDerecha button.menu-btn,
+        [data-theme="dark"] #headerDerecha button.menu-btn {
+            background: transparent;
+        }
+
+        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn:hover,
+        [data-theme="dark"] #headerDerecha button.menu-btn:hover {
+            background: transparent;
+        }
+
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn,
         [data-theme="dark"] #headerDerecha button.icon-btn {
             background: #333;
         }
 
-        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn:hover,
-        [data-theme="dark"] #headerDerecha button.menu-btn:hover,
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn:hover,
         [data-theme="dark"] #headerDerecha button.icon-btn:hover {
             background: var(--color-verde, #34af72);
@@ -491,7 +482,7 @@ class HeaderMap extends HTMLElement {
 
         :host-context([data-theme="dark"]) .iconos-btn:hover,
         [data-theme="dark"] .iconos-btn:hover {
-            background: #444;
+            background: var(--color-verde, #34af72);
         }
 
         :host-context([data-theme="dark"]) .iconos-btn svg,
@@ -518,6 +509,11 @@ class HeaderMap extends HTMLElement {
         :host-context([data-theme="dark"]) .iconos-dropdown button svg,
         [data-theme="dark"] .iconos-dropdown button svg {
             stroke: #aaa;
+        }
+
+        :host-context([data-theme="dark"]) .icon-luna path,
+        [data-theme="dark"] .icon-luna path {
+            fill: #aaa;
         }
 
         </style>
@@ -564,20 +560,22 @@ class HeaderMap extends HTMLElement {
                     </button>
                     <div class="iconos-dropdown" id="iconosDropdown">
                         <button type="button" id="cambiarIdiomaDrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
-                                <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" stroke="#666" stroke-width="1.2" fill="none"/>
-                                <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" stroke="#666" stroke-width="1.2" fill="none"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                             </svg>
                             <span>Idioma</span>
                         </button>
                         <button type="button" id="perfilUsuarioDrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" stroke="#666" stroke-width="1.2" fill="none"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
                             </svg>
                             <span>Perfil</span>
                         </button>
                         <button type="button" id="modoOscuroDrop">
-                            <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="5"></circle>
                                 <line x1="12" y1="1" x2="12" y2="3"></line>
                                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -588,47 +586,19 @@ class HeaderMap extends HTMLElement {
                                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                             </svg>
+                            <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#666"/>
+                            </svg>
                             <span>Tema</span>
                         </button>
                     </div>
                 </div>
 
-                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <g transform="scale(1.5)" stroke-width="1.333">
-                            <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z" fill="none"/>
-                            <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31" fill="none"/>
-                        </g>
-                    </svg>
-                </button>
-
-                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <g transform="scale(1.5)" stroke-width="1.333">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" fill="none"/>
-                        </g>
-                    </svg>
-                </button>
-
-                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema">
-                    <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </button>
+                <button type="button" id="cambiarIdioma" style="display:none"></button>
+                <button type="button" id="perfilUsuario" style="display:none"></button>
+                <button type="button" id="modoOscuro" style="display:none"></button>
 
             </div>
-
         </header>
         `;
     }
@@ -712,8 +682,7 @@ class HeaderMap extends HTMLElement {
             btnPerfilDrop.addEventListener('click', (e) => {
                 e.stopPropagation();
                 iconosDropdown.classList.remove('active');
-                const evento = new CustomEvent('abrirPerfil');
-                document.dispatchEvent(evento);
+                if (btnPerfil) btnPerfil.click();
             });
         }
 
