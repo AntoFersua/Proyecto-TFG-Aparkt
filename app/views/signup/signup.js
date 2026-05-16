@@ -264,16 +264,17 @@ function inicializarFormulario() {
       .then(data => {
 
         if (data.status === "ok") {
-          alert(data.mensaje);
+          window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
           window.location.href = "../login/login.html";
+          });
         } else {
-          alert(data.mensaje || t('signup.errorRegistro'));
+          window.Swal.fire({ icon: 'error', title: data.mensaje || t('signup.errorRegistro'), timer: 3000, showConfirmButton: false });
         }
 
       })
       .catch(err => {
         console.error(err);
-        alert(t('signup.errorConexion'));
+        window.Swal.fire({ icon: 'error', title: t('signup.errorConexion'), timer: 3000, showConfirmButton: false });
       });
 
   });

@@ -129,7 +129,7 @@ function configurarUIUsuarioNoLogueado() {
     botonPerfil.addEventListener('click', () => {
 
       //Mostramos mensaje o redirigimos según el idioma actual
-      alert(t('login.yaEnLogin'));
+      window.Swal.fire({ icon: 'info', text: t('login.yaEnLogin'), timer: 2000, showConfirmButton: false });
     });
   }
 }
@@ -189,24 +189,23 @@ function inicializarFormulario() {
 
         //Si el login es correcto
         if (data.status === "ok") {
-          alert(data.mensaje);
-
-          //Redirigimos a la app principal
+          window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
           window.location.href = '../aparkt/aparkt.html';
+          });
 
         //Si el login falla
         } else {
           const msjError = data.errores
             ? Object.values(data.errores).join('\n')
             : (data.mensaje || t('login.errorLogin'));
-          alert(msjError);
+          window.Swal.fire({ icon: 'error', title: msjError, timer: 3000, showConfirmButton: false });
         }
       })
       .catch((error) => {
 
         //Error de conexión con el backend
         console.error("Error:", error);
-        alert(t('login.errorConexion'));
+        window.Swal.fire({ icon: 'error', title: t('login.errorConexion'), timer: 3000, showConfirmButton: false });
       });
   });
 }
