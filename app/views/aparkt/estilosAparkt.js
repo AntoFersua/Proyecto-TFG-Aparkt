@@ -102,6 +102,23 @@ document.addEventListener("DOMContentLoaded", () => {
       else activar(Math.max(indiceActual - 1, 0));
     }
   }, { passive: true });
+
+
+  //Ocultar y ajustar elementos del mapa del iframe de aparkt
+  document.querySelector('iframe').addEventListener('load', function() {
+    //acceder al documento interno del iframe
+    const doc = this.contentDocument || this.contentWindow.document;
+    //ocultar encabezado del mapa
+    doc.querySelector('header-map').style.display = 'none';
+    //ocultar perfil del usuario
+    doc.querySelector('perfil-usuario').style.display = 'none';
+    //eliminar si existe el script del modo oscuro
+    const modoOscuro = doc.querySelector('script[src*="modoOscuro"]');
+    if (modoOscuro) modoOscuro.remove();
+    //posicionar la lupa y el menú de interactividad
+    doc.getElementById('btn-lupa').style.bottom = '20px';
+    doc.getElementById('menu-interactividad').style.bottom = '90px';
+  });
 });
 
 
