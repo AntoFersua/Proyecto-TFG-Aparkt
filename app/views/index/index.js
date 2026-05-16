@@ -225,7 +225,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "visibility",
                 "none",
               );
-              botonEstadosAparcamientos.textContent =
+              botonEstadosAparcamientos.querySelector("span").textContent =
                 "Mostrar estados aparcamientos";
             } else {
               mapa.setLayoutProperty(
@@ -233,7 +233,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "visibility",
                 "visible",
               );
-              botonEstadosAparcamientos.textContent =
+              botonEstadosAparcamientos.querySelector("span").textContent =
                 "Ocultar estados aparcamientos";
             }
           }
@@ -569,14 +569,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "visibility",
                 "none",
               );
-              botonAparcamientos.textContent = "Mostrar aparcamientos";
+              botonAparcamientos.querySelector("span").textContent = "Mostrar aparcamientos";
             } else {
               mapa.setLayoutProperty(
                 arrayAparcamientos[i].layerID,
                 "visibility",
                 "visible",
               );
-              botonAparcamientos.textContent = "Ocultar aparcamientos";
+              botonAparcamientos.querySelector("span").textContent = "Ocultar aparcamientos";
             }
           }
         }
@@ -802,7 +802,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       function cambiarVisibilidadMarkUsuario() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (
-          botonMarcadoresUsuario.textContent == "Mostrar marcadores usuario"
+          botonMarcadoresUsuario.querySelector("span").textContent == "Mostrar marcadores usuario"
         ) {
           estadoMostar = true;
         } else {
@@ -815,12 +815,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             arrayMarcadoresUsurio[i].removeClassName("estadoVisualMarker");
             //si es el último elemento
             if (i == arrayMarcadoresUsurio.length - 1) {
-              botonMarcadoresUsuario.textContent = "Ocultar marcadores usuario";
+              botonMarcadoresUsuario.querySelector("span").textContent = "Ocultar marcadores usuario";
             }
           } else {
             arrayMarcadoresUsurio[i].addClassName("estadoVisualMarker");
             if (i == arrayMarcadoresUsurio.length - 1) {
-              botonMarcadoresUsuario.textContent = "Mostrar marcadores usuario";
+              botonMarcadoresUsuario.querySelector("span").textContent = "Mostrar marcadores usuario";
             }
           }
         }
@@ -872,7 +872,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       function cambiarVisibilidadMarkPersonalizado() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (
-          botonMarcadoresAnunciante.textContent ==
+          botonMarcadoresAnunciante.querySelector("span").textContent ==
           "Mostrar marcadores anunciantes"
         ) {
           estadoMostarPersonalizados = true;
@@ -888,13 +888,13 @@ window.addEventListener("DOMContentLoaded", async function () {
             );
             //si es el último elemento
             if (i == arrayMarcadoresPersonalizados.length - 1) {
-              botonMarcadoresAnunciante.textContent =
+              botonMarcadoresAnunciante.querySelector("span").textContent =
                 "Ocultar marcadores anunciantes";
             }
           } else {
             arrayMarcadoresPersonalizados[i].addClassName("estadoVisualMarker");
             if (i == arrayMarcadoresPersonalizados.length - 1) {
-              botonMarcadoresAnunciante.textContent =
+              botonMarcadoresAnunciante.querySelector("span").textContent =
                 "Mostrar marcadores anunciantes";
             }
           }
@@ -937,20 +937,25 @@ async function configurarUIUsuarioLogueado(usuario) {
   // Buscamos el contenedor existente
   const contenedor = document.getElementById("menu-interactividad");
 
+  function crearBotonConIcono(id, texto, svgHTML) {
+    const btn = document.createElement("button");
+    btn.id = id;
+    btn.innerHTML = svgHTML + '<span>' + texto + '</span>';
+    return btn;
+  }
+
+  const iconoAparcamientos = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"/></svg>';
+  const iconoMarcadoresUsuario = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+  const iconoMarcadoresAnunciante = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+
   // BOTÓN: Mostrar aparcamientos
-  const btnAparcamientos = document.createElement("button");
-  btnAparcamientos.id = "mostrarAparcamientos";
-  btnAparcamientos.textContent = "Mostrar aparcamientos";
+  const btnAparcamientos = crearBotonConIcono("mostrarAparcamientos", "Mostrar aparcamientos", iconoAparcamientos);
 
   // BOTÓN: Mostrar marcadores usuario
-  const btnMarcadoresUsuario = document.createElement("button");
-  btnMarcadoresUsuario.id = "mostrarMarcadoresUsuario";
-  btnMarcadoresUsuario.textContent = "Mostrar marcadores usuario";
+  const btnMarcadoresUsuario = crearBotonConIcono("mostrarMarcadoresUsuario", "Mostrar marcadores usuario", iconoMarcadoresUsuario);
 
   // BOTÓN: Mostrar marcadores anunciantes
-  const btnMarcadoresAnunciante = document.createElement("button");
-  btnMarcadoresAnunciante.id = "mostrarMarcadoresAnunciante";
-  btnMarcadoresAnunciante.textContent = "Mostrar marcadores anunciantes";
+  const btnMarcadoresAnunciante = crearBotonConIcono("mostrarMarcadoresAnunciante", "Mostrar marcadores anunciantes", iconoMarcadoresAnunciante);
 
   // Añadir al contenedor existente
   contenedor.appendChild(btnAparcamientos);

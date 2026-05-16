@@ -35,15 +35,15 @@ class HeaderMap extends HTMLElement {
 
             background: rgba(255, 255, 255, 0.96);
 
-            border: 1px solid rgba(92, 122, 72, 0.15);
+            border: 1px solid rgba(0, 90, 96, 0.15);
 
             border-radius: 12px;
 
             backdrop-filter: blur(12px);
 
             box-shadow:
-                0 2px 10px rgba(0,0,0,0.06),
-                0 1px 4px rgba(0,0,0,0.03);
+                0 4px 20px rgba(0,0,0,0.08),
+                0 1px 4px rgba(0,0,0,0.04);
 
             z-index: 9999;
 
@@ -61,7 +61,7 @@ class HeaderMap extends HTMLElement {
         }
 
         .logoHeader img {
-            height: 28px;
+            height: 32px;
             object-fit: contain;
         }
 
@@ -85,7 +85,7 @@ class HeaderMap extends HTMLElement {
             height: 34px;
             padding: 0 14px;
             font-size: 15px;
-            border: 1.5px solid rgba(92, 122, 72, 0.25);
+            border: 1.5px solid rgba(0, 90, 96, 0.25);
             border-radius: 17px;
             outline: none;
             font-family: inherit;
@@ -99,8 +99,8 @@ class HeaderMap extends HTMLElement {
         }
 
         .buscador input[type="text"]:focus {
-            border-color: #5c7a48;
-            box-shadow: 0 1px 6px rgba(92, 122, 72, 0.12);
+            border-color: var(--color-azulOscuro);
+            box-shadow: 0 1px 6px rgba(0, 90, 96, 0.15);
             background: #fff;
         }
 
@@ -111,18 +111,18 @@ class HeaderMap extends HTMLElement {
             font-weight: 600;
             border: none;
             border-radius: 17px;
-            background: #5c7a48;
+            background: var(--color-verde, rgb(52, 175, 114));
             color: white;
             cursor: pointer;
             font-family: inherit;
-            box-shadow: 0 1px 3px rgba(92, 122, 72, 0.15);
+            box-shadow: 0 1px 3px var(--color-verde, rgb(52, 175, 114));
             transition: all 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
         }
 
         .buscador input[type="submit"]:hover {
-            background: #4e683d;
+            background: var(--color-verde, rgb(52, 175, 114));
         }
 
         #headerDerecha {
@@ -157,7 +157,7 @@ class HeaderMap extends HTMLElement {
 
             background: rgba(255, 255, 255, 0.96);
 
-            border: 1px solid rgba(92, 122, 72, 0.15);
+            border: 1px solid rgba(0, 90, 96, 0.15);
 
             border-radius: 50px;
 
@@ -171,11 +171,11 @@ class HeaderMap extends HTMLElement {
         }
 
         .page-nav a:hover {
-            color: #5c7a48;
-            border-color: #5c7a48;
+            color: var(--color-azulOscuro);
+            border-color: var(--color-azulOscuro);
             box-shadow:
-                0 4px 14px rgba(92, 122, 72, 0.15),
-                0 1px 4px rgba(0,0,0,0.03);
+                0 4px 14px var(--color-verde, rgb(52, 175, 114)),
+                0 1px 4px var(--color-verde, rgb(52, 175, 114));
             transform: translateY(-1px);
         }
 
@@ -185,28 +185,40 @@ class HeaderMap extends HTMLElement {
         }
 
         .iconos-btn {
-            width: 34px;
-            height: 34px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none;
+            border: 1px solid var(--color-verde, rgb(52, 175, 114)));
             border-radius: 50%;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.8);
             cursor: pointer;
-            transition: background 0.2s ease, background-color 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
         }
 
         .iconos-btn:hover {
             background: var(--color-verde, #34af72);
+            border-color: var(--color-verde, #34af72);
+            box-shadow: 0 2px 8px var(--color-verde, rgb(52, 175, 114));
+        }
+
+        .iconos-btn:active {
+            transform: scale(0.92);
         }
 
         .iconos-btn svg {
             width: 20px;
             height: 20px;
-            stroke: #666;
+            stroke: #555;
             fill: none;
+            transition: stroke 0.2s ease;
+        }
+
+        .iconos-btn:hover svg {
+            stroke: white;
         }
 
         .iconos-dropdown {
@@ -215,11 +227,11 @@ class HeaderMap extends HTMLElement {
             right: 0;
             transform: translateY(-8px);
             background: white;
-            border: 1px solid rgba(92, 122, 72, 0.15);
-            border-radius: 8px;
+            border: 1px solid rgba(0, 90, 96, 0.15);
+            border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            min-width: 34px;
-            width: 34px;
+            min-width: 40px;
+            width: 40px;
             opacity: 0;
             visibility: hidden;
             transition: all 0.2s ease;
@@ -227,8 +239,8 @@ class HeaderMap extends HTMLElement {
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 4px 2px;
-            gap: 2px;
+            padding: 6px 2px;
+            gap: 4px;
         }
 
         .iconos-dropdown.active {
@@ -252,16 +264,18 @@ class HeaderMap extends HTMLElement {
             width: 30px;
             height: 30px;
             padding: 0;
-            border: none;
+            border: 1px solid transparent;
             background: transparent;
             border-radius: 6px;
             cursor: pointer;
-            transition: background 0.15s ease;
+            transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
             color: #333;
         }
 
         .iconos-dropdown button:hover {
-            background: #f5f5f5;
+            background: rgba(52, 175, 114, 0.1);
+            border-color: var(--color-verde, #34af72);
+            color: var(--color-verde, #34af72);
         }
 
         .iconos-dropdown button svg {
@@ -270,6 +284,11 @@ class HeaderMap extends HTMLElement {
             stroke: #666;
             fill: none;
             flex-shrink: 0;
+            transition: stroke 0.15s ease;
+        }
+
+        .iconos-dropdown button:hover svg {
+            stroke: var(--color-verde, #34af72);
         }
 
         .iconos-dropdown button span {
@@ -277,28 +296,40 @@ class HeaderMap extends HTMLElement {
         }
 
         #headerDerecha button.icon-btn {
-            width: 34px;
-            height: 34px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none;
+            border: 1px solid rgba(52, 175, 114, 0.15);
             border-radius: 50%;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.8);
             cursor: pointer;
-            transition: background 0.2s ease, background-color 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
         }
 
         #headerDerecha button.icon-btn:hover {
-            background: var(--color-verde, #34af72);
+            background: var(--color-verde, rgb(52, 175, 114));
+            border-color: var(--color-verde, #34af72);
+            box-shadow: 0 2px 8px rgba(52, 175, 114, 0.25);
+        }
+
+        #headerDerecha button.icon-btn:active {
+            transform: scale(0.92);
         }
 
         #headerDerecha button.icon-btn svg {
             width: 20px;
             height: 20px;
-            stroke: #666;
+            stroke: #555;
             fill: none;
+            transition: stroke 0.2s ease;
+        }
+
+        #headerDerecha button.icon-btn:hover svg {
+            stroke: white;
         }
 
         @media (max-width: 600px) {
@@ -325,7 +356,7 @@ class HeaderMap extends HTMLElement {
             }
 
             .logoHeader img {
-                height: 22px;
+                height: 26px;
             }
 
             #headerDerecha {
@@ -358,19 +389,42 @@ class HeaderMap extends HTMLElement {
             }
 
             .page-nav {
-                margin: 12px auto 0;
-                width: calc(100vw - 24px);
+                position: fixed;
+                top: 12px;
+                left: 12px;
+                right: 12px;
+                width: auto;
                 max-width: none;
                 justify-content: space-between;
-                padding: 0;
+                padding: 6px 10px;
+                margin: 0;
+                background: rgba(255, 255, 255, 0.92);
+                backdrop-filter: blur(12px);
+                border-radius: 50px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+                z-index: 9999;
             }
 
             .page-nav a {
-                font-size: 13px;
-                padding: 6px 12px;
+                font-size: 12px;
+                padding: 8px 8px;
                 white-space: nowrap;
                 flex: 1;
                 text-align: center;
+                background: none;
+                border: none;
+                box-shadow: none;
+                backdrop-filter: none;
+                border-radius: 50px;
+                color: #555;
+            }
+
+            .page-nav a:hover {
+                background: rgba(0, 90, 96, 0.08);
+                color: var(--color-azulOscuro);
+                border: none;
+                box-shadow: none;
+                transform: none;
             }
 
             .iconos-container {
@@ -392,7 +446,7 @@ class HeaderMap extends HTMLElement {
         :host-context([data-theme="dark"]) header,
         [data-theme="dark"] header {
             background: rgba(30, 30, 30, 0.96);
-            border-color: rgba(92, 122, 72, 0.3);
+            border-color: rgba(0, 90, 96, 0.3);
             box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.15);
         }
 
@@ -400,7 +454,7 @@ class HeaderMap extends HTMLElement {
         [data-theme="dark"] .buscador input[type="text"] {
             color: #e0e0e0;
             background: #2a2a2a;
-            border-color: rgba(92, 122, 72, 0.35);
+            border-color: rgba(0, 90, 96, 0.35);
         }
 
         :host-context([data-theme="dark"]) .buscador input[type="text"]::placeholder,
@@ -411,57 +465,73 @@ class HeaderMap extends HTMLElement {
         :host-context([data-theme="dark"]) .buscador input[type="text"]:focus,
         [data-theme="dark"] .buscador input[type="text"]:focus {
             background: #333;
-            border-color: #5c7a48;
+            border-color: var(--color-azulOscuro);
         }
 
         :host-context([data-theme="dark"]) .page-nav a,
         [data-theme="dark"] .page-nav a {
             background: rgba(30, 30, 30, 0.96);
-            border-color: rgba(92, 122, 72, 0.3);
+            border-color: rgba(0, 90, 96, 0.3);
             box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.15);
             color: #aaa;
         }
 
         :host-context([data-theme="dark"]) .page-nav a:hover,
         [data-theme="dark"] .page-nav a:hover {
-            color: #8fb37a;
-            border-color: #8fb37a;
+            color: var(--color-verde);
+            border-color: var(--color-verde);
         }
 
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn,
         [data-theme="dark"] #headerDerecha button.icon-btn {
-            background: #333;
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn:hover,
         [data-theme="dark"] #headerDerecha button.icon-btn:hover {
             background: var(--color-verde, #34af72);
+            border-color: var(--color-verde, #34af72);
         }
 
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn svg,
         [data-theme="dark"] #headerDerecha button.icon-btn svg {
-            stroke: #aaa;
+            stroke: #ccc;
+            transition: stroke 0.2s ease;
+        }
+
+        :host-context([data-theme="dark"]) #headerDerecha button.icon-btn:hover svg,
+        [data-theme="dark"] #headerDerecha button.icon-btn:hover svg {
+            stroke: white;
         }
 
         :host-context([data-theme="dark"]) .iconos-btn,
         [data-theme="dark"] .iconos-btn {
-            background: #333;
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         :host-context([data-theme="dark"]) .iconos-btn:hover,
         [data-theme="dark"] .iconos-btn:hover {
             background: var(--color-verde, #34af72);
+            border-color: var(--color-verde, #34af72);
         }
 
         :host-context([data-theme="dark"]) .iconos-btn svg,
         [data-theme="dark"] .iconos-btn svg {
-            stroke: #aaa;
+            stroke: #ccc;
+            transition: stroke 0.2s ease;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-btn:hover svg,
+        [data-theme="dark"] .iconos-btn:hover svg {
+            stroke: white;
         }
 
         :host-context([data-theme="dark"]) .iconos-dropdown,
         [data-theme="dark"] .iconos-dropdown {
             background: #2a2a2a;
-            border-color: rgba(92, 122, 72, 0.3);
+            border-color: rgba(0, 90, 96, 0.3);
         }
 
         :host-context([data-theme="dark"]) .iconos-dropdown button,
@@ -471,17 +541,47 @@ class HeaderMap extends HTMLElement {
 
         :host-context([data-theme="dark"]) .iconos-dropdown button:hover,
         [data-theme="dark"] .iconos-dropdown button:hover {
-            background: #333;
+            background: rgba(52, 175, 114, 0.15);
+            border-color: var(--color-verde, #34af72);
+            color: var(--color-verde, #34af72);
         }
 
         :host-context([data-theme="dark"]) .iconos-dropdown button svg,
         [data-theme="dark"] .iconos-dropdown button svg {
             stroke: #aaa;
+            transition: stroke 0.15s ease;
+        }
+
+        :host-context([data-theme="dark"]) .iconos-dropdown button:hover svg,
+        [data-theme="dark"] .iconos-dropdown button:hover svg {
+            stroke: var(--color-verde, #34af72);
         }
 
         :host-context([data-theme="dark"]) .icon-luna path,
         [data-theme="dark"] .icon-luna path {
             fill: #aaa;
+        }
+
+        @media (max-width: 600px) {
+            :host-context([data-theme="dark"]) .page-nav,
+            [data-theme="dark"] .page-nav {
+                background: rgba(30, 30, 30, 0.92);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+
+            :host-context([data-theme="dark"]) .page-nav a,
+            [data-theme="dark"] .page-nav a {
+                color: #aaa;
+                background: none;
+                border: none;
+                box-shadow: none;
+            }
+
+            :host-context([data-theme="dark"]) .page-nav a:hover,
+            [data-theme="dark"] .page-nav a:hover {
+                background: rgba(52, 175, 114, 0.15);
+                color: var(--color-verde);
+            }
         }
 
         </style>
@@ -495,14 +595,14 @@ class HeaderMap extends HTMLElement {
             <div class="buscador">
                 <form id="form-busqueda-header" method="get">
                     <input type="text" id="busqueda-header" placeholder="Dirección" data-i18n-placeholder="index.placeholderDireccion" />
-                    <input type="submit" value="Buscar" data-i18n-value="index.enviar" />
+                    <input type="submit" value="Buscar" />
                 </form>
             </div>
 
             <div id="headerDerecha">
 
                 <div class="iconos-container">
-                    <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos">
+                    <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos" title="Más opciones">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="7" height="7"></rect>
                             <rect x="14" y="3" width="7" height="7"></rect>
@@ -546,7 +646,7 @@ class HeaderMap extends HTMLElement {
                     </div>
                 </div>
 
-                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma">
+                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma" title="Idioma">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="M2 12h20"/>
@@ -554,14 +654,14 @@ class HeaderMap extends HTMLElement {
                     </svg>
                 </button>
 
-                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario">
+                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario" title="Perfil">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
                     </svg>
                 </button>
 
-                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema">
+                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema" title="Tema">
                     <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>

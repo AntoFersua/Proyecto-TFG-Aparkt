@@ -70,18 +70,23 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 150;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .btn-lupa:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-lupa:active {
+  transform: scale(0.92);
 }
 
 .btn-lupa svg {
   width: 24px;
   height: 24px;
   stroke: #5c7a48;
+  transition: transform 0.25s ease, stroke 0.3s ease;
 }
 
 .btn-lupa.active svg {
@@ -117,13 +122,14 @@ body {
 }
 
 [data-theme="dark"] .menu-interactividad button {
-  background: #333;
+  background: #2a2a2a;
   color: #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .menu-interactividad button:hover {
-  background: #444;
+  background: #3a3a3a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 @media (min-width: 601px) {
@@ -149,25 +155,33 @@ body {
 }
 
 .menu-interactividad button {
-  height: 40px;
-  padding: 0 16px;
+  height: 42px;
+  padding: 0 18px;
   font-size: 13px;
   font-weight: 500;
   border: none;
-  border-radius: 20px;
+  border-radius: 12px;
   background: white;
   color: #333;
   cursor: pointer;
   font-family: inherit;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
   white-space: nowrap;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .menu-interactividad button:hover {
   background: #f5f5f5;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.menu-interactividad button:active {
+  transform: scale(0.97);
 }
 
 #mapa {
