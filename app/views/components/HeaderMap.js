@@ -10,6 +10,10 @@ class HeaderMap extends HTMLElement {
         
         <style>
 
+        header-map {
+            display: block;
+        }
+
         *{
             box-sizing:border-box;
         }
@@ -128,78 +132,51 @@ class HeaderMap extends HTMLElement {
             flex-shrink: 0;
         }
 
-        .menu-container {
-            position: relative;
-        }
-
-        #headerDerecha button.menu-btn {
-            width: 34px;
-            height: 34px;
-            padding: 0;
+        .page-nav {
             display: flex;
             align-items: center;
-            justify-content: center;
-            border: none;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            transition: background 0.2s ease, background-color 0.3s ease;
+            justify-content: space-between;
+
+            width: calc(100% - 20px);
+            max-width: 800px;
+
+            margin: 90px auto 0;
+
+            position: relative;
+            z-index: 2;
+
+            font-family: "Inter", sans-serif;
         }
 
-        #headerDerecha button.menu-btn:hover {
-            background: var(--color-verde, #34af72);
-        }
-
-
-        #headerDerecha button.menu-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: #666;
-            fill: none;
-        }
-
-        .menu-dropdown {
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            transform: translateY(-8px);
-            background: white;
-            border: 1px solid rgba(92, 122, 72, 0.15);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            min-width: 140px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            transition: all 0.2s ease;
-            z-index: 10000;
-        }
-
-        .menu-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .menu-dropdown a {
-            display: block;
-            padding: 10px 14px;
+        .page-nav a {
             text-decoration: none;
-            color: #333;
-            font-size: 13px;
-            transition: background 0.15s ease;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 36px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid rgba(92, 122, 72, 0.15);
+
+            border-radius: 50px;
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.06),
+                0 1px 4px rgba(0,0,0,0.03);
+
+            transition: all 0.2s ease;
         }
 
-        .menu-dropdown a:first-child {
-            border-radius: 7px 7px 0 0;
-        }
-
-        .menu-dropdown a:last-child {
-            border-radius: 0 0 7px 7px;
-        }
-
-        .menu-dropdown a:hover {
-            background: #f5f5f5;
+        .page-nav a:hover {
+            color: #5c7a48;
+            border-color: #5c7a48;
+            box-shadow:
+                0 4px 14px rgba(92, 122, 72, 0.15),
+                0 1px 4px rgba(0,0,0,0.03);
+            transform: translateY(-1px);
         }
 
         .iconos-container {
@@ -380,18 +357,20 @@ class HeaderMap extends HTMLElement {
                 display: none;
             }
 
-            .menu-dropdown {
-                bottom: calc(100% + 26px);
-                top: auto;
-                left: 0;
-                right: auto;
-                min-width: 120px;
-                transform: none;
+            .page-nav {
+                margin: 12px auto 0;
+                width: calc(100vw - 24px);
+                max-width: none;
+                justify-content: space-between;
+                padding: 0;
             }
 
-            .menu-dropdown a {
-                padding: 10px 14px;
+            .page-nav a {
                 font-size: 13px;
+                padding: 6px 12px;
+                white-space: nowrap;
+                flex: 1;
+                text-align: center;
             }
 
             .iconos-container {
@@ -435,14 +414,18 @@ class HeaderMap extends HTMLElement {
             border-color: #5c7a48;
         }
 
-        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn,
-        [data-theme="dark"] #headerDerecha button.menu-btn {
-            background: transparent;
+        :host-context([data-theme="dark"]) .page-nav a,
+        [data-theme="dark"] .page-nav a {
+            background: rgba(30, 30, 30, 0.96);
+            border-color: rgba(92, 122, 72, 0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.15);
+            color: #aaa;
         }
 
-        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn:hover,
-        [data-theme="dark"] #headerDerecha button.menu-btn:hover {
-            background: transparent;
+        :host-context([data-theme="dark"]) .page-nav a:hover,
+        [data-theme="dark"] .page-nav a:hover {
+            color: #8fb37a;
+            border-color: #8fb37a;
         }
 
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn,
@@ -455,28 +438,9 @@ class HeaderMap extends HTMLElement {
             background: var(--color-verde, #34af72);
         }
 
-        :host-context([data-theme="dark"]) #headerDerecha button.menu-btn svg,
-        [data-theme="dark"] #headerDerecha button.menu-btn svg,
         :host-context([data-theme="dark"]) #headerDerecha button.icon-btn svg,
         [data-theme="dark"] #headerDerecha button.icon-btn svg {
             stroke: #aaa;
-        }
-
-        :host-context([data-theme="dark"]) .menu-dropdown,
-        [data-theme="dark"] .menu-dropdown {
-            background: #2a2a2a;
-            border-color: rgba(92, 122, 72, 0.3);
-        }
-
-        :host-context([data-theme="dark"]) .menu-dropdown a,
-        [data-theme="dark"] .menu-dropdown a {
-            color: #e0e0e0;
-        }
-
-        :host-context([data-theme="dark"]) .menu-dropdown a:hover,
-        [data-theme="dark"] .menu-dropdown a:hover {
-            background: #333;
-            color: #8fb37a;
         }
 
         :host-context([data-theme="dark"]) .iconos-btn,
@@ -536,22 +500,6 @@ class HeaderMap extends HTMLElement {
             </div>
 
             <div id="headerDerecha">
-
-                <div class="menu-container">
-                    <button type="button" class="menu-btn" id="menuBtn" aria-label="Menú">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
-                    <div class="menu-dropdown" id="menuDropdown">
-                        <a href="../index/index.html">Mapa</a>
-                        <a href="../aparkt/aparkt.html">Aparkt</a>
-                        <a href="../login/login.html">Log In</a>
-                        <a href="../signup/signup.html">Sign Up</a>
-                    </div>
-                </div>
 
                 <div class="iconos-container">
                     <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos">
@@ -632,6 +580,13 @@ class HeaderMap extends HTMLElement {
 
             </div>
         </header>
+
+        <div class="page-nav" id="pageNav">
+            <a href="../index/index.html">Mapa</a>
+            <a href="../aparkt/aparkt.html">Aparkt</a>
+            <a href="../login/login.html">Log In</a>
+            <a href="../signup/signup.html">Sign Up</a>
+        </div>
         `;
     }
 
@@ -650,22 +605,6 @@ class HeaderMap extends HTMLElement {
             });
         }
 
-        const menuBtn = this.querySelector('#menuBtn');
-        const menuDropdown = this.querySelector('#menuDropdown');
-        
-        if (menuBtn && menuDropdown) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menuDropdown.classList.toggle('active');
-                const iconosDropdown = this.querySelector('#iconosDropdown');
-                if (iconosDropdown) iconosDropdown.classList.remove('active');
-            });
-
-            document.addEventListener('click', () => {
-                menuDropdown.classList.remove('active');
-            });
-        }
-
         const iconosBtn = this.querySelector('#iconosBtn');
         const iconosDropdown = this.querySelector('#iconosDropdown');
         
@@ -673,7 +612,6 @@ class HeaderMap extends HTMLElement {
             iconosBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 iconosDropdown.classList.toggle('active');
-                if (menuDropdown) menuDropdown.classList.remove('active');
             });
 
             document.addEventListener('click', () => {
