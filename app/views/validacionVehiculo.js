@@ -67,17 +67,17 @@ window.inicializarValidacionVehiculo = function () {
         })
         .then((data) => {
           if (data.status === "ok") {
-            alert(data.mensaje);
+             Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false });
             document.getElementById("formVehiculo").reset();
           } else if (data.errores) {
-            alert(Object.values(data.errores).join("\n"));
+             Swal.fire({ icon: 'error', title: Object.values(data.errores).join("\n"), timer: 3000, showConfirmButton: false });
           } else {
-            alert(data.mensaje || "Error al registrar vehículo");
+            Swal.fire({ icon: 'error', title: data.mensaje || "Error al registrar vehículo", timer: 3000, showConfirmButton: false });
           }
         })
         .catch((error) => {
           console.error("Error:", error);
-          alert("Error de conexión: " + error.message);
+           Swal.fire({ icon: 'error', title: "Error de conexión: " + error.message, timer: 3000, showConfirmButton: false });
         });
     });
 
