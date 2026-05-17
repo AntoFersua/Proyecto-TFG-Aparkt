@@ -1311,6 +1311,7 @@
   }
 
   @media (max-width: 480px) {
+
     .contenedor-tarjetas {
       flex-direction: column;
       padding-inline: 15px !important;
