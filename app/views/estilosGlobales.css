@@ -1158,7 +1158,7 @@ main img {
     left: 0;
     right: 0;
     width: 100%;
-    height: 100vh;
+    height: 95vh;
     /*max-height: 85vh;
     */
     box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25);
@@ -1244,5 +1244,11 @@ main img {
 
   .banner-lateral.dragging {
     transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    margin-top: 60px;
   }
 }
