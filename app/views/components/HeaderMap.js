@@ -332,6 +332,99 @@ class HeaderMap extends HTMLElement {
             stroke: white;
         }
 
+        .nav-container {
+            position: relative;
+            display: none;
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            background: white;
+            border: 1px solid rgba(0, 90, 96, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: all 0.2s ease;
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            padding: 6px;
+            gap: 2px;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            display: flex;
+        }
+
+        .nav-dropdown a {
+            display: block;
+            padding: 10px 14px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            font-family: inherit;
+            text-align: left;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.15s ease;
+        }
+
+        .nav-dropdown a:hover {
+            background: rgba(52, 175, 114, 0.1);
+            color: var(--color-verde, #34af72);
+        }
+
+        :host-context([data-theme="dark"]) .nav-dropdown,
+        [data-theme="dark"] .nav-dropdown {
+            background: #2a2a2a;
+            border-color: rgba(0, 90, 96, 0.3);
+        }
+
+        :host-context([data-theme="dark"]) .nav-dropdown a,
+        [data-theme="dark"] .nav-dropdown a {
+            color: #e0e0e0;
+        }
+
+        :host-context([data-theme="dark"]) .nav-dropdown a:hover,
+        [data-theme="dark"] .nav-dropdown a:hover {
+            background: rgba(52, 175, 114, 0.15);
+            color: var(--color-verde, #34af72);
+        }
+
+        :host-context([data-theme="dark"]) .nav-container .icon-btn,
+        [data-theme="dark"] .nav-container .icon-btn {
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        :host-context([data-theme="dark"]) .nav-container .icon-btn:hover,
+        [data-theme="dark"] .nav-container .icon-btn:hover {
+            background: var(--color-verde, #34af72);
+            border-color: var(--color-verde, #34af72);
+        }
+
+        :host-context([data-theme="dark"]) .nav-container .icon-btn svg,
+        [data-theme="dark"] .nav-container .icon-btn svg {
+            stroke: #ccc;
+        }
+
+        :host-context([data-theme="dark"]) .nav-container .icon-btn:hover svg,
+        [data-theme="dark"] .nav-container .icon-btn:hover svg {
+            stroke: white;
+        }
+
         @media (max-width: 600px) {
 
             header {
@@ -389,42 +482,11 @@ class HeaderMap extends HTMLElement {
             }
 
             .page-nav {
-                position: fixed;
-                top: 12px;
-                left: 12px;
-                right: 12px;
-                width: auto;
-                max-width: none;
-                justify-content: space-between;
-                padding: 6px 10px;
-                margin: 0;
-                background: rgba(255, 255, 255, 0.92);
-                backdrop-filter: blur(12px);
-                border-radius: 50px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-                z-index: 9999;
+                display: none;
             }
 
-            .page-nav a {
-                font-size: 12px;
-                padding: 8px 8px;
-                white-space: nowrap;
-                flex: 1;
-                text-align: center;
-                background: none;
-                border: none;
-                box-shadow: none;
-                backdrop-filter: none;
-                border-radius: 50px;
-                color: #555;
-            }
-
-            .page-nav a:hover {
-                background: rgba(0, 90, 96, 0.08);
-                color: var(--color-azulOscuro);
-                border: none;
-                box-shadow: none;
-                transform: none;
+            .nav-container {
+                display: block;
             }
 
             .iconos-container {
@@ -646,6 +708,17 @@ class HeaderMap extends HTMLElement {
                     </div>
                 </div>
 
+                <div class="nav-container">
+                    <button type="button" class="icon-btn" id="navBtn" aria-label="Menú de navegación" title="Menú">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown"></div>
+                </div>
+
                 <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma" title="Idioma">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
@@ -716,6 +789,30 @@ class HeaderMap extends HTMLElement {
 
             document.addEventListener('click', () => {
                 iconosDropdown.classList.remove('active');
+            });
+        }
+
+        const pageNav = this.querySelector('#pageNav');
+        const navDropdown = this.querySelector('#navDropdown');
+        if (pageNav && navDropdown) {
+            pageNav.querySelectorAll('a').forEach(function(link) {
+                navDropdown.appendChild(link.cloneNode(true));
+            });
+        }
+
+        const navBtn = this.querySelector('#navBtn');
+        if (navBtn && navDropdown) {
+            navBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navDropdown.classList.toggle('active');
+            });
+
+            navDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            document.addEventListener('click', () => {
+                navDropdown.classList.remove('active');
             });
         }
 
