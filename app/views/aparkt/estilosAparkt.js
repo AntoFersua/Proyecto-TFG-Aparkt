@@ -32,33 +32,87 @@ document.addEventListener("DOMContentLoaded", () => {
   mm.add("(min-width: 769px)", () => {
     const horizontalSection = document.querySelector(".horizontal");
     if (horizontalSection) {
+      const getScrollDistance = () =>
+        horizontalSection.scrollWidth - document.documentElement.clientWidth;
+
       gsap.to(horizontalSection, {
-        x: () =>
-          -(horizontalSection.scrollWidth - document.documentElement.clientWidth) +
-          "px",
+        x: () => -getScrollDistance() + "px",
         ease: "none",
         scrollTrigger: {
           trigger: horizontalSection,
           start: "top top",
-          end: () => "+=" + (horizontalSection.scrollWidth - innerWidth),
+          end: () => "+=" + getScrollDistance(),
           scrub: true,
           pin: true,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
       const car = document.querySelector(".car");
-      if (car) {
-        gsap.to(car, {
-          x: () => horizontalSection.scrollWidth - 200,
-          ease: "none",
+      const carContainer = document.querySelector(".car-container");
+      if (car && carContainer) {
+        const finalCarMargin = 24;
+        let carDirection = 1;
+        const getCarTravel = () =>
+          horizontalSection.scrollWidth - car.offsetWidth - finalCarMargin;
+
+        gsap.set(car, {
+          scaleX: 1,
+          transformOrigin: "50% 50%",
+        });
+
+        gsap.set(carContainer, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          transformOrigin: "50% 80%",
+          force3D: true,
+        });
+
+        const carTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: horizontalSection,
             start: "top top",
-            end: () => "+=" + (horizontalSection.scrollWidth - innerWidth),
-            scrub: 0.5,
+            end: () => "+=" + getScrollDistance(),
+            scrub: 0.9,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.direction === carDirection) return;
+
+              carDirection = self.direction;
+              gsap.to(car, {
+                scaleX: carDirection === 1 ? 1 : -1,
+                duration: 0.25,
+                ease: "power2.out",
+                overwrite: "auto",
+              });
+            },
           },
         });
+
+        carTimeline
+          .to(
+            carContainer,
+            {
+              x: getCarTravel,
+              ease: "none",
+              duration: 1,
+            },
+            0
+          )
+          .to(
+            carContainer,
+            {
+              y: -8,
+              rotation: -1.25,
+              ease: "sine.inOut",
+              repeat: 5,
+              yoyo: true,
+              duration: 0.1,
+            },
+            0
+          );
       }
     }
   });

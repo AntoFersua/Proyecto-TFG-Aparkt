@@ -460,6 +460,9 @@
     width: 300px;
     height: auto;
     transform: scaleX(-1);
+    transform-origin: 50% 80%;
+    backface-visibility: hidden;
+    will-change: transform;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   }
 
