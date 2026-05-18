@@ -28,6 +28,12 @@ class PerfilUsuario extends HTMLElement {
     const btnCerrar = this.querySelector('#cerrarBanner');
     btnCerrar.addEventListener('click', () => this.cerrarBanner());
 
+    const btnCambiarPassword = this.querySelector('.cambiarPassword');
+    btnCambiarPassword.addEventListener('click', (e) => this.cambiarPassword(e));
+
+    const formPassword = this.querySelector('#formPassword');
+    formPassword.addEventListener('submit', (e) => this.enviarCambioPassword(e));
+
     // Botón ver puntuación
     const btnPuntuacion = this.querySelector('.verPuntuacion');
     if (btnPuntuacion) {
@@ -336,6 +342,69 @@ class PerfilUsuario extends HTMLElement {
     }
   }
 
+   async cambiarPassword(event) {
+  if (event) event.preventDefault();
+
+  const formPassword = this.querySelector('#formPassword');
+  const formVehiculo = this.querySelector('#formVehiculo');
+
+  if (formPassword.style.display === 'none') {
+    formPassword.style.display = 'block';
+    formVehiculo.style.display = 'none';
+    const formEmail = this.querySelector('#formEmail');
+    formEmail.style.display = 'none';
+    const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
+    if (btnAnadirVehiculo) {
+      btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+    }
+    this.vehiculoVisible = false;
+  } else {
+    formPassword.style.display = 'none';
+  }
+}
+
+async enviarCambioPassword(event) {
+  event.preventDefault();
+
+  const passwordActual = this.querySelector('#passwordActual').value.trim();
+  const passwordNueva = this.querySelector('#passwordNueva').value.trim();
+
+  if (!passwordActual || !passwordNueva) {
+    await window.Swal.fire({ icon: 'warning', title: 'Todos los campos son obligatorios', timer: 2000, showConfirmButton: false });
+    return;
+  }
+
+  if (passwordNueva.length < 6) {
+    await window.Swal.fire({ icon: 'warning', title: 'La nueva contraseña debe tener al menos 6 caracteres', timer: 2500, showConfirmButton: false });
+    return;
+  }
+
+  const rutaBase = obtenerRutaBase();
+
+  try {
+    const response = await fetch(rutaBase + 'controllers/CambiarPasswordController.php', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ passwordActual, passwordNueva })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      await window.Swal.fire({ icon: 'success', title: 'Contraseña actualizada correctamente', timer: 1500, showConfirmButton: false });
+      this.querySelector('#formPassword').style.display = 'none';
+      this.querySelector('#passwordActual').value = '';
+      this.querySelector('#passwordNueva').value = '';
+    } else {
+      await window.Swal.fire({ icon: 'error', title: data.message || 'Error al cambiar la contraseña', timer: 3000, showConfirmButton: false });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    await window.Swal.fire({ icon: 'error', title: 'Error al cambiar la contraseña', timer: 3000, showConfirmButton: false });
+  }
+}
+
   //Aquí pintamos el HTML del modal PerfilUsuario
   render() {
     this.innerHTML = `
@@ -404,6 +473,20 @@ class PerfilUsuario extends HTMLElement {
                 <div id="error-nuevoEmail"></div>
               </div>
               <button type="submit" class="btn-guardar">Guardar</button>
+            </form>
+            <form id="formPassword" class="form-password" style="display: none">
+                <div class="form-group input-field">
+                  <input type="password" id="passwordActual" name="passwordActual" placeholder=" ">
+                  <label for="passwordActual">Contraseña actual</label>
+                  <div id="error-passwordActual"></div>
+                </div>
+
+                <div class="form-group input-field">
+                  <input type="password" id="passwordNueva" name="passwordNueva" placeholder=" ">
+                  <label for="passwordNueva">Nueva contraseña</label>
+                  <div id="error-passwordNueva"></div>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar</button>
             </form>
           </div>
           <div class="menu-inferior">
