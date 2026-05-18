@@ -63,6 +63,7 @@ export async function obtenerSesion() {
     return {
       logueado: datos.logueado,
       usuario: datos.usuario,
+      usuario_datos: datos.usuario_datos || null,
       usuario_id: datos.usuario_id, // Devolver toda la respuesta por si se necesitan otros datos
     };
   } catch (error) {

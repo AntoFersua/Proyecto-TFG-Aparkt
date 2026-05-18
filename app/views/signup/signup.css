@@ -1,3 +1,17 @@
+header {
+  & .navPrincipal {
+    ul .span-delante,
+    ul .span-detras,
+    ul .span-delante::before,
+    ul .span-detras::before {
+      background-image: url("../assets/fondoAparkt.webp") !important;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
 main {
   display: flex;
   justify-content: center;

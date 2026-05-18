@@ -119,4 +119,6 @@ class Footer extends HTMLElement {
 }
 
 // Define el nuevo elemento personalizado "app-footer" y lo asocia con la clase footer.
-customElements.define("app-footer", Footer);
+if (!customElements.get("app-footer")) {
+  customElements.define("app-footer", Footer);
+}

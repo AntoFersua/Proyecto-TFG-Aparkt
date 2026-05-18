@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const mm = gsap.matchMedia();
+  let horizontalScrollTrigger = null;
 
   mm.add("(min-width: 769px)", () => {
     const horizontalSection = document.querySelector(".horizontal");
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const getScrollDistance = () =>
         horizontalSection.scrollWidth - document.documentElement.clientWidth;
 
-      gsap.to(horizontalSection, {
+      const horizontalTween = gsap.to(horizontalSection, {
         x: () => -getScrollDistance() + "px",
         ease: "none",
         scrollTrigger: {
@@ -48,6 +49,43 @@ document.addEventListener("DOMContentLoaded", () => {
           invalidateOnRefresh: true,
         },
       });
+      horizontalScrollTrigger = horizontalTween.scrollTrigger;
+
+      const timeline = document.querySelector(".seccion-historia .timeline");
+      if (timeline) {
+        const timelineItems = timeline.querySelectorAll(".timeline-item");
+
+        gsap.set(timeline, { "--timeline-progress": 0 });
+        gsap.set(timelineItems, { autoAlpha: 0.35, y: 18 });
+
+        gsap.to(timeline, {
+          "--timeline-progress": 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: timeline,
+            containerAnimation: horizontalTween,
+            start: "left 80%",
+            end: "left 18%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        gsap.to(timelineItems, {
+          autoAlpha: 1,
+          y: 0,
+          ease: "power2.out",
+          stagger: 0.14,
+          scrollTrigger: {
+            trigger: timeline,
+            containerAnimation: horizontalTween,
+            start: "left 74%",
+            end: "left 22%",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
 
       const car = document.querySelector(".car");
       const carContainer = document.querySelector(".car-container");
@@ -116,6 +154,88 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
+  mm.add("(max-width: 768px)", () => {
+    const timeline = document.querySelector(".seccion-historia .timeline");
+    if (!timeline) return;
+
+    const timelineItems = timeline.querySelectorAll(".timeline-item");
+
+    gsap.set(timeline, { "--timeline-progress": 0 });
+    gsap.set(timelineItems, { autoAlpha: 0.35, y: 18 });
+
+    gsap.to(timeline, {
+      "--timeline-progress": 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: timeline,
+        start: "top 72%",
+        end: "bottom 45%",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    gsap.to(timelineItems, {
+      autoAlpha: 1,
+      y: 0,
+      ease: "power2.out",
+      stagger: 0.12,
+      scrollTrigger: {
+        trigger: timeline,
+        start: "top 68%",
+        end: "bottom 45%",
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      },
+    });
+  });
+
+  function navegarASeccionAparkt(hash, actualizarUrl = true) {
+    const target = document.querySelector(hash);
+    if (!target) return false;
+
+    if (actualizarUrl) {
+      history.pushState(null, "", hash);
+    }
+
+    const horizontalSection = document.querySelector(".horizontal");
+    const isHorizontalTarget =
+      horizontalScrollTrigger &&
+      horizontalSection &&
+      horizontalSection.contains(target) &&
+      window.matchMedia("(min-width: 769px)").matches;
+
+    if (isHorizontalTarget) {
+      const maxScroll = horizontalSection.scrollWidth - window.innerWidth;
+      const targetX = Math.min(Math.max(target.offsetLeft, 0), maxScroll);
+
+      window.scrollTo({
+        top: horizontalScrollTrigger.start + targetX,
+        behavior: "smooth",
+      });
+      return true;
+    }
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+  }
+
+  document.querySelectorAll('a[href*="aparkt.html#"], a[href^="#aparkt-"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const url = new URL(link.href, window.location.href);
+      if (url.pathname !== window.location.pathname || !url.hash) return;
+
+      if (!document.querySelector(url.hash)) return;
+
+      event.preventDefault();
+      navegarASeccionAparkt(url.hash);
+    });
+  });
+
+  if (window.location.hash?.startsWith("#aparkt-")) {
+    setTimeout(() => navegarASeccionAparkt(window.location.hash, false), 200);
+  }
 
    const tarjetas = document.querySelectorAll('.tarjeta');
   const puntosEl = document.querySelectorAll('.punto');

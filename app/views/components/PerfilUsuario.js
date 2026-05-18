@@ -1,4 +1,4 @@
-import { obtenerRutaBase } from '../auth.js';
+import { obtenerRutaBase, obtenerSesion } from '../auth.js';
 import './Modalpuntos.js';
 
 class PerfilUsuario extends HTMLElement {
@@ -10,6 +10,30 @@ class PerfilUsuario extends HTMLElement {
   connectedCallback() {
     this.render();
     this.configurarEventos();
+    this.cargarDatosUsuario();
+  }
+
+  async cargarDatosUsuario() {
+    const nombreEl = this.querySelector("#perfilNombreUsuario");
+    const emailEl = this.querySelector("#perfilEmailUsuario");
+    if (!nombreEl || !emailEl) return;
+
+    const sesion = await obtenerSesion();
+    if (!sesion.logueado) {
+      nombreEl.textContent = "Invitado";
+      emailEl.textContent = "Inicia sesi\u00f3n para ver tus datos";
+      return;
+    }
+
+    const usuario = sesion.usuario_datos || {};
+    const nombreCompleto = [usuario.nombre, usuario.apellido]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+    const email = usuario.email || sesion.usuario || "";
+
+    nombreEl.textContent = nombreCompleto || "Usuario";
+    emailEl.textContent = email;
   }
 
   configurarEventos() {
@@ -244,6 +268,7 @@ class PerfilUsuario extends HTMLElement {
         await window.Swal.fire({ icon: 'success', title: 'Email actualizado correctamente', timer: 1500, showConfirmButton: false });
         this.querySelector('#formEmail').style.display = 'none';
         this.querySelector('#nuevoEmail').value = '';
+        await this.cargarDatosUsuario();
       } else {
          await window.Swal.fire({ icon: 'error', title: data.message || 'Error al cambiar el email', timer: 3000, showConfirmButton: false });
       }
@@ -425,6 +450,17 @@ async enviarCambioPassword(event) {
         </button>
         <div class="banner-header">
           <h2 data-i18n="perfil.miPerfil">Mi Perfil</h2>
+          <div class="perfil-resumen">
+            <div class="perfil-avatar" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4z"/>
+              </svg>
+            </div>
+            <div class="perfil-identidad">
+              <strong id="perfilNombreUsuario">Usuario</strong>
+              <span id="perfilEmailUsuario">Cargando...</span>
+            </div>
+          </div>
         </div>
         <div class="banner-body">
           <div class="menu-superior">

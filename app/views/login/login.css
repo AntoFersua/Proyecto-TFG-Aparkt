@@ -1,3 +1,27 @@
+header {
+  & .navPrincipal {
+    ul .span-delante,
+    ul .span-detras,
+    ul .span-delante::before,
+    ul .span-detras::before {
+      background-image: url("../assets/fondoAparkt.webp") !important;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+app-footer {
+  display: none;
+}
+
 /*Contenedor principal MAIN*/
 main {
   display: flex;
@@ -10,7 +34,11 @@ main {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--bg-primary);
-  padding-top: 120px;
+  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
+  padding: 0 55px;
+  margin-top: 70px;
+  overflow: hidden;
 }
 
 /*Contenedor tipo móvil*/
@@ -357,8 +385,9 @@ main {
 @media (max-width: 480px) {
   main {
     flex-direction: column;
-    padding-top: 55px !important;
-    min-height: 70vh;
+    height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
+    padding: 0 20px !important;
     margin-top: 60px;
   }
 

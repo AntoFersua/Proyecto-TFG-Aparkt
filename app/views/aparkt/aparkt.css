@@ -934,6 +934,7 @@
       position: relative;
       margin-bottom: 60px;
       padding: 0 20px;
+      --timeline-progress: 0;
 
       &::before {
         content: "";
@@ -950,6 +951,8 @@
           var(--color-azulOscuro)
         );
         border-radius: 2px;
+        transform: scaleX(var(--timeline-progress));
+        transform-origin: left center;
       }
 
       .timeline-item {
@@ -1564,9 +1567,10 @@
         &::before {
           top: 0;
           left: 16%;
-          transform: translateX(-50%);
           width: 3px;
           height: 100%;
+          transform: translateX(-50%) scaleY(var(--timeline-progress));
+          transform-origin: top center;
         }
 
         .timeline-item {
