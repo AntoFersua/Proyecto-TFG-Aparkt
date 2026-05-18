@@ -462,19 +462,19 @@ window.addEventListener("DOMContentLoaded", async function () {
                         console.log(data.mensaje);
                         //si el status es ok
                         if (data.status === "ok") {
-                          alert(data.mensaje);
+                          window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false });
                           //llamar función de actualizarPlazas para cambiar el estado de ocupación (rojo o verde)
                           actualizarOcupacionPlazas(); 
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
-                          alert(data.mensaje || "Error al guardar el estado");
+                          window.Swal.fire({ icon: 'error', title: data.mensaje || "Error al guardar el estado", timer: 3000, showConfirmButton: false });
                           console.log("Error");
                         }
                       })
                       //capturar errores
                       .catch((err) => {
                         console.error(err);
-                        alert("Error al guardar datos");
+                        window.Swal.fire({ icon: 'error', title: "Error al guardar datos", timer: 3000, showConfirmButton: false });
                       });
                   } else if (accion == "liberar") {
                     console.log("entrao liberar");
@@ -503,19 +503,19 @@ window.addEventListener("DOMContentLoaded", async function () {
                         console.log(data.mensaje);
                         //si el status es ok
                         if (data.status === "ok") {
-                          alert(data.mensaje);
+                          window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false });
                           //llamar función de actualizarPlazas para cambiar el estado de ocupación (rojo o verde)
                           actualizarOcupacionPlazas(); 
                         } else {
                           //mostrar un mensaje del backend o uno por defecto
-                          alert(data.mensaje || t('index.errorGuardarEstado'));
+                          window.Swal.fire({ icon: 'error', title: data.mensaje || t('index.errorGuardarEstado'), timer: 3000, showConfirmButton: false });
                           console.log("Error");
                         }
                       })
                       //capturar errores
                       .catch((err) => {
                         console.error(err);
-                        alert(t('index.errorGuardarDatos'));
+                        window.Swal.fire({ icon: 'error', title: t('index.errorGuardarDatos'), timer: 3000, showConfirmButton: false });
                       });
                   }
                 });
@@ -627,24 +627,19 @@ window.addEventListener("DOMContentLoaded", async function () {
               datos.features[0]?.properties?.full_address ||
               datos.features[0]?.properties?.name ||
               t('index.direccionNoEncontrada');
-            alert(
-              "Coordenadas: " +
-                longitud.toFixed(6) +
-                ", " +
-                latitud.toFixed(6) +
-                "\nDirección: " +
-                address,
-            );
+              window.Swal.fire({
+              icon: 'info',
+              html: "Coordenadas: " + longitud.toFixed(6) + ", " + latitud.toFixed(6) + "<br>Dirección: " + address,
+              confirmButtonText: 'OK'
+            });
           })
           //En caso de error
           .catch(function (error) {
-            alert(
-              "Coordenadas: " +
-                longitud.toFixed(6) +
-                ", " +
-                latitud.toFixed(6) +
-                "\nError al obtener dirección",
-            );
+            window.Swal.fire({
+              icon: 'warning',
+              html: "Coordenadas: " + longitud.toFixed(6) + ", " + latitud.toFixed(6) + "<br>Error al obtener dirección",
+              confirmButtonText: 'OK'
+            });
           });
       }
 
@@ -678,12 +673,12 @@ window.addEventListener("DOMContentLoaded", async function () {
                 essential: true, //Asegura que la animación se realice
               });
             } else {
-              alert(t('index.sinResultados').replace('{query}', searchText));
+              window.Swal.fire({ icon: 'warning', title: t('index.sinResultados').replace('{query}', searchText), timer: 3000, showConfirmButton: false });
             }
           })
           //En caso de error
           .catch(function (error) {
-            alert("Error al obtener coordenadas para: " + searchText);
+            window.Swal.fire({ icon: 'error', title: "Error al obtener coordenadas para: " + searchText, timer: 3000, showConfirmButton: false });
           });
       }
 

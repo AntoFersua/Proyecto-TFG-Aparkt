@@ -218,7 +218,7 @@ class PerfilUsuario extends HTMLElement {
     const nuevoEmail = this.querySelector('#nuevoEmail').value.trim();
 
     if (!nuevoEmail) {
-      alert('El email no puede estar vacío');
+       await window.Swal.fire({ icon: 'warning', title: 'El email no puede estar vacío', timer: 2000, showConfirmButton: false });
       return;
     }
 
@@ -235,15 +235,15 @@ class PerfilUsuario extends HTMLElement {
       const data = await response.json();
 
       if (data.success) {
-        alert('Email actualizado correctamente');
+        await window.Swal.fire({ icon: 'success', title: 'Email actualizado correctamente', timer: 1500, showConfirmButton: false });
         this.querySelector('#formEmail').style.display = 'none';
         this.querySelector('#nuevoEmail').value = '';
       } else {
-        alert(data.message || 'Error al cambiar el email');
+         await window.Swal.fire({ icon: 'error', title: data.message || 'Error al cambiar el email', timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al cambiar el email');
+      await window.Swal.fire({ icon: 'error', title: 'Error al cambiar el email', timer: 3000, showConfirmButton: false });
     }
   }
 
@@ -253,9 +253,15 @@ class PerfilUsuario extends HTMLElement {
    */
   async borrarVehiculo() {
     // 1. Mostrar confirmación al usuario
-    if (!confirm('¿Estás seguro de que quieres borrar tu vehículo?')) {
-      return;
-    }
+    const confirmarBorrar = await window.Swal.fire({
+      icon: 'warning',
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que quieres borrar tu vehículo?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    });
+    if (!confirmarBorrar.isConfirmed) return;
 
     // 2. Obtener la ruta base para construir la URL
     const rutaBase = obtenerRutaBase();
@@ -272,21 +278,29 @@ class PerfilUsuario extends HTMLElement {
 
       // 5. Si success es true, mostrar mensaje y recargar página
       if (data.success) {
-        alert('Vehículo eliminado correctamente');
+        await window.Swal.fire({ icon: 'success', title: 'Vehículo eliminado correctamente', timer: 1500, showConfirmButton: false });
         location.reload();
       } else {
         // 6. Si hay error, mostrar mensaje
-        alert(data.message || 'Error al eliminar el vehículo');
+        await window.Swal.fire({ icon: 'error', title: data.message || 'Error al eliminar el vehículo', timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       // 7. Error de red
       console.error('Error:', error);
-      alert('Error al eliminar el vehículo');
+      await window.Swal.fire({ icon: 'error', title: 'Error al eliminar el vehículo', timer: 3000, showConfirmButton: false });
     }
   }
 
-  async eliminarCuenta() {
-    if (!confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.')) {
+   async eliminarCuenta() {
+    const confirmarEliminar = await window.Swal.fire({
+      icon: 'warning',
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+    if (!confirmarEliminar.isConfirmed) {
       return;
     }
 
@@ -314,11 +328,11 @@ class PerfilUsuario extends HTMLElement {
       if (data.success) {
         window.location.href = rutaBase + 'views/index/index.html';
       } else {
-        alert('Error al eliminar la cuenta');
+         await window.Swal.fire({ icon: 'error', title: 'Error al eliminar la cuenta', timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al eliminar la cuenta');
+      await window.Swal.fire({ icon: 'error', title: 'Error al eliminar la cuenta', timer: 3000, showConfirmButton: false });
     }
   }
 
