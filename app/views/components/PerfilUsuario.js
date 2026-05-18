@@ -374,8 +374,9 @@ async enviarCambioPassword(event) {
     return;
   }
 
-  if (passwordNueva.length < 6) {
-    await window.Swal.fire({ icon: 'warning', title: 'La nueva contraseña debe tener al menos 6 caracteres', timer: 2500, showConfirmButton: false });
+  const passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,15}$/;
+  if (!passPattern.test(passwordNueva)) {
+    await window.Swal.fire({ icon: 'warning', title: 'Mínimo 6 y máximo 15 caracteres, al menos una mayúscula, una minúscula, un número y un símbolo (@!?%)', timer: 3000, showConfirmButton: false });
     return;
   }
 
@@ -428,7 +429,7 @@ async enviarCambioPassword(event) {
         <div class="banner-body">
           <div class="menu-superior">
             <div class="menu-opciones">
-              <button class="opcion-btn">Cambiar contraseña</button>
+              <button class="opcion-btn cambiarPassword">Cambiar contraseña</button>
               <button class="opcion-btn">Editar foto de perfil</button>
               <button class="opcion-btn cambiarEmail">Cambiar email</button>
               <button class="opcion-btn">Editar vehículo</button>
