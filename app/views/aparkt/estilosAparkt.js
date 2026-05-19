@@ -28,40 +28,214 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const mm = gsap.matchMedia();
+  let horizontalScrollTrigger = null;
 
   mm.add("(min-width: 769px)", () => {
     const horizontalSection = document.querySelector(".horizontal");
     if (horizontalSection) {
-      gsap.to(horizontalSection, {
-        x: () =>
-          -(horizontalSection.scrollWidth - document.documentElement.clientWidth) +
-          "px",
+      const getScrollDistance = () =>
+        horizontalSection.scrollWidth - document.documentElement.clientWidth;
+
+      const horizontalTween = gsap.to(horizontalSection, {
+        x: () => -getScrollDistance() + "px",
         ease: "none",
         scrollTrigger: {
           trigger: horizontalSection,
           start: "top top",
-          end: () => "+=" + (horizontalSection.scrollWidth - innerWidth),
+          end: () => "+=" + getScrollDistance(),
           scrub: true,
           pin: true,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
+      horizontalScrollTrigger = horizontalTween.scrollTrigger;
 
-      const car = document.querySelector(".car");
-      if (car) {
-        gsap.to(car, {
-          x: () => horizontalSection.scrollWidth - 200,
+      const timeline = document.querySelector(".seccion-historia .timeline");
+      if (timeline) {
+        const timelineItems = timeline.querySelectorAll(".timeline-item");
+
+        gsap.set(timeline, { "--timeline-progress": 0 });
+        gsap.set(timelineItems, { autoAlpha: 0.35, y: 18 });
+
+        gsap.to(timeline, {
+          "--timeline-progress": 1,
           ease: "none",
           scrollTrigger: {
-            trigger: horizontalSection,
-            start: "top top",
-            end: () => "+=" + (horizontalSection.scrollWidth - innerWidth),
-            scrub: 0.5,
+            trigger: timeline,
+            containerAnimation: horizontalTween,
+            start: "left 80%",
+            end: "left 18%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        gsap.to(timelineItems, {
+          autoAlpha: 1,
+          y: 0,
+          ease: "power2.out",
+          stagger: 0.14,
+          scrollTrigger: {
+            trigger: timeline,
+            containerAnimation: horizontalTween,
+            start: "left 74%",
+            end: "left 22%",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
           },
         });
       }
+
+      const car = document.querySelector(".car");
+      const carContainer = document.querySelector(".car-container");
+      if (car && carContainer) {
+        const finalCarMargin = 24;
+        let carDirection = 1;
+        const getCarTravel = () =>
+          horizontalSection.scrollWidth - car.offsetWidth - finalCarMargin;
+
+        gsap.set(car, {
+          scaleX: 1,
+          transformOrigin: "50% 50%",
+        });
+
+        gsap.set(carContainer, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          transformOrigin: "50% 80%",
+          force3D: true,
+        });
+
+        const carTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: horizontalSection,
+            start: "top top",
+            end: () => "+=" + getScrollDistance(),
+            scrub: 0.9,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.direction === carDirection) return;
+
+              carDirection = self.direction;
+              gsap.to(car, {
+                scaleX: carDirection === 1 ? 1 : -1,
+                duration: 0.25,
+                ease: "power2.out",
+                overwrite: "auto",
+              });
+            },
+          },
+        });
+
+        carTimeline
+          .to(
+            carContainer,
+            {
+              x: getCarTravel,
+              ease: "none",
+              duration: 1,
+            },
+            0
+          )
+          .to(
+            carContainer,
+            {
+              y: -8,
+              rotation: -1.25,
+              ease: "sine.inOut",
+              repeat: 5,
+              yoyo: true,
+              duration: 0.1,
+            },
+            0
+          );
+      }
     }
   });
+
+  mm.add("(max-width: 768px)", () => {
+    const timeline = document.querySelector(".seccion-historia .timeline");
+    if (!timeline) return;
+
+    const timelineItems = timeline.querySelectorAll(".timeline-item");
+
+    gsap.set(timeline, { "--timeline-progress": 0 });
+    gsap.set(timelineItems, { autoAlpha: 0.35, y: 18 });
+
+    gsap.to(timeline, {
+      "--timeline-progress": 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: timeline,
+        start: "top 72%",
+        end: "bottom 45%",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    gsap.to(timelineItems, {
+      autoAlpha: 1,
+      y: 0,
+      ease: "power2.out",
+      stagger: 0.12,
+      scrollTrigger: {
+        trigger: timeline,
+        start: "top 68%",
+        end: "bottom 45%",
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      },
+    });
+  });
+
+  function navegarASeccionAparkt(hash, actualizarUrl = true) {
+    const target = document.querySelector(hash);
+    if (!target) return false;
+
+    if (actualizarUrl) {
+      history.pushState(null, "", hash);
+    }
+
+    const horizontalSection = document.querySelector(".horizontal");
+    const isHorizontalTarget =
+      horizontalScrollTrigger &&
+      horizontalSection &&
+      horizontalSection.contains(target) &&
+      window.matchMedia("(min-width: 769px)").matches;
+
+    if (isHorizontalTarget) {
+      const maxScroll = horizontalSection.scrollWidth - window.innerWidth;
+      const targetX = Math.min(Math.max(target.offsetLeft, 0), maxScroll);
+
+      window.scrollTo({
+        top: horizontalScrollTrigger.start + targetX,
+        behavior: "smooth",
+      });
+      return true;
+    }
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+  }
+
+  document.querySelectorAll('a[href*="aparkt.html#"], a[href^="#aparkt-"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const url = new URL(link.href, window.location.href);
+      if (url.pathname !== window.location.pathname || !url.hash) return;
+
+      if (!document.querySelector(url.hash)) return;
+
+      event.preventDefault();
+      navegarASeccionAparkt(url.hash);
+    });
+  });
+
+  if (window.location.hash?.startsWith("#aparkt-")) {
+    setTimeout(() => navegarASeccionAparkt(window.location.hash, false), 200);
+  }
 
    const tarjetas = document.querySelectorAll('.tarjeta');
   const puntosEl = document.querySelectorAll('.punto');

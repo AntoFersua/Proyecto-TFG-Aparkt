@@ -29,10 +29,28 @@ class Header extends HTMLElement {
       <nav class="navPrincipal" aria-label="Navegación principal">
         <ul>
           <li><a href="../index/index.html" data-i18n="nav.mapa">Mapa</a></li>
-          <li><a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a></li>
+          <li class="nav-item-aparkt"><a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a></li>
+          <li class="submenu-aparkt-mobile" aria-label="Secciones de Aparkt">
+            <a href="../aparkt/aparkt.html#aparkt-inicio">Inicio</a>
+            <a href="../aparkt/aparkt.html#aparkt-problema">Problema</a>
+            <a href="../aparkt/aparkt.html#aparkt-mapa">Mapa</a>
+            <a href="../aparkt/aparkt.html#aparkt-preguntas">Preguntas</a>
+            <a href="../aparkt/aparkt.html#aparkt-recompensas">Recompensas</a>
+            <a href="../aparkt/aparkt.html#aparkt-historia">Historia</a>
+            <a href="../aparkt/aparkt.html#aparkt-equipo">Equipo</a>
+          </li>
           <li><a href="../login/login.html" data-i18n="nav.login">Log In</a></li>
           <li><a href="../signup/signup.html" data-i18n="nav.signup">Sign Up</a></li>
         </ul>
+        <div class="submenu-aparkt" aria-label="Secciones de Aparkt">
+          <a href="../aparkt/aparkt.html#aparkt-inicio">Inicio</a>
+          <a href="../aparkt/aparkt.html#aparkt-problema">Problema</a>
+          <a href="../aparkt/aparkt.html#aparkt-mapa">Mapa</a>
+          <a href="../aparkt/aparkt.html#aparkt-preguntas">Preguntas</a>
+          <a href="../aparkt/aparkt.html#aparkt-recompensas">Recompensas</a>
+          <a href="../aparkt/aparkt.html#aparkt-historia">Historia</a>
+          <a href="../aparkt/aparkt.html#aparkt-equipo">Equipo</a>
+        </div>
       </nav>
       <div id="headerDerecha">
         <button type="button" id="cambiarIdioma" data-i18n-aria-label="header.cambiarIdioma" aria-label="Cambiar idioma">
@@ -71,6 +89,8 @@ class Header extends HTMLElement {
   initJS() {
     const menuToggle = this.querySelector('.menu-toggle');
     const navPrincipal = this.querySelector('.navPrincipal');
+    const submenuAparkt = this.querySelector(".submenu-aparkt");
+    const navItemAparkt = this.querySelector(".nav-item-aparkt");
     
     if (menuToggle && navPrincipal) {
       menuToggle.addEventListener('click', () => {
@@ -81,26 +101,39 @@ class Header extends HTMLElement {
     }
 
     const navUl = this.querySelector(".navPrincipal ul");
-    if (navUl) {
+    if (navPrincipal && navUl) {
       const navLinks = this.querySelectorAll(".navPrincipal ul li");
-      let spanDelante = document.createElement("span");
-      spanDelante.className = "span-delante";
-      navUl.appendChild(spanDelante);
-      let spanDetras = document.createElement("span");
-      spanDetras.className = "span-detras";
-      navUl.appendChild(spanDetras);
-      let circle = document.createElement("div");
-      circle.className = "nav-circulo";
-      navUl.appendChild(circle);
+      let spanDelante = navUl.querySelector(".span-delante");
+      if (!spanDelante) {
+        spanDelante = document.createElement("span");
+        spanDelante.className = "span-delante";
+        navUl.appendChild(spanDelante);
+      }
+
+      let spanDetras = navUl.querySelector(".span-detras");
+      if (!spanDetras) {
+        spanDetras = document.createElement("span");
+        spanDetras.className = "span-detras";
+        navUl.appendChild(spanDetras);
+      }
+
+      let circle = navPrincipal.querySelector(".nav-circulo");
+      if (!circle) {
+        circle = document.createElement("div");
+        circle.className = "nav-circulo";
+        navPrincipal.appendChild(circle);
+      }
 
       //Mueve el círculo de animación sobre el menú
       function moverCirculo(li) {
         const liRect = li.getBoundingClientRect();
+        const navRect = navPrincipal.getBoundingClientRect();
         const ulRect = navUl.getBoundingClientRect();
-        const left = liRect.left - ulRect.left + liRect.width / 2 - 35;
-        circle.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-        spanDelante.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-        spanDetras.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
+        const circleLeft = liRect.left - navRect.left + liRect.width / 2 - 35;
+        const spanLeft = liRect.left - ulRect.left + liRect.width / 2 - 35;
+        circle.style.transform = `translateY(calc(-50% + 17px)) translateX(${circleLeft}px) scale(1)`;
+        spanDelante.style.transform = `translateY(calc(-50% + 17px)) translateX(${spanLeft}px) scale(1)`;
+        spanDetras.style.transform = `translateY(calc(-50% + 17px)) translateX(${spanLeft}px) scale(1)`;
       }
 
       //Oculta los efectos que tiene el menu cuando el ratón sale del menú
@@ -116,10 +149,37 @@ class Header extends HTMLElement {
       navUl.addEventListener("mouseleave", ocultarCirculo);
     }
 
+    if (navPrincipal && navItemAparkt && submenuAparkt) {
+      function posicionarSubmenuAparkt() {
+        if (window.matchMedia("(max-width: 768px)").matches) {
+          submenuAparkt.style.removeProperty("--submenu-left");
+          return;
+        }
+
+        const itemRect = navItemAparkt.getBoundingClientRect();
+        const navRect = navPrincipal.getBoundingClientRect();
+        const left = itemRect.left - navRect.left + itemRect.width / 2;
+        submenuAparkt.style.setProperty("--submenu-left", `${left}px`);
+      }
+
+      posicionarSubmenuAparkt();
+      window.addEventListener("resize", posicionarSubmenuAparkt);
+      navItemAparkt.addEventListener("mouseenter", posicionarSubmenuAparkt);
+
+      this.querySelectorAll(".submenu-aparkt a, .submenu-aparkt-mobile a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navPrincipal.classList.remove("active");
+          menuToggle?.classList.remove("active");
+          menuToggle?.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+
     const btnIdioma = this.querySelector('#cambiarIdioma');
     if (btnIdioma) {
       btnIdioma.addEventListener('click', async () => {
         await import('./ModalIdioma.js');
+        document.querySelector('modal-idioma')?.remove();
         const modal = document.createElement('modal-idioma');
         document.body.appendChild(modal);
       });

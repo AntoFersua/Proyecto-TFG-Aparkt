@@ -39,8 +39,15 @@ $response = [
 if ($logueado && isset($_SESSION['usuario_id'])) {
     try {
         $conexion = require __DIR__ . '/../models/Conexion.php';
+        require_once __DIR__ . '/../models/Usuario.php';
         require_once __DIR__ . '/../models/SistemaPuntuacion.php';
+        $usuarioModel = new Usuario($conexion);
         $puntuacionModel = new SistemaPuntuacion($conexion);
+        $usuarioDatos = $usuarioModel->obtenerUsuarioPorId($_SESSION['usuario_id']);
+        if ($usuarioDatos) {
+            unset($usuarioDatos['contrasena']);
+            $response['usuario_datos'] = $usuarioDatos;
+        }
         $response['puntuacion'] = $puntuacionModel->obtenerPuntuacion($_SESSION['usuario_id']);
         $response['usuario_id'] = $_SESSION['usuario_id'];
         $response['puntosCrear'] = SistemaPuntuacion::PUNTOS_CREAR;

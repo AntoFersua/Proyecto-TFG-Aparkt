@@ -1,28 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const navPrincipal = document.querySelector(".navPrincipal");
   const navUl = document.querySelector(".navPrincipal ul");
-  if (!navUl) return;
+  if (!navPrincipal || !navUl) return;
   
   const navLinks = document.querySelectorAll(".navPrincipal ul li");
 
-  let spanDelante = document.createElement("span");
-  spanDelante.className = "span-delante";
-  navUl.appendChild(spanDelante);
+  let spanDelante = navUl.querySelector(".span-delante");
+  if (!spanDelante) {
+    spanDelante = document.createElement("span");
+    spanDelante.className = "span-delante";
+    navUl.appendChild(spanDelante);
+  }
 
-  let spanDetras = document.createElement("span");
-  spanDetras.className = "span-detras";
-  navUl.appendChild(spanDetras);
+  let spanDetras = navUl.querySelector(".span-detras");
+  if (!spanDetras) {
+    spanDetras = document.createElement("span");
+    spanDetras.className = "span-detras";
+    navUl.appendChild(spanDetras);
+  }
 
-  let circle = document.createElement("div");
-  circle.className = "nav-circulo";
-  navUl.appendChild(circle);
+  let circle = navPrincipal.querySelector(".nav-circulo");
+  if (!circle) {
+    circle = document.createElement("div");
+    circle.className = "nav-circulo";
+    navPrincipal.appendChild(circle);
+  }
 
   function moverCirculo(li) {
     const liRect = li.getBoundingClientRect();
+    const navRect = navPrincipal.getBoundingClientRect();
     const ulRect = navUl.getBoundingClientRect();
-    const left = liRect.left - ulRect.left + liRect.width / 2 - 35;
-    circle.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-    spanDelante.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
-    spanDetras.style.transform = `translateY(calc(-50% + 17px)) translateX(${left}px) scale(1)`;
+    const circleLeft = liRect.left - navRect.left + liRect.width / 2 - 35;
+    const spanLeft = liRect.left - ulRect.left + liRect.width / 2 - 35;
+    circle.style.transform = `translateY(calc(-50% + 17px)) translateX(${circleLeft}px) scale(1)`;
+    spanDelante.style.transform = `translateY(calc(-50% + 17px)) translateX(${spanLeft}px) scale(1)`;
+    spanDetras.style.transform = `translateY(calc(-50% + 17px)) translateX(${spanLeft}px) scale(1)`;
   }
 
   function ocultarCirculo() {
@@ -89,15 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }*/
 
-  if (formVehiculo) {
+  const formVehiculoPerfil = document.getElementById("formVehiculo");
+  if (formVehiculoPerfil) {
     console.log("JustValidate:", typeof window.JustValidate);
-    if (typeof window.JustValidate !== "undefined") {
+    if (
+      typeof window.JustValidate !== "undefined" &&
+      typeof window.inicializarValidacionVehiculo === "function"
+    ) {
       window.inicializarValidacionVehiculo();
     } else {
       console.log("JustValidate no cargado");
     }
 
-    const selects = formVehiculo.querySelectorAll("select");
+    const selects = formVehiculoPerfil.querySelectorAll("select");
     selects.forEach(function (select) {
       select.addEventListener("change", function () {
         if (this.value) {

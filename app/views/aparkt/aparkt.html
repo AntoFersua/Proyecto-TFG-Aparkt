@@ -29,7 +29,7 @@
       <div class="owl-carousel">
         <div class="item">
           <video
-            src="../assets/video/Aparkt_corporate_video_202604241138.mp4"
+            src="../assets/video/videopromo.mp4"
             autoplay
             muted
             playsinline
@@ -59,10 +59,13 @@
           />
         </div>
       </div>
-      <section class="seccion-principal contenedor">
+      <section id="aparkt-inicio" class="seccion-principal contenedor">
         <h1 class="titulo-principal" data-i18n="aparkt.heroH1">
           Aparca más fácil <br />
-          que nunca con <span class="texto-verde">Aparkt</span>
+          que nunca con
+        </h1>
+        <h1>
+          <span class="texto-verde">Aparkt</span>
         </h1>
         <p class="descripcion" data-i18n="aparkt.heroDescripcion">
           Nuestra plataforma te ayuda a localizar espacios disponibles cerca de
@@ -97,7 +100,7 @@
       </section>
 
       <!--SECCIÓN PROBLEMA-->
-      <section class="seccion-problema contenedor">
+      <section id="aparkt-problema" class="seccion-problema contenedor">
         <div class="problema-header">
           <h2>Buscar aparcamiento no debería ser una odisea</h2>
           <p>
@@ -177,7 +180,7 @@
         </div>
       </section>
 
-      <section class="contenedor seccion-mapa">
+      <section id="aparkt-mapa" class="contenedor seccion-mapa">
         <iframe src="../index/index.html"></iframe>
         <div class="mapa-visitar">
           <h2>Visita nuestro mapa</h2>
@@ -189,9 +192,9 @@
         <div class="car-container">
           <img class="car" src="../assets/coche.svg" alt="Coche" />
         </div>
-        <section class="preguntasFrecuentes">
+        <section id="aparkt-preguntas" class="preguntasFrecuentes">
           <div>
-            <h1>Preguntas frecuentes</h1>
+            <h2>Preguntas frecuentes</h2>
             <p>
               Encuentra todo lo que necesitas saber sobre Aparkt y cómo estamos
               transformando la movilidad urbana a través de soluciones
@@ -201,55 +204,58 @@
 
           <div id="preguntas">
             <details>
+              <summary>¿Qué es Aparkt?</summary>
+              <p>
+                Aparkt es una plataforma desarrollada como Trabajo de Fin de
+                Grado (TFG) que busca facilitar la búsqueda de aparcamiento en
+                ciudad. La aplicación conecta a conductores con plazas
+                disponibles en tiempo real, ayudando a reducir el tiempo de
+                búsqueda, el tráfico y el estrés al aparcar.
+              </p>
+            </details>
+
+            <details>
               <summary>¿Es gratis usar Aparkt?</summary>
               <p>
-                Sí, descargar y navegar por la aplicación Aparkt es
-                completamente gratuito. Solo pagas por las reservas de
-                estacionamiento que realices y por los servicios premium
-                opcionales.
-              </p>
-            </details>
-
-            <details>
-              <summary>¿Cómo gano recompensas?</summary>
-              <p>
-                Ganas recompensas cada vez que utilizas nuestra red de
-                estacionamientos asociados o compartes tu plaza privada.
-              </p>
-            </details>
-
-            <details>
-              <summary>¿Es seguro el proceso de pago?</summary>
-              <p>
-                Utilizamos tecnología de cifrado segura y proveedores
-                certificados para proteger todas las transacciones.
+                La plataforma muestra plazas de aparcamiento disponibles y
+                permite al usuario localizarlas de forma rápida e intuitiva
+                mediante un mapa interactivo. El objetivo es optimizar el tiempo
+                de búsqueda y mejorar la movilidad urbana.
               </p>
             </details>
 
             <details>
               <summary>¿En qué ciudades está disponible?</summary>
               <p>
-                Actualmente Aparkt está disponible únicamente en Málaga, donde
-                estamos desarrollando y mejorando continuamente la plataforma.
-                Próximamente ampliaremos el servicio a nuevas ciudades.
+                Actualmente Aparkt está enfocado en Málaga como entorno
+                principal de desarrollo y pruebas del proyecto. La idea futura
+                es ampliar el sistema a otras ciudades para seguir mejorando la
+                experiencia de aparcamiento urbano.
               </p>
             </details>
 
             <details>
-              <summary>¿Existe alguna suscripción premium?</summary>
+              <summary>¿Es seguro el uso de la plataforma?</summary>
               <p>
-                Sí, Aparkt cuenta con una suscripción premium para usuarios que
-                quieran una experiencia más completa. Con ella tendrás acceso a
-                funcionalidades extra como localizador del coche, eliminación de
-                publicidad, acceso a filtros avanzados, estadísticas
-                personalizadas sobre tus hábitos de aparcamiento y prioridad en
-                notificaciones y soporte.
+                Sí. Aparkt está desarrollado siguiendo buenas prácticas de
+                desarrollo web y diseño de interfaces, priorizando una
+                experiencia segura, clara y accesible para el usuario.
+              </p>
+            </details>
+
+            <details>
+              <summary>¿Cuál es el objetivo del proyecto?</summary>
+              <p>
+                El principal objetivo de Aparkt es ofrecer una solución
+                tecnológica al problema de encontrar aparcamiento en ciudad,
+                reduciendo desplazamientos innecesarios, contaminación y tiempo
+                perdido al volante.
               </p>
             </details>
           </div>
         </section>
 
-        <section class="seccion-recompensas">
+        <section id="aparkt-recompensas" class="seccion-recompensas">
           <div class="recompensas-content">
             <div class="recompensas-header">
               <h2>Convierte tu buena acción en beneficios</h2>
@@ -276,8 +282,8 @@
                   </svg>
                 </div>
                 <h3>Regístrate</h3>
-                <p>Crea tu cuenta gratis y recibe 50 puntos de bienvenida</p>
-                <span class="points">+50 pts</span>
+                <p>Crea tu cuenta gratis y recibe 150 puntos de bienvenida</p>
+                <span class="points">+150 pts</span>
               </div>
 
               <div class="recompensa-card colaboracion">
@@ -295,8 +301,8 @@
                   </svg>
                 </div>
                 <h3>Comparte plaza</h3>
-                <p>Publica tu plaza cuando no la uses y gana puntos</p>
-                <span class="points">+20 pts</span>
+                <p>Publica tu plaza cuando no la dejes libre y gana puntos</p>
+                <span class="points">+80 pts</span>
               </div>
 
               <div class="recompensa-card indica">
@@ -315,7 +321,7 @@
                 </div>
                 <h3>Indica tu plaza</h3>
                 <p>Confirma que has aparcado para actualizar disponibilidad</p>
-                <span class="points">+10 pts</span>
+                <span class="points">+60 pts</span>
               </div>
 
               <div class="recompensa-card canjea">
@@ -334,7 +340,7 @@
                   </svg>
                 </div>
                 <h3>Canjea</h3>
-                <p>Usa tus puntos en horas gratis, premium y más</p>
+                <p>Usa tus puntos en regalos gatris, premium y descuentos</p>
                 <span class="points">🎁 Premium</span>
               </div>
             </div>
@@ -342,7 +348,7 @@
         </section>
 
         <!--SECCIÓN HISTORIA-->
-        <section class="seccion-historia">
+        <section id="aparkt-historia" class="seccion-historia">
           <div class="historia-content">
             <div class="historia-header">
               <h2>Facilitando el aparcamiento en ciudades</h2>
@@ -483,22 +489,22 @@
       </section>
 
       <!--SECCIÓN EQUIPO-->
-      <section class="contenedor seccion-equipo">
+      <section id="aparkt-equipo" class="contenedor seccion-equipo">
         <div class="contenedor">
-          <p class="titular">Nuestro equipo</p>
+          <h2 class="titular">Nuestro equipo</h2>
           <div class="tarjetas">
             <div class="tarjeta" data-indice="0">
               <div class="etiqueta-pildora">
                 <div class="punto-pildora"></div>
                 <div>
                   <div class="nombre-pildora">Antonio Fernandez Suarez</div>
-                  <div class="rol-pildora">----</div>
+                  <div class="rol-pildora">Product Owner y Backend</div>
                 </div>
               </div>
-              <img src="../assets/equipo/antonio.jpeg" alt="" class="persona">
+              <img src="../assets/equipo/antonio.jpeg" alt="" class="persona" />
               <div class="etiqueta">
                 <div class="nombre">Antonio Fernández Suárez</div>
-                <div class="rol">Fundadora</div>
+                <div class="rol">Product Owner y desarrollador Backend</div>
               </div>
             </div>
 
@@ -507,13 +513,15 @@
                 <div class="punto-pildora"></div>
                 <div>
                   <div class="nombre-pildora">Adrian González Núñez</div>
-                  <div class="rol-pildora">Diseñadora</div>
+                  <div class="rol-pildora">Backend y mapa de Aparkt</div>
                 </div>
               </div>
-              <img src="../assets/equipo/adri.jpg" alt="" class="persona">
+              <img src="../assets/equipo/adri.jpg" alt="" class="persona" />
               <div class="etiqueta">
                 <div class="nombre">Adrian González Núñez</div>
-                <div class="rol">Diseñadora</div>
+                <div class="rol">
+                  Responsable principal de Backend y productor de mapa de Aparkt
+                </div>
               </div>
             </div>
 
@@ -522,13 +530,13 @@
                 <div class="punto-pildora"></div>
                 <div>
                   <div class="nombre-pildora">Celia Molina Leal</div>
-                  <div class="rol-pildora">Desarrollador</div>
+                  <div class="rol-pildora">Frontend y responsable de QA</div>
                 </div>
               </div>
-              <img src="../assets/equipo/celia.jpg" alt="" class="persona">
+              <img src="../assets/equipo/celia.jpg" alt="" class="persona" />
               <div class="etiqueta">
                 <div class="nombre">Celia Molina Leal</div>
-                <div class="rol">Desarrollador</div>
+                <div class="rol">Líder de Frontend y responsable de QA</div>
               </div>
             </div>
 
@@ -537,13 +545,15 @@
                 <div class="punto-pildora"></div>
                 <div>
                   <div class="nombre-pildora">Noemí Ruiz Toro</div>
-                  <div class="rol-pildora">Marketing</div>
+                  <div class="rol-pildora">BBDD y Frontend</div>
                 </div>
               </div>
-              <img src="../assets/equipo/noemi.jpeg" alt="" class="persona">
+              <img src="../assets/equipo/noemi.jpeg" alt="" class="persona" />
               <div class="etiqueta">
                 <div class="nombre">Noemí Ruiz Toro</div>
-                <div class="rol">Marketing</div>
+                <div class="rol">
+                  Responsable de Base de Datos y desarrolladora Frontend
+                </div>
               </div>
             </div>
           </div>

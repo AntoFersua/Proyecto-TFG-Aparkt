@@ -54,7 +54,7 @@ class Modalpuntos extends HTMLElement {
 .overlay-modal {
   position: fixed;
   inset: 0;
-  z-index: 105;
+  z-index: 100005;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,4 +320,6 @@ class Modalpuntos extends HTMLElement {
   }
 }
 
-customElements.define("modal-puntos", Modalpuntos);
+if (!customElements.get("modal-puntos")) {
+  customElements.define("modal-puntos", Modalpuntos);
+}

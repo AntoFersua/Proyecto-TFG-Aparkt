@@ -133,6 +133,22 @@ class Usuario extends Model
         return $stmt->execute();
     }
 
+     /**
+     * Actualiza la contraseña de un usuario.
+     * @param int $id ID del usuario
+     * @param string $password Nueva contraseña
+     * @return bool true si se actualizó correctamente
+     */
+    public function actualizarPassword($id, $password)
+    {
+        $consulta = "UPDATE usuario SET contrasena = :contrasena WHERE id = :id";
+
+        $stmt = $this->_conexion->prepare($consulta);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->bindValue(":contrasena", $password, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
 
     
 }

@@ -1,10 +1,24 @@
+header {
+  & .navPrincipal {
+    ul .span-delante,
+    ul .span-detras,
+    ul .span-delante::before,
+    ul .span-detras::before {
+      background-image: url("../assets/fondoAparkt.webp") !important;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
 main {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 !important;
   font-family: "Roboto", Arial, Verdana, sans-serif;
   gap: 60px;
-  /* padding-top: 120px; */
   background-image: url("../assets/fondoAparkt.webp");
   background-size: cover;
   background-position: center;
@@ -205,6 +219,18 @@ main {
     margin-top: 2px;
     padding-left: 4px;
   }
+}
+
+[id^="error-"] {
+  min-height: 12px;
+  margin-top: 2px;
+  padding-left: 4px;
+}
+
+[id^="error-"],
+[id^="error-"] .just-validate-error-label {
+  font-size: 0.62rem !important;
+  line-height: 1.2;
 }
 
 .ver-contrasena {
