@@ -2,6 +2,8 @@
 window.inicializarValidacionVehiculo = function () {
   let form = document.getElementById("formVehiculo");
   if (!form) return;
+  if (form.dataset.validacionVehiculoInicializada === "true") return;
+  form.dataset.validacionVehiculoInicializada = "true";
 
   let validator = new window.JustValidate(form, {
     errorFieldCssClass: "error-field",

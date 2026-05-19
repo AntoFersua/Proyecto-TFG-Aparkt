@@ -101,15 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }*/
 
-  if (formVehiculo) {
+  const formVehiculoPerfil = document.getElementById("formVehiculo");
+  if (formVehiculoPerfil) {
     console.log("JustValidate:", typeof window.JustValidate);
-    if (typeof window.JustValidate !== "undefined") {
+    if (
+      typeof window.JustValidate !== "undefined" &&
+      typeof window.inicializarValidacionVehiculo === "function"
+    ) {
       window.inicializarValidacionVehiculo();
     } else {
       console.log("JustValidate no cargado");
     }
 
-    const selects = formVehiculo.querySelectorAll("select");
+    const selects = formVehiculoPerfil.querySelectorAll("select");
     selects.forEach(function (select) {
       select.addEventListener("change", function () {
         if (this.value) {
