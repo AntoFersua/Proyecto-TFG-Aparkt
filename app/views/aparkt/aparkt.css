@@ -1,3 +1,11 @@
+html {
+  scroll-padding-top: 50px;
+}
+
+#aparkt section[id] {
+  scroll-margin-top: 50px;
+}
+
 #aparkt {
   padding-top: 0;
   padding-inline: 0;
@@ -27,13 +35,25 @@
   .owl-carousel {
     position: relative;
     width: 100%;
-    height: 80vh;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: calc(100vh - 70px);
+    background: #071315;
     overflow: hidden;
+
+    .owl-stage-outer,
+    .owl-stage,
+    .owl-item {
+      height: 100%;
+    }
 
     .item {
       position: relative;
       width: 100%;
-      height: 80vh;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &::after {
         content: "";
@@ -50,7 +70,9 @@
       video {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        display: block;
+        object-fit: contain;
+        object-position: center;
       }
     }
 
@@ -1241,6 +1263,7 @@
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.78);
       margin-top: 4px;
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
@@ -1305,9 +1328,55 @@
   }
 }
 
+@media (min-width: 769px) {
+  .seccion-equipo {
+    .tarjeta.activa:hover,
+    .tarjeta.activa:focus-within {
+      .rol {
+        transform: translateY(-260px);
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 75px;
+  }
+
+  #aparkt section[id] {
+    scroll-margin-top: 75px;
+  }
+
   #aparkt {
     padding-inline: 0 !important;
+
+    .owl-carousel {
+      aspect-ratio: auto;
+      height: 64vh;
+      height: 64svh;
+      min-height: 300px;
+      max-height: 560px;
+
+      .item {
+        height: 100%;
+      }
+
+      .item::after {
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.12),
+          rgba(0, 0, 0, 0.42)
+        );
+      }
+
+      img,
+      video {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   .car-container {
@@ -1334,6 +1403,15 @@
 @media (max-width: 480px) {
   main {
     margin-top: 60px !important;
+  }
+
+  #aparkt {
+    .owl-carousel {
+      height: 58vh;
+      height: 58svh;
+      min-height: 260px;
+      max-height: 430px;
+    }
   }
 
   .contenedor-tarjetas {

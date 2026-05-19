@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Crea tu cuenta en Aparkt" data-i18n-meta="signup.description" />
+    <meta
+      name="description"
+      content="Crea tu cuenta en Aparkt"
+      data-i18n-meta="signup.description"
+    />
     <meta name="keywords" content="Aparkt, Cuenta, Aparcamiento" />
     <meta name="author" content="Aparkt" />
     <title data-i18n-title="signup.title">Sign Up</title>
@@ -17,7 +21,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
     />
-    <script src="../components/Modalpuntos.js"></script>
     <script type="module" src="../components/Footer.js"></script>
     <script src="../funcionesGlobales.js" defer></script>
     <script type="module" src="signup.js"></script>
@@ -37,7 +40,11 @@
         <form id="formUsuario">
           <div class="form-contenido">
             <h2 data-i18n="signup.crearCuenta">CREAR CUENTA</h2>
-            <img src="../assets/imagotipoAparkt.webp" alt="Aparkt" data-i18n-alt="signup.aparktAlt" />
+            <img
+              src="../assets/imagotipoAparkt.webp"
+              alt="Aparkt"
+              data-i18n-alt="signup.aparktAlt"
+            />
 
             <!-- Indicador de paso -->
             <div class="indicador-paso">
@@ -57,7 +64,9 @@
                     placeholder=" "
                     name="nombre"
                   />
-                  <label for="inputNombre" data-i18n="signup.nombre">Nombre</label>
+                  <label for="inputNombre" data-i18n="signup.nombre"
+                    >Nombre</label
+                  >
                   <div id="error-nombre"></div>
                 </div>
                 <div class="input-field">
@@ -67,7 +76,9 @@
                     placeholder=" "
                     name="apellido"
                   />
-                  <label for="inputApellidos" data-i18n="signup.apellidos">Apellidos</label>
+                  <label for="inputApellidos" data-i18n="signup.apellidos"
+                    >Apellidos</label
+                  >
                   <div id="error-apellidos"></div>
                 </div>
               </div>
@@ -81,7 +92,9 @@
                     placeholder=" "
                     name="email"
                   />
-                  <label for="inputCorreo" data-i18n="signup.correo">Correo Electrónico</label>
+                  <label for="inputCorreo" data-i18n="signup.correo"
+                    >Correo Electrónico</label
+                  >
                   <div id="error-email"></div>
                 </div>
                 <div class="input-field">
@@ -91,20 +104,37 @@
                     placeholder=" "
                     name="telefono"
                   />
-                  <label for="inputTelefono" data-i18n="signup.telefono">Teléfono</label>
+                  <label for="inputTelefono" data-i18n="signup.telefono"
+                    >Teléfono</label
+                  >
                   <div id="error-telefono"></div>
                 </div>
                 <div class="input-field">
                   <select id="inputCiudad" name="ciudad">
-                    <option value="" disabled selected data-i18n="signup.seleccionaCiudad">
+                    <option
+                      value=""
+                      disabled
+                      selected
+                      data-i18n="signup.seleccionaCiudad"
+                    >
                       Selecciona tu ciudad
                     </option>
-                    <option value="Malaga" data-i18n="signup.malaga">Málaga</option>
-                    <option value="Sevilla" data-i18n="signup.sevilla">Sevilla</option>
-                    <option value="Granada" data-i18n="signup.granada">Granada</option>
-                    <option value="Cordoba" data-i18n="signup.cordoba">Córdoba</option>
+                    <option value="Malaga" data-i18n="signup.malaga">
+                      Málaga
+                    </option>
+                    <option value="Sevilla" data-i18n="signup.sevilla">
+                      Sevilla
+                    </option>
+                    <option value="Granada" data-i18n="signup.granada">
+                      Granada
+                    </option>
+                    <option value="Cordoba" data-i18n="signup.cordoba">
+                      Córdoba
+                    </option>
                   </select>
-                  <label for="inputCiudad" data-i18n="signup.ciudad">Ciudad</label>
+                  <label for="inputCiudad" data-i18n="signup.ciudad"
+                    >Ciudad</label
+                  >
                   <div id="error-ciudad"></div>
                 </div>
               </div>
@@ -118,7 +148,9 @@
                     placeholder=" "
                     name="contrasena"
                   />
-                  <label for="inputContrasena" data-i18n="signup.contrasena">Contraseña</label>
+                  <label for="inputContrasena" data-i18n="signup.contrasena"
+                    >Contraseña</label
+                  >
                   <div id="error-contrasena"></div>
                   <button
                     type="button"
@@ -140,7 +172,11 @@
                     placeholder=" "
                     name="confirmarContrasena"
                   />
-                  <label for="confirmarContrasena" data-i18n="signup.confirmarContrasena">Confirmar Contraseña</label>
+                  <label
+                    for="confirmarContrasena"
+                    data-i18n="signup.confirmarContrasena"
+                    >Confirmar Contraseña</label
+                  >
                   <div id="error-confirmarContrasena"></div>
                   <button
                     type="button"
@@ -170,20 +206,32 @@
           <!-- Botones navegación -->
           <div class="nav-pasos">
             <div class="nav-carrusel"></div>
-            <button type="submit" class="btn-crear" id="btnCrear" data-i18n="signup.crearCuentaBtn">
+            <button
+              type="submit"
+              class="btn-crear"
+              id="btnCrear"
+              data-i18n="signup.crearCuentaBtn"
+            >
               Crear Cuenta
             </button>
           </div>
 
           <p>
-            <span data-i18n="signup.yaTienesCuenta">¿Ya tienes cuenta?</span> <a href="../login/login.html" data-i18n="signup.iniciarSesion">Iniciar sesión</a>
+            <span data-i18n="signup.yaTienesCuenta">¿Ya tienes cuenta?</span>
+            <a href="../login/login.html" data-i18n="signup.iniciarSesion"
+              >Iniciar sesión</a
+            >
           </p>
         </form>
       </article>
 
       <!-- Logo (derecha) -->
       <div class="main-izquierdo">
-        <img src="../assets/isotipoAparkt.webp" alt="Logo" data-i18n-alt="signup.logoAlt" />
+        <img
+          src="../assets/isotipoAparkt.webp"
+          alt="Logo"
+          data-i18n-alt="signup.logoAlt"
+        />
       </div>
     </main>
 

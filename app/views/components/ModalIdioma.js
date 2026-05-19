@@ -421,4 +421,6 @@ class ModalIdioma extends HTMLElement {
   }
 }
 
-customElements.define("modal-idioma", ModalIdioma);
+if (!customElements.get("modal-idioma")) {
+  customElements.define("modal-idioma", ModalIdioma);
+}

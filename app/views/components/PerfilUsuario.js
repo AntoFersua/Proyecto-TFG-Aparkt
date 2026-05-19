@@ -53,6 +53,13 @@ class PerfilUsuario extends HTMLElement {
     const btnBorrarVehiculo = this.querySelector('#borrarVehiculo');
     btnBorrarVehiculo.addEventListener('click', () => this.borrarVehiculo());
 
+    this.querySelectorAll('.enConstruccion').forEach((btnEnConstruccion) => {
+      btnEnConstruccion.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = '../construccion/construccion.html';
+      });
+    });
+
     this.querySelectorAll('.cambiarEmail').forEach((btnCambiarEmail) => {
       btnCambiarEmail.addEventListener('click', (e) => this.cambiarEmail(e));
     });
@@ -627,7 +634,7 @@ async enviarCambioPassword(event) {
                 </svg>
                 <span class="opcion-label">Cambiar contraseña</span>
               </button>
-              <button class="opcion-btn">
+              <button class="opcion-btn enConstruccion">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                   <circle cx="12" cy="13" r="4"></circle>
@@ -641,7 +648,7 @@ async enviarCambioPassword(event) {
                 </svg>
                 <span class="opcion-label">Cambiar email</span>
               </button>
-              <button class="opcion-btn">
+              <button class="opcion-btn enConstruccion">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="1" y="3" width="15" height="13"></rect>
                   <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
@@ -664,11 +671,13 @@ async enviarCambioPassword(event) {
                 </svg>
                 <span class="opcion-label">Añadir mi vehículo</span>
               </button>
-              <button class="opcion-btn verPuntuacion" data-i18n="perfil.verPuntuacion">
-                <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              <button class="opcion-btn verPuntuacion">
+                <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="5"></circle>
+                  <path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5"></path>
+                  <path d="m10.5 8 1 1 2-2"></path>
                 </svg>
-                <span class="opcion-label">Ver puntuación</span>
+                <span class="opcion-label" data-i18n="perfil.verPuntuacion">Ver puntuación</span>
               </button>
             </div>
             <form id="formVehiculo" class="form-vehiculo" style="display: none">

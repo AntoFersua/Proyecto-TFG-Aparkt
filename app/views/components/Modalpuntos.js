@@ -320,4 +320,6 @@ class Modalpuntos extends HTMLElement {
   }
 }
 
-customElements.define("modal-puntos", Modalpuntos);
+if (!customElements.get("modal-puntos")) {
+  customElements.define("modal-puntos", Modalpuntos);
+}

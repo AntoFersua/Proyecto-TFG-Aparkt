@@ -821,6 +821,7 @@ class HeaderMap extends HTMLElement {
         
         const abrirModalIdioma = async () => {
             await import('./ModalIdioma.js');
+            document.querySelector('modal-idioma')?.remove();
             const modal = document.createElement('modal-idioma');
             document.body.appendChild(modal);
         };

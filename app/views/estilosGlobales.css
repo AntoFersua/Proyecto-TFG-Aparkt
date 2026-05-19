@@ -813,7 +813,7 @@ footer {
   }
 }
 
-/* RESPONSIVE FOOTER MODERNO */
+/* RESPONSIVE FOOTER */
 @media (max-width: 480px) {
   footer {
     padding: 20px 20px;
@@ -1038,7 +1038,7 @@ perfil-usuario {
 }
 
 .perfil-titulo {
-  margin: 10px 48px 10px;
+  margin: 10px 15px;
 }
 
 .form-titulo {
@@ -1175,6 +1175,9 @@ perfil-usuario {
 }
 
 .opcion-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 10px 14px;
   border: 1px solid var(--border-opcion);
   background: var(--bg-opcion-btn);
@@ -1185,6 +1188,7 @@ perfil-usuario {
   cursor: pointer;
   width: 100%;
   text-align: left;
+  min-height: 42px;
 }
 
 .opcion-icon {
@@ -1203,17 +1207,16 @@ perfil-usuario {
   color: currentColor;
 }
 
-.anadirVehiculo {
-  background: var(--color-verde);
-  color: white;
-}
-
 .opcion-btn:hover {
   background: var(--color-azulOscuro);
   color: white;
   border-color: var(--color-azulOscuro);
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(0, 90, 96, 0.25);
+}
+
+.opcion-btn:hover .opcion-icon {
+  color: currentColor;
 }
 
 .opcion-btn.danger {
@@ -1248,8 +1251,8 @@ perfil-usuario {
 
 .cerrar-banner {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   width: 36px;
   height: 36px;
   min-width: 36px;
@@ -1258,14 +1261,15 @@ perfil-usuario {
   flex: 0 0 36px;
   aspect-ratio: 1;
   border-radius: 50%;
-  /* background: rgba(255, 255, 255, 0.7); */
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--color-azulOscuro);
+  border: 1px solid rgba(0, 90, 96, 0.25);
+  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 90, 96, 0.25);
   margin: 0;
   z-index: 2;
 
@@ -1277,8 +1281,13 @@ perfil-usuario {
 }
 
 .cerrar-banner:hover {
-  background: var(--color-azulOscuro);
+  background: #003f44;
   transform: scale(1.1);
+}
+
+.cerrar-banner svg,
+.cerrar-banner svg path {
+  fill: currentColor;
 }
 
 .cerrar-banner svg {
@@ -1460,8 +1469,7 @@ perfil-usuario {
   box-shadow: 0 0 0 3px rgba(0, 90, 96, 0.15);
 }
 
-.btn-guardar,
-.anadirVehiculo {
+.btn-guardar {
   padding: 9px 14px;
   font-size: 0.82rem;
   font-family: inherit;
@@ -1477,8 +1485,7 @@ perfil-usuario {
   box-shadow: 0 3px 10px rgba(0, 200, 150, 0.24);
 }
 
-.btn-guardar::before,
-.anadirVehiculo::before {
+.btn-guardar::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1494,21 +1501,18 @@ perfil-usuario {
   transition: left 0.5s ease;
 }
 
-.btn-guardar:hover,
-.anadirVehiculo:hover {
+.btn-guardar:hover {
   background: linear-gradient(135deg, var(--color-naranja), #ff8c00);
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(255, 165, 0, 0.34);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.btn-guardar:hover::before,
-.anadirVehiculo:hover::before {
+.btn-guardar:hover::before {
   left: 100%;
 }
 
-.btn-guardar:active,
-.anadirVehiculo:active {
+.btn-guardar:active {
   transform: translateY(0);
 }
 

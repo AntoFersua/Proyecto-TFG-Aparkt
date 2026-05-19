@@ -14,12 +14,15 @@ header {
 
 html,
 body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 app-footer {
-  display: none;
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 /*Contenedor principal MAIN*/
@@ -34,11 +37,10 @@ main {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--bg-primary);
-  height: calc(100vh - 70px);
-  min-height: calc(100vh - 70px);
-  padding: 0 55px;
+  min-height: calc(100vh - 221px);
   margin-top: 70px;
-  overflow: hidden;
+  overflow: visible;
+  padding: 0 !important;
 }
 
 /*Contenedor tipo móvil*/
@@ -252,6 +254,18 @@ main {
 }
 
 /*Botón para ver contraseña*/
+[id^="error-"] {
+  min-height: 12px;
+  margin-top: 2px;
+  padding-left: 4px;
+}
+
+[id^="error-"],
+[id^="error-"] .just-validate-error-label {
+  font-size: 0.62rem !important;
+  line-height: 1.2;
+}
+
 .ver-contrasena {
   position: absolute;
   right: 10px;
@@ -385,7 +399,6 @@ main {
 @media (max-width: 480px) {
   main {
     flex-direction: column;
-    height: calc(100vh - 60px);
     min-height: calc(100vh - 60px);
     padding: 0 20px !important;
     margin-top: 60px;

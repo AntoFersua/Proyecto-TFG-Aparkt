@@ -190,7 +190,7 @@ function inicializarFormulario() {
         //Si el login es correcto
         if (data.status === "ok") {
           window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
-          window.location.href = '../aparkt/aparkt.html';
+          window.location.href = '../index/index.html';
           });
 
         //Si el login falla

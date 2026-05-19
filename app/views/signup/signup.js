@@ -194,6 +194,13 @@ function inicializarFormulario() {
     errorsContainer: "#error-email",
   });
 
+  // VALIDACIÓN CIUDAD
+  validador.addField("#inputCiudad", [
+    { rule: "required", errorMessage: t('signup.errorCiudad') },
+  ], {
+    errorsContainer: "#error-ciudad",
+  });
+
   // VALIDACIÓN TELÉFONO
   validador.addField("#inputTelefono", [
     {
@@ -237,6 +244,30 @@ function inicializarFormulario() {
     errorsContainer: "#error-aceptarTerminos",
   });
 
+  validador.onFail((fields) => {
+    const pasosPorCampo = {
+      "#inputNombre": 0,
+      "#inputApellidos": 0,
+      "#inputCorreo": 1,
+      "#inputTelefono": 1,
+      "#inputCiudad": 1,
+      "#inputContrasena": 2,
+      "#confirmarContrasena": 2,
+      "#aceptarTerminos": 2,
+    };
+
+    const primerCampoInvalido = Object.keys(pasosPorCampo).find(
+      (selector) => fields[selector] && fields[selector].isValid === false
+    );
+
+    if (primerCampoInvalido && window.jQuery) {
+      window.jQuery(".owl-carousel").trigger("to.owl.carousel", [
+        pasosPorCampo[primerCampoInvalido],
+        300,
+      ]);
+    }
+  });
+
   // CUANDO EL FORMULARIO ES VÁLIDO
   validador.onSuccess((event) => {
 
@@ -268,7 +299,11 @@ function inicializarFormulario() {
           window.location.href = "../login/login.html";
           });
         } else {
-          window.Swal.fire({ icon: 'error', title: data.mensaje || t('signup.errorRegistro'), timer: 3000, showConfirmButton: false });
+          const msjError = data.errores
+            ? Object.values(data.errores).join("\n")
+            : (data.mensaje || t('signup.errorRegistro'));
+
+          window.Swal.fire({ icon: 'error', title: msjError, timer: 3000, showConfirmButton: false });
         }
 
       })
@@ -276,7 +311,5 @@ function inicializarFormulario() {
         console.error(err);
         window.Swal.fire({ icon: 'error', title: t('signup.errorConexion'), timer: 3000, showConfirmButton: false });
       });
-
   });
-
 }
