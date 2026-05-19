@@ -339,6 +339,7 @@
 
 .seccion-mapa {
   display: flex;
+  justify-content: center;
   gap: 50px;
   padding-inline: 80px 50px;
   padding-top: 30px;
@@ -816,7 +817,7 @@
 
       .indica .points {
         background: rgba(9, 132, 227, 0.2);
-        color: #0984e3;
+        color: #073961;
       }
 
       .canjea .card-icon {
@@ -1501,7 +1502,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 20px !important;
     padding-block: 10px;
     padding-inline: 0;
 
@@ -1517,6 +1518,8 @@
   }
 
   .horizontal {
+    padding-top: 10px !important;
+
     > section {
       padding: 20px;
     }
