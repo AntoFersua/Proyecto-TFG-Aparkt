@@ -7,6 +7,14 @@ body {
   height: 100dvh;
 }
 
+@media (min-width: 769px) {
+  body > perfil-usuario .banner-lateral {
+    top: 0;
+    bottom: 0;
+    height: 100dvh;
+  }
+}
+
 #form-busqueda {
   position: absolute;
   top: 80px;

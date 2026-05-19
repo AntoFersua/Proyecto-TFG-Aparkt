@@ -237,45 +237,39 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => navegarASeccionAparkt(window.location.hash, false), 200);
   }
 
-   const tarjetas = document.querySelectorAll('.tarjeta');
-  const puntosEl = document.querySelectorAll('.punto');
+  const contenedor = document.querySelector('.seccion-equipo .tarjetas');
+  const tarjetas = contenedor?.querySelectorAll('.tarjeta') || [];
   let indiceActual = 0;
 
   function activar(indice) {
+    if (!tarjetas[indice]) return;
     indiceActual = indice;
     tarjetas.forEach(t => t.classList.remove('activa'));
-    puntosEl.forEach(p => p.classList.remove('activo'));
     tarjetas[indice].classList.add('activa');
-    if (puntosEl[indice]) puntosEl[indice].classList.add('activo');
   }
 
-  tarjetas.forEach((tarjeta, i) => {
-    tarjeta.addEventListener('mouseenter', () => activar(i));
-  });
-  document.querySelector('.tarjetas').addEventListener('mouseleave', () => activar(0));
+  if (contenedor && tarjetas.length) {
+    tarjetas.forEach((tarjeta, i) => {
+      tarjeta.addEventListener('mouseenter', () => activar(i));
+      tarjeta.addEventListener('click', () => activar(i));
+    });
 
-  tarjetas.forEach((tarjeta, i) => {
-    tarjeta.addEventListener('click', () => activar(i));
-  });
+    contenedor.addEventListener('mouseleave', () => activar(0));
 
-  puntosEl.forEach((punto, i) => {
-    punto.addEventListener('click', () => activar(i));
-  });
+    let startX = 0;
 
-  let startX = 0;
-  const contenedor = document.querySelector('.tarjetas');
+    contenedor.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
 
-  contenedor.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  contenedor.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) activar(Math.min(indiceActual + 1, tarjetas.length - 1));
-      else activar(Math.max(indiceActual - 1, 0));
-    }
-  }, { passive: true });
+    contenedor.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) activar(Math.min(indiceActual + 1, tarjetas.length - 1));
+        else activar(Math.max(indiceActual - 1, 0));
+      }
+    }, { passive: true });
+  }
 
 
   //Ocultar y ajustar elementos del mapa del iframe de aparkt
