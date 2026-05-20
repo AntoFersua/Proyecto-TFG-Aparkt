@@ -1658,7 +1658,7 @@ perfil-usuario {
     left: 0;
     right: 0;
     width: 100%;
-    height: 100vh;
+    height: 95vh;
     /*max-height: 85vh;
     */
     box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25);
@@ -2002,5 +2002,11 @@ perfil-usuario {
     transform: translateY(-1px);
     box-shadow: 0 4px 14px rgba(255, 165, 0, 0.34);
     border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    margin-top: 60px;
   }
 }
