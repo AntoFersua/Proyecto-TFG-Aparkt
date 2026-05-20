@@ -19,7 +19,7 @@
   }
 
   function aplicarTemaSwal(tema) {
-    if (typeof window.Swal !== 'undefined') {
+    if (typeof window.Swal !== 'undefined' && typeof window.Swal.setDefaults === 'function') {
       if (tema === 'dark') {
         window.Swal.setDefaults({
           background: '#1e2a45',
@@ -38,7 +38,6 @@
 
   function actualizarIconos() {
     var esOscuro = document.documentElement.getAttribute('data-theme') === 'dark';
-
     document.querySelectorAll('#modoOscuro, #modoOscuroDrop').forEach(function(b) {
       var sol = b.querySelector('.icon-sol');
       var luna = b.querySelector('.icon-luna');
@@ -48,11 +47,6 @@
   }
 
   function toggleTema(e) {
-    var btn = e.target.closest('#modoOscuro, #modoOscuroDrop');
-    if (!btn) return;
-
-    e.preventDefault();
-
     var actual = document.documentElement.getAttribute('data-theme');
     var nuevo = actual === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', nuevo);
@@ -62,24 +56,38 @@
     actualizarIconos();
   }
 
+  function enlatarBotones() {
+    document.querySelectorAll('#modoOscuro, #modoOscuroDrop').forEach(function(btn) {
+      if (btn._modoOscuroEnlazado) return;
+      btn._modoOscuroEnlazado = true;
+      btn.addEventListener('click', function(e) {
+        toggleTema(e);
+      });
+    });
+  }
+
+  function sincronizar() {
+    actualizarIconos();
+    enlatarBotones();
+  }
+
   inicializarTema();
+  sincronizar();
 
-  document.addEventListener('click', toggleTema);
-
-  var observer = new MutationObserver(function() {
+  var observer = new MutationObserver(function(muts) {
     var btn = document.querySelector('#modoOscuro');
     if (btn) {
-      actualizarIconos();
+      sincronizar();
       observer.disconnect();
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
   if (document.readyState !== 'loading') {
-    actualizarIconos();
+    sincronizar();
   } else {
     document.addEventListener('DOMContentLoaded', function() {
-      actualizarIconos();
+      sincronizar();
     });
   }
 })();

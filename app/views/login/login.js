@@ -189,15 +189,15 @@ function inicializarFormulario() {
 
         //Si el login es correcto
         if (data.status === "ok") {
-          window.Swal.fire({ icon: 'success', title: data.mensaje, timer: 1500, showConfirmButton: false }).then(() => {
+          window.Swal.fire({ icon: 'success', title: t('login.' + data.mensaje), timer: 1500, showConfirmButton: false }).then(() => {
           window.location.href = '../index/index.html';
           });
 
         //Si el login falla
         } else {
           const msjError = data.errores
-            ? Object.values(data.errores).join('\n')
-            : (data.mensaje || t('login.errorLogin'));
+            ? Object.values(data.errores).map(function(c) { return t('login.error_' + c); }).join('\n')
+            : (data.mensaje ? t('login.' + data.mensaje) : t('login.errorLogin'));
           window.Swal.fire({ icon: 'error', title: msjError, timer: 3000, showConfirmButton: false });
         }
       })

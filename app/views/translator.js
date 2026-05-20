@@ -3,7 +3,7 @@ let lang = localStorage.getItem('aparkt-lang') || 'es';
 
 function rutaBase() {
   const base = new URL('.', import.meta.url).href;
-  return base + 'assets/i18n/translations.json';
+  return base + 'assets/i18n/translations.json?v=' + Date.now();
 }
 
 export async function cargarTraducciones() {

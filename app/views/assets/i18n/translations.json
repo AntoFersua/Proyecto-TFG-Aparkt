@@ -40,7 +40,15 @@
       "errorPassword": "La contraseña es obligatoria",
       "errorLogin": "Error en el login",
       "errorConexion": "Error de conexión",
-      "yaEnLogin": "Ya estás en la página de inicio de sesión"
+      "yaEnLogin": "Ya estás en la página de inicio de sesión",
+      "error_usuario_requerido": "Introduce un usuario o email",
+      "error_contrasena_requerida": "Introduce una contraseña",
+      "error_email_invalido": "Introduce un email válido",
+      "error_email_no_existe": "No existe cuenta con este email",
+      "error_contrasena_incorrecta": "Contraseña incorrecta",
+      "error_sin_vehiculo": "No tienes vehículo asociado",
+      "error_bd": "Error en la base de datos",
+      "login_exitoso": "Inicio de sesión correcto"
     },
     "signup": {
       "title": "Crear cuenta",
@@ -366,7 +374,15 @@
       "errorPassword": "Password is required",
       "errorLogin": "Login error",
       "errorConexion": "Connection error",
-      "yaEnLogin": "You are already on the login page"
+      "yaEnLogin": "You are already on the login page",
+      "error_usuario_requerido": "Enter a username or email",
+      "error_contrasena_requerida": "Enter a password",
+      "error_email_invalido": "Enter a valid email",
+      "error_email_no_existe": "No account with this email",
+      "error_contrasena_incorrecta": "Incorrect password",
+      "error_sin_vehiculo": "No vehicle associated",
+      "error_bd": "Database error",
+      "login_exitoso": "Login successful"
     },
     "signup": {
       "title": "Sign Up",
@@ -692,7 +708,15 @@
       "errorPassword": "Le mot de passe est obligatoire",
       "errorLogin": "Erreur de connexion",
       "errorConexion": "Erreur de connexion",
-      "yaEnLogin": "Vous êtes déjà sur la page de connexion"
+      "yaEnLogin": "Vous êtes déjà sur la page de connexion",
+      "error_usuario_requerido": "Entrez un nom d'utilisateur ou un email",
+      "error_contrasena_requerida": "Entrez un mot de passe",
+      "error_email_invalido": "Entrez un email valide",
+      "error_email_no_existe": "Aucun compte avec cet email",
+      "error_contrasena_incorrecta": "Mot de passe incorrect",
+      "error_sin_vehiculo": "Aucun véhicule associé",
+      "error_bd": "Erreur de base de données",
+      "login_exitoso": "Connexion réussie"
     },
     "signup": {
       "title": "Inscription",
@@ -1018,7 +1042,15 @@
       "errorPassword": "Passwort ist erforderlich",
       "errorLogin": "Anmeldefehler",
       "errorConexion": "Verbindungsfehler",
-      "yaEnLogin": "Sie befinden sich bereits auf der Anmeldeseite"
+      "yaEnLogin": "Sie befinden sich bereits auf der Anmeldeseite",
+      "error_usuario_requerido": "Benutzername oder E-Mail eingeben",
+      "error_contrasena_requerida": "Passwort eingeben",
+      "error_email_invalido": "Gültige E-Mail eingeben",
+      "error_email_no_existe": "Kein Konto mit dieser E-Mail",
+      "error_contrasena_incorrecta": "Falsches Passwort",
+      "error_sin_vehiculo": "Kein Fahrzeug zugeordnet",
+      "error_bd": "Datenbankfehler",
+      "login_exitoso": "Anmeldung erfolgreich"
     },
     "signup": {
       "title": "Registrieren",
