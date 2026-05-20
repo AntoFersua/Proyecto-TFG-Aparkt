@@ -1,3 +1,5 @@
+import { t } from '../translator.js';
+
 //Componente llamado ModalPuntos que hereda de HTMLElement
 class Modalpuntos extends HTMLElement {
   //Constructor para crear el componente
@@ -269,7 +271,7 @@ class Modalpuntos extends HTMLElement {
 
       <div class="points-circle">
         <div class="points-value">${puntos}</div>
-        <div class="points-label">PUNTOS</div>
+        <div class="points-label" data-i18n="modalPuntos.label"></div>
       </div>
 
       <div class="reward-item">

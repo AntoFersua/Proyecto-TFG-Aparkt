@@ -15,7 +15,7 @@ class Header extends HTMLElement {
   render() {
     this.innerHTML = `
         <header>
-      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <button class="menu-toggle" data-i18n-aria-label="headerMap.menuBtn" aria-label="Abrir menú" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -26,30 +26,30 @@ class Header extends HTMLElement {
       <div class="logoMobile">
         <img src="../assets/isotipoAparkt.webp" data-i18n-alt="header.logoAlt" alt="Isotipo" />
       </div>
-      <nav class="navPrincipal" aria-label="Navegación principal">
+      <nav class="navPrincipal" data-i18n-aria-label="header.navegacion" aria-label="Navegación principal">
         <ul>
           <li><a href="../index/index.html" data-i18n="nav.mapa">Mapa</a></li>
           <li class="nav-item-aparkt"><a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a></li>
           <li class="submenu-aparkt-mobile" aria-label="Secciones de Aparkt">
-            <a href="../aparkt/aparkt.html#aparkt-inicio">Inicio</a>
-            <a href="../aparkt/aparkt.html#aparkt-problema">Problema</a>
-            <a href="../aparkt/aparkt.html#aparkt-mapa">Mapa</a>
-            <a href="../aparkt/aparkt.html#aparkt-preguntas">Preguntas</a>
-            <a href="../aparkt/aparkt.html#aparkt-recompensas">Recompensas</a>
-            <a href="../aparkt/aparkt.html#aparkt-historia">Historia</a>
-            <a href="../aparkt/aparkt.html#aparkt-equipo">Equipo</a>
+            <a href="../aparkt/aparkt.html#aparkt-inicio" data-i18n="nav.inicio">Inicio</a>
+            <a href="../aparkt/aparkt.html#aparkt-problema" data-i18n="nav.problema">Problema</a>
+            <a href="../aparkt/aparkt.html#aparkt-mapa" data-i18n="nav.mapa">Mapa</a>
+            <a href="../aparkt/aparkt.html#aparkt-preguntas" data-i18n="nav.preguntas">Preguntas</a>
+            <a href="../aparkt/aparkt.html#aparkt-recompensas" data-i18n="nav.recompensas">Recompensas</a>
+            <a href="../aparkt/aparkt.html#aparkt-historia" data-i18n="nav.historia">Historia</a>
+            <a href="../aparkt/aparkt.html#aparkt-equipo" data-i18n="nav.equipo">Equipo</a>
           </li>
           <li><a href="../login/login.html" data-i18n="nav.login">Log In</a></li>
           <li><a href="../signup/signup.html" data-i18n="nav.signup">Sign Up</a></li>
         </ul>
         <div class="submenu-aparkt" aria-label="Secciones de Aparkt">
-          <a href="../aparkt/aparkt.html#aparkt-inicio">Inicio</a>
-          <a href="../aparkt/aparkt.html#aparkt-problema">Problema</a>
-          <a href="../aparkt/aparkt.html#aparkt-mapa">Mapa</a>
-          <a href="../aparkt/aparkt.html#aparkt-preguntas">Preguntas</a>
-          <a href="../aparkt/aparkt.html#aparkt-recompensas">Recompensas</a>
-          <a href="../aparkt/aparkt.html#aparkt-historia">Historia</a>
-          <a href="../aparkt/aparkt.html#aparkt-equipo">Equipo</a>
+          <a href="../aparkt/aparkt.html#aparkt-inicio" data-i18n="nav.inicio">Inicio</a>
+          <a href="../aparkt/aparkt.html#aparkt-problema" data-i18n="nav.problema">Problema</a>
+          <a href="../aparkt/aparkt.html#aparkt-mapa" data-i18n="nav.mapa">Mapa</a>
+          <a href="../aparkt/aparkt.html#aparkt-preguntas" data-i18n="nav.preguntas">Preguntas</a>
+          <a href="../aparkt/aparkt.html#aparkt-recompensas" data-i18n="nav.recompensas">Recompensas</a>
+          <a href="../aparkt/aparkt.html#aparkt-historia" data-i18n="nav.historia">Historia</a>
+          <a href="../aparkt/aparkt.html#aparkt-equipo" data-i18n="nav.equipo">Equipo</a>
         </div>
       </nav>
       <div id="headerDerecha">
@@ -65,7 +65,7 @@ class Header extends HTMLElement {
           </svg>
         </button>
         <button type="button" id="modoOscuro" data-i18n-aria-label="header.modoOscuro" aria-label="Cambiar tema">
-          <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -76,7 +76,7 @@ class Header extends HTMLElement {
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>

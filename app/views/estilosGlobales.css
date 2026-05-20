@@ -54,9 +54,9 @@
     --bg-banner: linear-gradient(180deg, #1a1a2e 0%, #1e2a45 50%, #2d3a52 100%);
     --bg-form: rgba(22, 33, 62, 0.5);
     --bg-opcion-btn: rgba(30, 42, 69, 0.7);
-    --text-primary: #e0e0e0;
-    --text-secondary: #b0b0b0;
-    --text-muted: #888888;
+    --text-primary: #f0f0f0;
+    --text-secondary: #d0d0d0;
+    --text-muted: #aaaaaa;
     --text-on-dark: #ffffff;
     --border-color: rgba(255, 255, 255, 0.1);
     --border-opcion: rgba(255, 255, 255, 0.08);
@@ -90,6 +90,69 @@
   --border-banner: rgba(255, 255, 255, 0.05);
   --divider-color: #333;
   --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.4), 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Tema oscuro - header */
+[data-theme="dark"] header {
+  background: linear-gradient(to bottom, #003d42 0%, #1a6b47 100%);
+}
+
+[data-theme="dark"] header #headerDerecha button svg {
+  color: #ccc;
+}
+
+/* Tema oscuro - títulos con máximo contraste */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #ffffff;
+}
+
+/* Tema oscuro - tarjetas: texto oscuro cuando el fondo es claro (hover PC y móvil) */
+[data-theme="dark"] .contenedor-tarjetas .tarjeta:hover,
+[data-theme="dark"] .contenedor-tarjetas .tarjeta:hover h3,
+[data-theme="dark"] .contenedor-tarjetas .tarjeta:hover p {
+  color: #1a1a2e;
+}
+
+@media (max-width: 480px) {
+  [data-theme="dark"] .contenedor-tarjetas .tarjeta,
+  [data-theme="dark"] .contenedor-tarjetas .tarjeta h3,
+  [data-theme="dark"] .contenedor-tarjetas .tarjeta p {
+    color: #1a1a2e;
+  }
+}
+
+/* Tema oscuro - inputs con fondo oscuro */
+[data-theme="dark"] .input-field input,
+[data-theme="dark"] .input-field select {
+  background: #2a2a3e;
+  border-color: #555;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .input-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .input-field input:focus {
+  border-color: var(--color-verde);
+  box-shadow: 0 0 0 3px rgba(52, 175, 114, 0.2);
+}
+
+[data-theme="dark"] .input-field label {
+  color: #aaa;
+}
+
+[data-theme="dark"] .input-field input:focus ~ label,
+[data-theme="dark"] .input-field select:focus ~ label,
+[data-theme="dark"] .input-field input.has-value ~ label,
+[data-theme="dark"] .input-field select.has-value ~ label {
+  background-color: #2a2a3e;
+  color: var(--color-verde);
 }
 
 *,
@@ -925,6 +988,53 @@ perfil-usuario {
 
 .swal2-container {
   z-index: 40000;
+}
+
+[data-theme="dark"] .swal2-popup {
+  background: #1e2a45 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .swal2-title {
+  color: #f0f0f0 !important;
+}
+
+[data-theme="dark"] .swal2-html-container {
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .swal2-confirm {
+  background: #34af72 !important;
+}
+
+[data-theme="dark"] .swal2-cancel {
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .swal2-icon.swal2-success .swal2-success-ring {
+  border-color: #34af72 !important;
+}
+
+[data-theme="dark"] .swal2-icon.swal2-warning {
+  border-color: #d99e73 !important;
+  color: #d99e73 !important;
+}
+
+[data-theme="dark"] .swal2-icon.swal2-error {
+  border-color: #e74c3c !important;
+}
+
+[data-theme="dark"] .swal2-icon.swal2-info {
+  border-color: #3498db !important;
+}
+
+[data-theme="dark"] .swal2-validation-message {
+  background: #16213e !important;
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .swal2-timer-progress-bar {
+  background: #34af72 !important;
 }
 
 .banner-lateral {

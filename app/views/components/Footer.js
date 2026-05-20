@@ -53,7 +53,7 @@ class Footer extends HTMLElement {
         </div>
 
         <div class="footer-section footer-payments">
-          <h4>Pagos seguros</h4>
+          <h4 data-i18n="footer.pagosSeguros">Pagos seguros</h4>
           <div class="payment-icons">
            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="50" height="50">
                 <defs>
@@ -112,7 +112,7 @@ class Footer extends HTMLElement {
           </div>
         </div>
 
-        <p class="copyright">&copy; 2026 Aparkt. Todos los derechos reservados.</p>
+        <p class="copyright" data-i18n="footer.copyright">&copy; 2026 Aparkt. Todos los derechos reservados.</p>
       </div>
     </footer>`;
   }

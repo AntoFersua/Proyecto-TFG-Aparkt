@@ -1,4 +1,5 @@
 import { obtenerRutaBase, obtenerSesion } from '../auth.js';
+import { t, cargarTraducciones } from '../translator.js';
 import './Modalpuntos.js';
 
 class PerfilUsuario extends HTMLElement {
@@ -28,8 +29,8 @@ class PerfilUsuario extends HTMLElement {
 
     const sesion = await obtenerSesion();
     if (!sesion.logueado) {
-      nombreEl.textContent = "Invitado";
-      emailEl.textContent = "Inicia sesi\u00f3n para ver tus datos";
+      nombreEl.textContent = t('perfil.invitado');
+      emailEl.textContent = t('perfil.iniciaSesion');
       return;
     }
 
@@ -40,7 +41,7 @@ class PerfilUsuario extends HTMLElement {
       .trim();
     const email = usuario.email || sesion.usuario || "";
 
-    nombreEl.textContent = nombreCompleto || "Usuario";
+    nombreEl.textContent = nombreCompleto || t('perfil.usuario');
     emailEl.textContent = email;
   }
 
@@ -113,14 +114,14 @@ class PerfilUsuario extends HTMLElement {
         this.vehiculoVisible = !this.vehiculoVisible;
         const btnLabel = btnAnadirVehiculo.querySelector('.opcion-label');
         if (this.vehiculoVisible) {
-          this.actualizarTextoBotonVehiculo('Cancelar');
+          this.actualizarTextoBotonVehiculo(t('perfil.cancelar'));
           formVehiculo.style.display = 'flex';
           formEmail.style.display = 'none';
         } else {
           if (btnLabel) {
-            btnLabel.textContent = 'Añadir mi vehículo';
+            btnLabel.textContent = t('perfil.anadirVehiculo');
           } else {
-            btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+            btnAnadirVehiculo.textContent = t('perfil.anadirVehiculo');
           }
           formVehiculo.style.display = 'none';
         }
@@ -134,9 +135,9 @@ class PerfilUsuario extends HTMLElement {
         this.vehiculoVisible = false;
         const btnLabel = btnAnadirVehiculo.querySelector('.opcion-label');
         if (btnLabel) {
-          btnLabel.textContent = 'Añadir mi vehículo';
+          btnLabel.textContent = t('perfil.anadirVehiculo');
         } else {
-          btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+          btnAnadirVehiculo.textContent = t('perfil.anadirVehiculo');
         }
         formVehiculo.style.display = 'none';
       });
@@ -323,7 +324,7 @@ class PerfilUsuario extends HTMLElement {
       formVehiculo.style.display = 'none';
       const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
       if (btnAnadirVehiculo) {
-        btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+        btnAnadirVehiculo.textContent = t('perfil.anadirVehiculo');
       }
       this.vehiculoVisible = false;
     } else {
@@ -340,7 +341,7 @@ class PerfilUsuario extends HTMLElement {
     const nuevoEmail = this.querySelector('#nuevoEmail').value.trim();
 
     if (!nuevoEmail) {
-       await window.Swal.fire({ icon: 'warning', title: 'El email no puede estar vacío', timer: 2000, showConfirmButton: false });
+        await window.Swal.fire({ icon: 'warning', title: t('perfil.emailVacio'), timer: 2000, showConfirmButton: false });
       return;
     }
 
@@ -357,16 +358,16 @@ class PerfilUsuario extends HTMLElement {
       const data = await response.json();
 
       if (data.success) {
-        await window.Swal.fire({ icon: 'success', title: 'Email actualizado correctamente', timer: 1500, showConfirmButton: false });
+        await window.Swal.fire({ icon: 'success', title: t('perfil.emailActualizado'), timer: 1500, showConfirmButton: false });
         this.querySelector('#formEmail').style.display = 'none';
         this.querySelector('#nuevoEmail').value = '';
         await this.cargarDatosUsuario();
       } else {
-         await window.Swal.fire({ icon: 'error', title: data.message || 'Error al cambiar el email', timer: 3000, showConfirmButton: false });
+         await window.Swal.fire({ icon: 'error', title: data.message || t('perfil.errorEmail'), timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       console.error('Error:', error);
-      await window.Swal.fire({ icon: 'error', title: 'Error al cambiar el email', timer: 3000, showConfirmButton: false });
+      await window.Swal.fire({ icon: 'error', title: t('perfil.errorEmail'), timer: 3000, showConfirmButton: false });
     }
   }
 
@@ -383,7 +384,7 @@ class PerfilUsuario extends HTMLElement {
     if (!tipoVehiculo || !tamanoVehiculo) {
       await window.Swal.fire({
         icon: 'warning',
-        title: 'Selecciona el tipo y el tamaño del vehículo',
+        title: t('perfil.seleccionaVehiculo'),
         timer: 2500,
         showConfirmButton: false
       });
@@ -408,14 +409,14 @@ class PerfilUsuario extends HTMLElement {
       if (data.status === 'ok' || data.success) {
         await window.Swal.fire({
           icon: 'success',
-          title: data.mensaje || 'Vehículo registrado correctamente',
+          title: data.mensaje || t('perfil.vehiculoRegistrado'),
           timer: 1500,
           showConfirmButton: false
         });
         this.querySelector('#formVehiculo').reset();
         this.querySelector('#formVehiculo').style.display = 'none';
         this.vehiculoVisible = false;
-        this.actualizarTextoBotonVehiculo('Añadir mi vehículo');
+        this.actualizarTextoBotonVehiculo(t('perfil.anadirVehiculo'));
       } else if (data.errores) {
         await window.Swal.fire({
           icon: 'error',
@@ -426,7 +427,7 @@ class PerfilUsuario extends HTMLElement {
       } else {
         await window.Swal.fire({
           icon: 'error',
-          title: data.mensaje || data.message || 'Error al registrar vehículo',
+          title: data.mensaje || data.message || t('perfil.errorVehiculo'),
           timer: 3000,
           showConfirmButton: false
         });
@@ -435,7 +436,7 @@ class PerfilUsuario extends HTMLElement {
       console.error('Error:', error);
       await window.Swal.fire({
         icon: 'error',
-        title: 'Error al registrar vehículo',
+        title: t('perfil.errorVehiculo'),
         timer: 3000,
         showConfirmButton: false
       });
@@ -446,11 +447,11 @@ class PerfilUsuario extends HTMLElement {
     // 1. Mostrar confirmación al usuario
     const confirmarBorrar = await window.Swal.fire({
       icon: 'warning',
-      title: '¿Estás seguro?',
-      text: '¿Estás seguro de que quieres borrar tu vehículo?',
+      title: t('perfil.confirmarTitulo'),
+      text: t('perfil.confirmarBorrarVehiculo'),
       showCancelButton: true,
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: t('perfil.si'),
+      cancelButtonText: t('perfil.cancelar')
     });
     if (!confirmarBorrar.isConfirmed) return;
 
@@ -469,27 +470,27 @@ class PerfilUsuario extends HTMLElement {
 
       // 5. Si success es true, mostrar mensaje y recargar página
       if (data.success) {
-        await window.Swal.fire({ icon: 'success', title: 'Vehículo eliminado correctamente', timer: 1500, showConfirmButton: false });
+        await window.Swal.fire({ icon: 'success', title: t('perfil.vehiculoEliminado'), timer: 1500, showConfirmButton: false });
         location.reload();
       } else {
         // 6. Si hay error, mostrar mensaje
-        await window.Swal.fire({ icon: 'error', title: data.message || 'Error al eliminar el vehículo', timer: 3000, showConfirmButton: false });
+        await window.Swal.fire({ icon: 'error', title: data.message || t('perfil.errorEliminarVehiculo'), timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       // 7. Error de red
       console.error('Error:', error);
-      await window.Swal.fire({ icon: 'error', title: 'Error al eliminar el vehículo', timer: 3000, showConfirmButton: false });
+      await window.Swal.fire({ icon: 'error', title: t('perfil.errorEliminarVehiculo'), timer: 3000, showConfirmButton: false });
     }
   }
 
    async eliminarCuenta() {
     const confirmarEliminar = await window.Swal.fire({
       icon: 'warning',
-      title: '¿Estás seguro?',
-      text: '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.',
+      title: t('perfil.confirmarTitulo'),
+      text: t('perfil.confirmarEliminarCuenta'),
       showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: t('perfil.siEliminar'),
+      cancelButtonText: t('perfil.cancelar')
     });
     if (!confirmarEliminar.isConfirmed) {
       return;
@@ -519,11 +520,11 @@ class PerfilUsuario extends HTMLElement {
       if (data.success) {
         window.location.href = rutaBase + 'views/index/index.html';
       } else {
-         await window.Swal.fire({ icon: 'error', title: 'Error al eliminar la cuenta', timer: 3000, showConfirmButton: false });
+         await window.Swal.fire({ icon: 'error', title: t('perfil.errorEliminarCuenta'), timer: 3000, showConfirmButton: false });
       }
     } catch (error) {
       console.error('Error:', error);
-      await window.Swal.fire({ icon: 'error', title: 'Error al eliminar la cuenta', timer: 3000, showConfirmButton: false });
+      await window.Swal.fire({ icon: 'error', title: t('perfil.errorEliminarCuenta'), timer: 3000, showConfirmButton: false });
     }
   }
 
@@ -540,7 +541,7 @@ class PerfilUsuario extends HTMLElement {
     formEmail.style.display = 'none';
     const btnAnadirVehiculo = this.querySelector('.anadirVehiculo');
     if (btnAnadirVehiculo) {
-      btnAnadirVehiculo.textContent = 'Añadir mi vehículo';
+      btnAnadirVehiculo.textContent = t('perfil.anadirVehiculo');
     }
     this.vehiculoVisible = false;
   } else {
@@ -555,13 +556,13 @@ async enviarCambioPassword(event) {
   const passwordNueva = this.querySelector('#passwordNueva').value.trim();
 
   if (!passwordActual || !passwordNueva) {
-    await window.Swal.fire({ icon: 'warning', title: 'Todos los campos son obligatorios', timer: 2000, showConfirmButton: false });
+    await window.Swal.fire({ icon: 'warning', title: t('perfil.camposObligatorios'), timer: 2000, showConfirmButton: false });
     return;
   }
 
   const passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,15}$/;
   if (!passPattern.test(passwordNueva)) {
-    await window.Swal.fire({ icon: 'warning', title: 'Mínimo 6 y máximo 15 caracteres, al menos una mayúscula, una minúscula, un número y un símbolo (@!?%)', timer: 3000, showConfirmButton: false });
+    await window.Swal.fire({ icon: 'warning', title: t('perfil.errorPasswordComplejidad'), timer: 3000, showConfirmButton: false });
     return;
   }
 
@@ -578,16 +579,16 @@ async enviarCambioPassword(event) {
     const data = await response.json();
 
     if (data.success) {
-      await window.Swal.fire({ icon: 'success', title: 'Contraseña actualizada correctamente', timer: 1500, showConfirmButton: false });
+      await window.Swal.fire({ icon: 'success', title: t('perfil.passwordActualizada'), timer: 1500, showConfirmButton: false });
       this.querySelector('#formPassword').style.display = 'none';
       this.querySelector('#passwordActual').value = '';
       this.querySelector('#passwordNueva').value = '';
     } else {
-      await window.Swal.fire({ icon: 'error', title: data.message || 'Error al cambiar la contraseña', timer: 3000, showConfirmButton: false });
+      await window.Swal.fire({ icon: 'error', title: data.message || t('perfil.errorPassword'), timer: 3000, showConfirmButton: false });
     }
   } catch (error) {
     console.error('Error:', error);
-    await window.Swal.fire({ icon: 'error', title: 'Error al cambiar la contraseña', timer: 3000, showConfirmButton: false });
+    await window.Swal.fire({ icon: 'error', title: t('perfil.errorPassword'), timer: 3000, showConfirmButton: false });
   }
 }
 
@@ -618,10 +619,10 @@ async enviarCambioPassword(event) {
               </svg>
             </div>
             <div class="perfil-identidad">
-              <strong id="perfilNombreUsuario" class="perfil-nombre">Usuario</strong>
-              <span id="perfilEmailUsuario" class="perfil-email">Cargando...</span>
+              <strong id="perfilNombreUsuario" class="perfil-nombre" data-i18n="perfil.usuario"></strong>
+              <span id="perfilEmailUsuario" class="perfil-email" data-i18n="perfil.cargando"></span>
             </div>
-            <button type="button" class="perfil-edit-btn cambiarEmail">Editar perfil</button>
+            <button type="button" class="perfil-edit-btn cambiarEmail" data-i18n="perfil.editarPerfil"></button>
           </div>
         </div>
         <div class="banner-body">
@@ -632,21 +633,21 @@ async enviarCambioPassword(event) {
                   <circle cx="12" cy="12" r="3"></circle>
                   <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
-                <span class="opcion-label">Cambiar contraseña</span>
+                <span class="opcion-label" data-i18n="perfil.cambiarPassword"></span>
               </button>
               <button class="opcion-btn enConstruccion">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                   <circle cx="12" cy="13" r="4"></circle>
                 </svg>
-                <span class="opcion-label">Editar foto de perfil</span>
+                <span class="opcion-label" data-i18n="perfil.editarFoto"></span>
               </button>
               <button class="opcion-btn cambiarEmail">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span class="opcion-label">Cambiar email</span>
+                <span class="opcion-label" data-i18n="perfil.cambiarEmail"></span>
               </button>
               <button class="opcion-btn enConstruccion">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -655,21 +656,21 @@ async enviarCambioPassword(event) {
                   <circle cx="5.5" cy="18.5" r="2.5"></circle>
                   <circle cx="18.5" cy="18.5" r="2.5"></circle>
                 </svg>
-                <span class="opcion-label">Editar vehículo</span>
+                <span class="opcion-label" data-i18n="perfil.editarVehiculo"></span>
               </button>
               <button class="opcion-btn" id="borrarVehiculo">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                   <line x1="1" y1="10" x2="23" y2="10"></line>
                 </svg>
-                <span class="opcion-label">Borrar vehículo</span>
+                <span class="opcion-label" data-i18n="perfil.borrarVehiculo"></span>
               </button>
               <button class="opcion-btn anadirVehiculo">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="12" y1="5" x2="12" y2="19"></line>
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                <span class="opcion-label">Añadir mi vehículo</span>
+                <span class="opcion-label" data-i18n="perfil.anadirVehiculo"></span>
               </button>
               <button class="opcion-btn verPuntuacion">
                 <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -681,7 +682,7 @@ async enviarCambioPassword(event) {
               </button>
             </div>
             <form id="formVehiculo" class="form-vehiculo" style="display: none">
-              <h3 class="form-titulo">Añadir vehículo</h3>
+              <h3 class="form-titulo" data-i18n="perfil.anadirVehiculoTitle"></h3>
               <div class="form-group input-field">
                 <select id="tipoVehiculo" name="tipo_vehiculo">
                   <option value=""></option>
@@ -706,38 +707,38 @@ async enviarCambioPassword(event) {
                 <div id="error-tamanoVehiculo"></div>
               </div>
               <div class="form-botones">
-                <button type="button" class="btn-cancelar btn-cancelar-vehiculo">Cancelar</button>
+                <button type="button" class="btn-cancelar btn-cancelar-vehiculo" data-i18n="perfil.cancelar"></button>
                 <button type="submit" class="btn-guardar" data-i18n="perfil.guardar">Guardar</button>
               </div>
             </form>
             <form id="formEmail" class="form-email" style="display: none">
-              <h3 class="form-titulo">Cambiar email</h3>
+              <h3 class="form-titulo" data-i18n="perfil.cambiarEmail"></h3>
               <div class="form-group input-field">
                 <input type="email" id="nuevoEmail" name="nuevoEmail" placeholder=" ">
-                <label for="nuevoEmail">Nuevo email</label>
+                <label for="nuevoEmail" data-i18n="perfil.nuevoEmail"></label>
                 <div id="error-nuevoEmail"></div>
               </div>
               <div class="form-botones">
-                <button type="button" class="btn-cancelar cambiarEmail">Cancelar</button>
-                <button type="submit" class="btn-guardar">Guardar</button>
+                <button type="button" class="btn-cancelar cambiarEmail" data-i18n="perfil.cancelar"></button>
+                <button type="submit" class="btn-guardar" data-i18n="perfil.guardar"></button>
               </div>
             </form>
             <form id="formPassword" class="form-password" style="display: none">
-                <h3 class="form-titulo">Cambiar contraseña</h3>
+                <h3 class="form-titulo" data-i18n="perfil.cambiarTitulo"></h3>
                 <div class="form-group input-field">
                   <input type="password" id="passwordActual" name="passwordActual" placeholder=" ">
-                  <label for="passwordActual">Contraseña actual</label>
+                  <label for="passwordActual" data-i18n="perfil.passwordActual"></label>
                   <div id="error-passwordActual"></div>
                 </div>
 
                 <div class="form-group input-field">
                   <input type="password" id="passwordNueva" name="passwordNueva" placeholder=" ">
-                  <label for="passwordNueva">Nueva contraseña</label>
+                  <label for="passwordNueva" data-i18n="perfil.passwordNueva"></label>
                   <div id="error-passwordNueva"></div>
                 </div>
                 <div class="form-botones">
-                  <button type="button" class="btn-cancelar cambiarPassword">Cancelar</button>
-                  <button type="submit" class="btn-guardar">Guardar</button>
+                  <button type="button" class="btn-cancelar cambiarPassword" data-i18n="perfil.cancelar"></button>
+                  <button type="submit" class="btn-guardar" data-i18n="perfil.guardar"></button>
                 </div>
             </form>
           </div>
@@ -748,14 +749,14 @@ async enviarCambioPassword(event) {
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
-              <span class="opcion-label">Cerrar sesión</span>
+              <span class="opcion-label" data-i18n="perfil.cerrarSesion"></span>
             </button>
             <button class="opcion-btn danger" id="eliminarCuenta">
               <svg class="opcion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
               </svg>
-              <span class="opcion-label">Eliminar cuenta</span>
+              <span class="opcion-label" data-i18n="perfil.eliminarCuenta"></span>
             </button>
           </div>
         </div>

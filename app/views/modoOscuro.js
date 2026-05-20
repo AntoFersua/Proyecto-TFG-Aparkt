@@ -15,77 +15,71 @@
 
     document.documentElement.setAttribute('data-theme', temaInicial);
     document.documentElement.style.colorScheme = temaInicial;
+    aplicarTemaSwal(temaInicial);
+  }
+
+  function aplicarTemaSwal(tema) {
+    if (typeof window.Swal !== 'undefined') {
+      if (tema === 'dark') {
+        window.Swal.setDefaults({
+          background: '#1e2a45',
+          color: '#f0f0f0',
+          confirmButtonColor: '#34af72'
+        });
+      } else {
+        window.Swal.setDefaults({
+          background: '#fff',
+          color: '#545454',
+          confirmButtonColor: '#3085d6'
+        });
+      }
+    }
   }
 
   function actualizarIconos() {
-    var headerMap = document.querySelector('header-map');
-    if (!headerMap) return;
-
-    var btn = headerMap.querySelector('#modoOscuro');
-    var btnDrop = headerMap.querySelector('#modoOscuroDrop');
-
     var esOscuro = document.documentElement.getAttribute('data-theme') === 'dark';
 
-    [btn, btnDrop].forEach(function(b) {
-      if (!b) return;
+    document.querySelectorAll('#modoOscuro, #modoOscuroDrop').forEach(function(b) {
       var sol = b.querySelector('.icon-sol');
       var luna = b.querySelector('.icon-luna');
-      if (sol) sol.style.display = esOscuro ? 'none' : 'block';
-      if (luna) luna.style.display = esOscuro ? 'block' : 'none';
+      if (sol) sol.style.display = esOscuro ? 'none' : '';
+      if (luna) luna.style.display = esOscuro ? '' : 'none';
     });
   }
 
-  function esperarYConfigurar(intentos) {
-    intentos = intentos || 0;
-    if (intentos > 100) return;
+  function toggleTema(e) {
+    var btn = e.target.closest('#modoOscuro, #modoOscuroDrop');
+    if (!btn) return;
 
-    var headerMap = document.querySelector('header-map');
-    if (!headerMap) {
-      setTimeout(function() { esperarYConfigurar(intentos + 1); }, 100);
-      return;
-    }
+    e.preventDefault();
 
-    var btn = headerMap.querySelector('#modoOscuro');
-    if (!btn) {
-      setTimeout(function() { esperarYConfigurar(intentos + 1); }, 100);
-      return;
-    }
-
+    var actual = document.documentElement.getAttribute('data-theme');
+    var nuevo = actual === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nuevo);
+    document.documentElement.style.colorScheme = nuevo;
+    localStorage.setItem('modoOscuro', nuevo === 'dark' ? 'true' : 'false');
+    aplicarTemaSwal(nuevo);
     actualizarIconos();
-
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var actual = document.documentElement.getAttribute('data-theme');
-      var nuevo = actual === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', nuevo);
-      document.documentElement.style.colorScheme = nuevo;
-      localStorage.setItem('modoOscuro', nuevo === 'dark' ? 'true' : 'false');
-      actualizarIconos();
-    });
-
-    var btnDrop = headerMap.querySelector('#modoOscuroDrop');
-    if (btnDrop) {
-      btnDrop.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var actual = document.documentElement.getAttribute('data-theme');
-        var nuevo = actual === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', nuevo);
-        document.documentElement.style.colorScheme = nuevo;
-        localStorage.setItem('modoOscuro', nuevo === 'dark' ? 'true' : 'false');
-        actualizarIconos();
-      });
-    }
   }
 
   inicializarTema();
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(esperarYConfigurar, 500);
-    });
+  document.addEventListener('click', toggleTema);
+
+  var observer = new MutationObserver(function() {
+    var btn = document.querySelector('#modoOscuro');
+    if (btn) {
+      actualizarIconos();
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  if (document.readyState !== 'loading') {
+    actualizarIconos();
   } else {
-    setTimeout(esperarYConfigurar, 500);
+    document.addEventListener('DOMContentLoaded', function() {
+      actualizarIconos();
+    });
   }
 })();

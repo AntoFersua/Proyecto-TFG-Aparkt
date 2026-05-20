@@ -58,8 +58,12 @@ export function aplicarTraducciones() {
     const clave = el.getAttribute('data-i18n-value');
     el.value = t(clave);
   });
-  const titleEl = document.querySelector('title[data-i18n-title]');
-  if (titleEl) {
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const clave = el.getAttribute('data-i18n-title');
+    el.title = t(clave);
+  });
+  const titleEl = document.querySelector('title');
+  if (titleEl && titleEl.hasAttribute('data-i18n-title')) {
     document.title = t(titleEl.getAttribute('data-i18n-title'));
   }
   const metaDesc = document.querySelector('meta[name="description"][data-i18n-meta]');

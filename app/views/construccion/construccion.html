@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aparkt - Página en construcción</title>
+    <title data-i18n-title="construccion.title">Aparkt - Página en construcción</title>
     <style>
       * {
         margin: 0;
@@ -365,7 +365,7 @@
         <a href="../aparkt/aparkt.html" aria-label="Ir a Aparkt">
           <img src="../assets/isotipoAparkt.webp" alt="Aparkt" />
         </a>
-        <span>Proyecto en desarrollo</span>
+        <span data-i18n="construccion.proyecto">Proyecto en desarrollo</span>
       </div>
 
       <div class="brillo b1"></div>
@@ -393,9 +393,9 @@
       ></div>
 
       <div class="contenido">
-        <h1><span>Página en construcción</span></h1>
+        <h1><span data-i18n="construccion.h1">Página en construcción</span></h1>
 
-        <p class="subtitulo">
+        <p class="subtitulo" data-i18n="construccion.sub">
           Estamos terminando esta experiencia. El motor ya está arrancado, solo
           faltan los últimos ajustes.
         </p>
@@ -691,5 +691,12 @@
         </div>
       </div>
     </div>
+  <script type="module">
+    import { cargarTraducciones, aplicarTraducciones } from '../translator.js';
+    document.addEventListener('DOMContentLoaded', async () => {
+      await cargarTraducciones();
+      aplicarTraducciones();
+    });
+  </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { cargarTraducciones, getIdiomaActual, cambiarIdioma } from '../translator.js';
+import { cargarTraducciones, getIdiomaActual, cambiarIdioma, t } from '../translator.js';
 
 //Componente llamado ModalIdioma que hereda de HTMLElement
 class ModalIdioma extends HTMLElement {
@@ -304,8 +304,8 @@ class ModalIdioma extends HTMLElement {
   <div class="caja-modal">
     <div class="cabecera-modal">
       <div>
-        <h2>Seleccionar idioma</h2>
-        <p>Elige el idioma de la plataforma</p>
+        <h2>${t('modalIdioma.titulo')}</h2>
+        <p>${t('modalIdioma.subtitulo')}</p>
       </div>
       <button id="closeLanguageModal" class="btn-cerrar">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +330,7 @@ class ModalIdioma extends HTMLElement {
     </div>
 
     <div class="pie-modal">
-      <button id="saveLanguage" class="btn-guardar">Guardar idioma</button>
+      <button id="saveLanguage" class="btn-guardar">${t('modalIdioma.guardar')}</button>
     </div>
   </div>
 </div>`;
@@ -385,11 +385,11 @@ class ModalIdioma extends HTMLElement {
   }
 
   getNombreIdioma(codigo) {
-    return { es: 'Español', en: 'English', fr: 'Français', de: 'Deutsch' }[codigo] || codigo;
+    return t(`modalIdioma.${codigo}`) || codigo;
   }
 
   getRegion(codigo) {
-    return { es: 'España', en: 'United Kingdom', fr: 'France', de: 'Germany' }[codigo] || '';
+    return t(`modalIdioma.${codigo}Region`) || '';
   }
 
   agregarEventListeners() {

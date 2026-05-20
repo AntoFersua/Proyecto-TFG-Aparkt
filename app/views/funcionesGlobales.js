@@ -154,12 +154,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  (function() {
-        const tema = localStorage.getItem("modoOscuro");
-        const esOscuro = tema === "true" || (tema === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        const valor = esOscuro ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", valor);
-        document.documentElement.style.colorScheme = valor;
-      })();
-
 });

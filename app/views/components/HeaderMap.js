@@ -651,20 +651,20 @@ class HeaderMap extends HTMLElement {
         <header>
 
             <div class="logoHeader">
-                <img src="../assets/imagotipoAparkt.webp" alt="Logo">
+                <img src="../assets/imagotipoAparkt.webp" data-i18n-alt="header.logoAlt" alt="Logo">
             </div>
 
             <div class="buscador">
                 <form id="form-busqueda-header" method="get">
                     <input type="text" id="busqueda-header" placeholder="Dirección" data-i18n-placeholder="index.placeholderDireccion" />
-                    <input type="submit" value="Buscar" />
+                    <input type="submit" value="Buscar" data-i18n-value="headerMap.buscar" />
                 </form>
             </div>
 
             <div id="headerDerecha">
 
                 <div class="iconos-container">
-                    <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos" title="Más opciones">
+                    <button type="button" class="iconos-btn" id="iconosBtn" aria-label="Iconos" title="Más opciones" data-i18n-aria-label="headerMap.iconos" data-i18n-title="headerMap.masOpciones">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="7" height="7"></rect>
                             <rect x="14" y="3" width="7" height="7"></rect>
@@ -679,14 +679,14 @@ class HeaderMap extends HTMLElement {
                                 <path d="M2 12h20"/>
                                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                             </svg>
-                            <span>Idioma</span>
+                            <span data-i18n="headerMap.idioma">Idioma</span>
                         </button>
                         <button type="button" id="perfilUsuarioDrop">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                 <circle cx="12" cy="7" r="4"/>
                             </svg>
-                            <span>Perfil</span>
+                            <span data-i18n="headerMap.perfil">Perfil</span>
                         </button>
                         <button type="button" id="modoOscuroDrop">
                             <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -703,13 +703,13 @@ class HeaderMap extends HTMLElement {
                             <svg class="icon-luna" style="display:none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#666"/>
                             </svg>
-                            <span>Tema</span>
+                            <span data-i18n="headerMap.tema">Tema</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="nav-container">
-                    <button type="button" class="icon-btn" id="navBtn" aria-label="Menú de navegación" title="Menú">
+                    <button type="button" class="icon-btn" id="navBtn" aria-label="Menú de navegación" title="Menú" data-i18n-aria-label="headerMap.menuNav" data-i18n-title="headerMap.menu">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -719,7 +719,7 @@ class HeaderMap extends HTMLElement {
                     <div class="nav-dropdown" id="navDropdown"></div>
                 </div>
 
-                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma" title="Idioma">
+                <button type="button" class="icon-btn" id="cambiarIdioma" aria-label="Cambiar idioma" title="Idioma" data-i18n-aria-label="header.cambiarIdioma" data-i18n-title="headerMap.idioma">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="M2 12h20"/>
@@ -727,14 +727,14 @@ class HeaderMap extends HTMLElement {
                     </svg>
                 </button>
 
-                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario" title="Perfil">
+                <button type="button" class="icon-btn" id="perfilUsuario" aria-label="Perfil de usuario" title="Perfil" data-i18n-aria-label="header.perfilUsuario" data-i18n-title="headerMap.perfil">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
                     </svg>
                 </button>
 
-                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema" title="Tema">
+                <button type="button" class="icon-btn" id="modoOscuro" aria-label="Cambiar tema" title="Tema" data-i18n-aria-label="header.modoOscuro" data-i18n-title="headerMap.tema">
                     <svg class="icon-sol" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -755,10 +755,10 @@ class HeaderMap extends HTMLElement {
         </header>
 
         <div class="page-nav" id="pageNav">
-            <a href="../index/index.html">Mapa</a>
-            <a href="../aparkt/aparkt.html">Aparkt</a>
-            <a href="../login/login.html">Log In</a>
-            <a href="../signup/signup.html">Sign Up</a>
+            <a href="../index/index.html" data-i18n="nav.mapa">Mapa</a>
+            <a href="../aparkt/aparkt.html" data-i18n="nav.aparkt">Aparkt</a>
+            <a href="../login/login.html" data-i18n="nav.login">Log In</a>
+            <a href="../signup/signup.html" data-i18n="nav.signup">Sign Up</a>
         </div>
         `;
     }

@@ -1,4 +1,6 @@
 //Creación de componente personalizado que se llama ModalAparcamiento
+import { aplicarTraducciones } from '../translator.js';
+
 class ModalAparcamiento extends HTMLElement {
   constructor() {
     super();
@@ -8,6 +10,8 @@ class ModalAparcamiento extends HTMLElement {
   connectedCallback() {
     //renderizar el modal
     this.render();
+    //aplicar traducciones a los elementos del modal
+    aplicarTraducciones();
     //si la plaza esta libre, motrar botón de ocupar
     if(this.estadoOcupacionPlaza == 0){
       this.querySelector('#botonOcuparPlaza').classList.remove("visibilidadNone");

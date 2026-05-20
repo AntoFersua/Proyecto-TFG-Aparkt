@@ -226,7 +226,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "none",
               );
               botonEstadosAparcamientos.querySelector("span").textContent =
-                "Mostrar estados aparcamientos";
+                t('index.mostrarEstados');
             } else {
               mapa.setLayoutProperty(
                 arrayEstadosAparcamientos[i].layerID,
@@ -234,7 +234,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "visible",
               );
               botonEstadosAparcamientos.querySelector("span").textContent =
-                "Ocultar estados aparcamientos";
+                t('index.ocultarEstados');
             }
           }
         }
@@ -569,14 +569,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                 "visibility",
                 "none",
               );
-              botonAparcamientos.querySelector("span").textContent = "Mostrar aparcamientos";
+               botonAparcamientos.querySelector("span").textContent = t('index.mostrarAparcamientos');
             } else {
               mapa.setLayoutProperty(
                 arrayAparcamientos[i].layerID,
                 "visibility",
                 "visible",
               );
-              botonAparcamientos.querySelector("span").textContent = "Ocultar aparcamientos";
+               botonAparcamientos.querySelector("span").textContent = t('index.ocultarAparcamientos');
             }
           }
         }
@@ -629,7 +629,7 @@ window.addEventListener("DOMContentLoaded", async function () {
               t('index.direccionNoEncontrada');
               window.Swal.fire({
               icon: 'info',
-              html: "Coordenadas: " + longitud.toFixed(6) + ", " + latitud.toFixed(6) + "<br>Dirección: " + address,
+              html: t('index.coordenadas') + longitud.toFixed(6) + ", " + latitud.toFixed(6) + t('index.direccion') + address,
               confirmButtonText: 'OK'
             });
           })
@@ -637,7 +637,7 @@ window.addEventListener("DOMContentLoaded", async function () {
           .catch(function (error) {
             window.Swal.fire({
               icon: 'warning',
-              html: "Coordenadas: " + longitud.toFixed(6) + ", " + latitud.toFixed(6) + "<br>Error al obtener dirección",
+              html: t('index.coordenadas') + longitud.toFixed(6) + ", " + latitud.toFixed(6) + t('index.errorDireccion'),
               confirmButtonText: 'OK'
             });
           });
@@ -678,7 +678,7 @@ window.addEventListener("DOMContentLoaded", async function () {
           })
           //En caso de error
           .catch(function (error) {
-            window.Swal.fire({ icon: 'error', title: "Error al obtener coordenadas para: " + searchText, timer: 3000, showConfirmButton: false });
+            window.Swal.fire({ icon: 'error', title: t('index.errorCoordenadas') + searchText, timer: 3000, showConfirmButton: false });
           });
       }
 
@@ -716,12 +716,12 @@ window.addEventListener("DOMContentLoaded", async function () {
       }
 
       const popupAnuncianteCasaLola = crearPopupTituloParrafo(
-        "Casa Lola",
-        "El mejor restaurante de la zona.",
+        t('index.ejemplo1Titulo'),
+        t('index.ejemplo1Desc'),
       );
       const popupAnuncianteCasaPaco = crearPopupTituloParrafo(
-        "Casa Paco",
-        "El mejor restaurante de la zona.",
+        t('index.ejemplo2Titulo'),
+        t('index.ejemplo2Desc'),
       );
 
       //Forma sin función
@@ -737,8 +737,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         return popupTitulo;
       }
 
-      const popupUsuarioCasa = crearPopupTitulo("Mi Casa");
-      const popupUsuarioColegio = crearPopupTitulo("Mi Cole");
+      const popupUsuarioCasa = crearPopupTitulo(t('index.ejemplo3Titulo'));
+      const popupUsuarioColegio = crearPopupTitulo(t('index.ejemplo4Titulo'));
 
       //Crear popup con solo texto
       function crearPopupTexto(texto) {
@@ -747,7 +747,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         return popupTexto;
       }
 
-      const popupUsuarioUbicacion = crearPopupTexto("Mi ubi");
+      const popupUsuarioUbicacion = crearPopupTexto(t('index.ejemplo5Titulo'));
 
       //Forma sin función
       /*const popupUsuarioUbicacion = new mapboxgl.Popup()
@@ -797,7 +797,7 @@ window.addEventListener("DOMContentLoaded", async function () {
       function cambiarVisibilidadMarkUsuario() {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (
-          botonMarcadoresUsuario.querySelector("span").textContent == "Mostrar marcadores usuario"
+          botonMarcadoresUsuario.querySelector("span").textContent == t('index.mostrarMarcadoresUsuario')
         ) {
           estadoMostar = true;
         } else {
@@ -810,12 +810,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             arrayMarcadoresUsurio[i].removeClassName("estadoVisualMarker");
             //si es el último elemento
             if (i == arrayMarcadoresUsurio.length - 1) {
-              botonMarcadoresUsuario.querySelector("span").textContent = "Ocultar marcadores usuario";
+              botonMarcadoresUsuario.querySelector("span").textContent = t('index.ocultarMarcadoresUsuario');
             }
           } else {
             arrayMarcadoresUsurio[i].addClassName("estadoVisualMarker");
             if (i == arrayMarcadoresUsurio.length - 1) {
-              botonMarcadoresUsuario.querySelector("span").textContent = "Mostrar marcadores usuario";
+              botonMarcadoresUsuario.querySelector("span").textContent = t('index.mostrarMarcadoresUsuario');
             }
           }
         }
@@ -868,7 +868,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         //semáforo para indicar si se debe de añadir o eliminar la clase según el textContent
         if (
           botonMarcadoresAnunciante.querySelector("span").textContent ==
-          "Mostrar marcadores anunciantes"
+          t('index.mostrarMarcadoresAnunciantes')
         ) {
           estadoMostarPersonalizados = true;
         } else {
@@ -884,13 +884,13 @@ window.addEventListener("DOMContentLoaded", async function () {
             //si es el último elemento
             if (i == arrayMarcadoresPersonalizados.length - 1) {
               botonMarcadoresAnunciante.querySelector("span").textContent =
-                "Ocultar marcadores anunciantes";
+                t('index.ocultarMarcadoresAnunciantes');
             }
           } else {
             arrayMarcadoresPersonalizados[i].addClassName("estadoVisualMarker");
             if (i == arrayMarcadoresPersonalizados.length - 1) {
               botonMarcadoresAnunciante.querySelector("span").textContent =
-                "Mostrar marcadores anunciantes";
+                t('index.mostrarMarcadoresAnunciantes');
             }
           }
         }
@@ -944,13 +944,13 @@ async function configurarUIUsuarioLogueado(usuario) {
   const iconoMarcadoresAnunciante = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
 
   // BOTÓN: Mostrar aparcamientos
-  const btnAparcamientos = crearBotonConIcono("mostrarAparcamientos", "Mostrar aparcamientos", iconoAparcamientos);
+  const btnAparcamientos = crearBotonConIcono("mostrarAparcamientos", t('index.mostrarAparcamientos'), iconoAparcamientos);
 
   // BOTÓN: Mostrar marcadores usuario
-  const btnMarcadoresUsuario = crearBotonConIcono("mostrarMarcadoresUsuario", "Mostrar marcadores usuario", iconoMarcadoresUsuario);
+  const btnMarcadoresUsuario = crearBotonConIcono("mostrarMarcadoresUsuario", t('index.mostrarMarcadoresUsuario'), iconoMarcadoresUsuario);
 
   // BOTÓN: Mostrar marcadores anunciantes
-  const btnMarcadoresAnunciante = crearBotonConIcono("mostrarMarcadoresAnunciante", "Mostrar marcadores anunciantes", iconoMarcadoresAnunciante);
+  const btnMarcadoresAnunciante = crearBotonConIcono("mostrarMarcadoresAnunciante", t('index.mostrarMarcadoresAnunciantes'), iconoMarcadoresAnunciante);
 
   // Añadir al contenedor existente
   contenedor.appendChild(btnAparcamientos);
