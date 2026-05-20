@@ -105,17 +105,43 @@ class Usuario extends Model
 
     public function eliminarUsuario($id)
     {
-        // Primero eliminar vehículos asociados
-        $consultaVehiculos = "DELETE FROM Vehiculo WHERE usuario_id = :id";
-        $stmtVehiculos = $this->_conexion->prepare($consultaVehiculos);
-        $stmtVehiculos->bindValue(":id", $id, PDO::PARAM_INT);
-        $stmtVehiculos->execute();
+        try {
 
-        // Luego eliminar el usuario
-        $consulta = "DELETE FROM Usuario WHERE id = :id";
-        $stmt = $this->_conexion->prepare($consulta);
-        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
-        return $stmt->execute();
+            $this->_conexion->beginTransaction();
+
+            //Primero eliminar vehículos asociados
+            $consultaVehiculos = "DELETE FROM Vehiculo WHERE usuario_id = :id";
+            $stmtVehiculos = $this->_conexion->prepare($consultaVehiculos);
+            $stmtVehiculos->bindValue(":id", $id, PDO::PARAM_INT);
+            $stmtVehiculos->execute();
+
+            
+            //Poner la plazaDeAparcamiento asociada a null
+            $consultaPlaza = "UPDATE PlazaAparcamiento 
+                    SET usuario_id = NULL
+                    WHERE usuario_id = :id";
+
+            $stmtPlaza = $this->_conexion->prepare($consultaPlaza);
+            $stmtPlaza->bindValue(":id", $id, PDO::PARAM_INT);
+            $stmtPlaza->execute();
+
+
+            // Luego eliminar el usuario
+            $consulta = "DELETE FROM Usuario WHERE id = :id";
+            $stmt = $this->_conexion->prepare($consulta);
+            $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $this->_conexion->commit();
+
+            return true;
+
+        } catch (PDOException $e) {
+
+            $this->_conexion->rollBack();
+
+            return false;
+        }
     }
 
     /**
