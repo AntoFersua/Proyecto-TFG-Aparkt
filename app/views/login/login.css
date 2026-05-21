@@ -497,29 +497,29 @@ main {
     border-width: 2.5px;
 
     form {
-      max-width: 220px;
-      padding: 4%;
+      max-width: 240px;
+      padding: 5%;
 
       .form-contenido {
         img {
-          height: 70px;
-          width: 70px;
+          height: 80px;
+          width: 80px;
         }
       }
 
       h2 {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
     }
   }
 
   .input-field input {
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    padding: 10px 15px;
+    font-size: 0.85rem;
   }
 
   .telefono button[type="submit"] {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+    padding: 10px 20px;
+    font-size: 0.85rem;
   }
 }

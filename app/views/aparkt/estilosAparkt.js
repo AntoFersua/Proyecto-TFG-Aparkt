@@ -248,13 +248,17 @@ document.addEventListener("DOMContentLoaded", () => {
     tarjetas[indice].classList.add('activa');
   }
 
+  function cerrarTarjetas() {
+    tarjetas.forEach(t => t.classList.remove('activa'));
+  }
+
   if (contenedor && tarjetas.length) {
     tarjetas.forEach((tarjeta, i) => {
       tarjeta.addEventListener('mouseenter', () => activar(i));
       tarjeta.addEventListener('click', () => activar(i));
     });
 
-    contenedor.addEventListener('mouseleave', () => activar(0));
+    contenedor.addEventListener('mouseleave', cerrarTarjetas);
 
     let startX = 0;
 

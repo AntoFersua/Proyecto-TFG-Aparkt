@@ -1252,8 +1252,9 @@ html {
       font-family: "Cormorant Garamond", serif;
       font-size: 18px;
       font-weight: 600;
-      color: #fff;
+      color: #ffe7a3;
       line-height: 1.1;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
     }
 
     .rol {
@@ -1282,8 +1283,9 @@ html {
       font-family: "Cormorant Garamond", serif;
       font-size: 17px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.92);
+      color: #ffe7a3;
       line-height: 1;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
     }
 
     .rol-pildora {
