@@ -527,8 +527,11 @@ window.addEventListener("DOMContentLoaded", async function () {
         let botonAparcamientos = document.querySelector(
           "#mostrarAparcamientos",
         );
-        //Aplicar listener
-        botonAparcamientos.addEventListener("click", cambiarVisibilidadPlazas);
+        //si existe 
+        if (botonAparcamientos){
+          //Aplicar listener
+          botonAparcamientos.addEventListener("click", cambiarVisibilidadPlazas);
+        }
 
         //mapa.on("click", obtenerDireccionDeCoordenadas);
 
@@ -751,11 +754,15 @@ window.addEventListener("DOMContentLoaded", async function () {
       let botonMarcadoresUsuario = document.querySelector(
         "#mostrarMarcadoresUsuario",
       );
-      //Aplicar listener
-      botonMarcadoresUsuario.addEventListener(
-        "click",
-        cambiarVisibilidadMarkUsuario,
-      );
+
+      //si existe 
+      if(botonMarcadoresUsuario){
+        //Aplicar listener
+        botonMarcadoresUsuario.addEventListener(
+          "click",
+          cambiarVisibilidadMarkUsuario,
+        );
+      }
 
       //añadir marcador Personalizado Logo
       function añadirMarcadorPersonalizado(longitudX, latitudY, popup) {
@@ -815,11 +822,14 @@ window.addEventListener("DOMContentLoaded", async function () {
       let botonMarcadoresAnunciante = document.querySelector(
         "#mostrarMarcadoresAnunciante",
       );
-      //Aplicar listener
-      botonMarcadoresAnunciante.addEventListener(
-        "click",
-        cambiarVisibilidadMarkPersonalizado,
-      );
+      //si existe 
+      if(botonMarcadoresAnunciante){
+        //Aplicar listener
+        botonMarcadoresAnunciante.addEventListener(
+          "click",
+          cambiarVisibilidadMarkPersonalizado,
+        );
+      }
     })
     .catch(function (error) {
       console.log("Error: " + error);
