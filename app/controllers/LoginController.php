@@ -26,10 +26,10 @@ class LoginController
 
         //validaciones básicas
         if ($usuario == '') {
-            $errores['usuario'] = "Introduce un usuario o email";
+            $errores['usuario'] = "usuario_requerido";
         }
         if ($contrasena == '') {
-            $errores['contrasena'] = "Introduce una contraseña";
+            $errores['contrasena'] = "contrasena_requerida";
         }
 
         //si hay errores de validación básica, devolverlos
@@ -43,13 +43,13 @@ class LoginController
 
         // Validar que sea email
         if (strpos($usuario, '@') === false) {
-            $errores['usuario'] = "Introduce un email válido";
+            $errores['usuario'] = "email_invalido";
         }
 
         // Buscar por email
         $user_info = $this->usuarioModelo->obtenerUsuarioPorEmail($usuario);
         if (!$user_info) {
-            $errores['usuario'] = "No existe cuenta con este email";
+            $errores['usuario'] = "email_no_existe";
         }
 
         //si hay errores de email, devolverlos
@@ -64,7 +64,7 @@ class LoginController
         //verificar contraseña
         $contrasenaInfo = $this->usuarioModelo->verificarContrasena($contrasena, $user_info['contrasena']);
         if (!$contrasenaInfo) {
-            $errores['contrasena'] = "Contraseña incorrecta";
+            $errores['contrasena'] = "contrasena_incorrecta";
         }
 
         //si hay errores de contraseña, devolverlos
@@ -79,7 +79,7 @@ class LoginController
         //Buscar si tiene vehiculo asociado
         $vehiculo_info = $this->usuarioModelo->obtenerVehiculosPorEmail($usuario);
         if (empty($vehiculo_info)) {
-            $errores['vehiculo'] = "No tienes vehiculo asociado";
+            $errores['vehiculo'] = "sin_vehiculo";
         }
 
         //si hay errores de vehiculo, devolverlos
@@ -111,12 +111,12 @@ class LoginController
             "user" => $_SESSION['usuario'],
             "user_id" => $_SESSION['usuario_id'],
             "vehiculo_user" => $_SESSION['vehiculo'],
-            "mensaje" => "Usuario inició sesión correctamente"
+            "mensaje" => "login_exitoso"
         ]);
         } catch (PDOException $e) {
             echo json_encode([
                 "status" => "error",
-                "mensaje" => "Error en la base de datos: " . $e->getMessage()
+                "mensaje" => "error_bd"
             ]);
         }
     }
