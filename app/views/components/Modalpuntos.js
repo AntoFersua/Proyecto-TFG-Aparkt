@@ -1,4 +1,4 @@
-import { t } from '../translator.js';
+import { t, getIdiomaActual } from '../translator.js';
 
 //Componente llamado ModalPuntos que hereda de HTMLElement
 class Modalpuntos extends HTMLElement {
@@ -42,7 +42,9 @@ class Modalpuntos extends HTMLElement {
 
   //Con este método pintamos el HTML
   render() {
-    const puntos = this.cargando ? "..." : Number(this.puntuacion).toLocaleString("es-ES");
+    const localeMap = { es: "es-ES", en: "en-US", fr: "fr-FR", de: "de-DE" };
+    const locale = localeMap[getIdiomaActual()] || "es-ES";
+    const puntos = this.cargando ? "..." : Number(this.puntuacion).toLocaleString(locale);
 
     this.innerHTML = `<style>
 
@@ -61,16 +63,16 @@ class Modalpuntos extends HTMLElement {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(6px);
 }
 
 .caja-modal {
   width: 100%;
   max-width: 420px;
-  background: white;
+  background: var(--bg-primary);
   border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
   animation: fadeIn 0.25s ease;
 }
@@ -81,7 +83,7 @@ class Modalpuntos extends HTMLElement {
 }
 
 .cabecera-modal {
-  background: linear-gradient(135deg, #005a60, #34af72);
+  background: linear-gradient(135deg, var(--color-azulOscuro), var(--color-verde));
   padding: 24px;
   display: flex;
   align-items: center;
@@ -145,13 +147,13 @@ class Modalpuntos extends HTMLElement {
 .points-value {
   font-size: 34px;
   font-weight: bold;
-  color: #005a60;
+  color: var(--color-azulOscuro);
 }
 
 .points-label {
   font-size: 12px;
   letter-spacing: 2px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .reward-item {
@@ -161,15 +163,15 @@ class Modalpuntos extends HTMLElement {
   justify-content: space-between;
   padding: 14px 16px;
   border-radius: 16px;
-  border: 1px solid #34af72;
-  background: white;
+  border: 1px solid var(--color-verde);
+  background: var(--bg-primary);
   cursor: pointer;
   transition: 0.2s;
 }
 
 .reward-item:hover {
-  background: #f7fff9;
-  border-color: #b5ffc2;
+  background: var(--bg-secondary);
+  border-color: var(--color-verdeAmarillo);
 }
 
 .reward-info {
@@ -181,18 +183,18 @@ class Modalpuntos extends HTMLElement {
 
 .reward-text {
   font-weight: bold;
-  color: #005a60;
+  color: var(--color-azulOscuro);
   font-size: 16px;
 }
 
 .reward-sub {
   font-size: 13px;
-  color: #888;
+  color: var(--text-muted);
 }
 
 .reward-points {
   font-weight: 600;
-  color: #005a60;
+  color: var(--color-azulOscuro);
   flex-shrink: 0;
 }
 
@@ -203,8 +205,8 @@ class Modalpuntos extends HTMLElement {
 
 .modal-button {
   width: 100%;
-  background: #005a60;
-  color: white;
+  background: var(--color-azulOscuro);
+  color: var(--text-on-dark);
   border: none;
   padding: 14px;
   border-radius: 16px;
@@ -256,8 +258,8 @@ class Modalpuntos extends HTMLElement {
   <div class="caja-modal">
     <div class="cabecera-modal">
       <div>
-        <h2 data-i18n="modalPuntos.titulo">Mis Recompensas</h2>
-        <p data-i18n="modalPuntos.puntos">Puntos disponibles</p>
+        <h2>${t('modalPuntos.titulo')}</h2>
+        <p>${t('modalPuntos.puntos')}</p>
       </div>
 
       <button class="btn-cerrar" id="closePointsModal">
@@ -271,36 +273,34 @@ class Modalpuntos extends HTMLElement {
 
       <div class="points-circle">
         <div class="points-value">${puntos}</div>
-        <div class="points-label" data-i18n="modalPuntos.label"></div>
+        <div class="points-label">${t('modalPuntos.label')}</div>
       </div>
 
       <div class="reward-item">
         <div class="reward-info">
-          <div class="reward-text" data-i18n="modalPuntos.crearPlazas">Crear plazas</div>
+          <div class="reward-text">${t('modalPuntos.crearPlazas')}</div>
         </div>
-        <div class="reward-points">+${this.puntosCrear} pts</div>
+        <div class="reward-points">+${this.puntosCrear} ${t('modalPuntos.pts')}</div>
       </div>
 
       <div class="reward-item">
         <div class="reward-info">
-          <div class="reward-text" data-i18n="modalPuntos.ocuparPlazas">Ocupar plazas</div>
+          <div class="reward-text">${t('modalPuntos.ocuparPlazas')}</div>
         </div>
-        <div class="reward-points">+${this.puntosOcupar} pts</div>
+        <div class="reward-points">+${this.puntosOcupar} ${t('modalPuntos.pts')}</div>
       </div>
 
       <div class="reward-item">
         <div class="reward-info">
-          <div class="reward-text" data-i18n="modalPuntos.liberarPlazas">Liberar plazas</div>
+          <div class="reward-text">${t('modalPuntos.liberarPlazas')}</div>
         </div>
-        <div class="reward-points">+${this.puntosLiberar} pts</div>
+        <div class="reward-points">+${this.puntosLiberar} ${t('modalPuntos.pts')}</div>
       </div>
 
     </div>
 
     <div class="pie-modal">
-      <button class="modal-button" data-i18n="modalPuntos.cerrar">
-        Cerrar
-      </button>
+      <button class="modal-button">${t('modalPuntos.cerrar')}</button>
     </div>
 
   </div>
